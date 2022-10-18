@@ -56,7 +56,18 @@ const GlobalStyles = createGlobalStyle`
         box-sizing: border-box;
     }
 
-    
+    :root {
+        --main-font: 'Lato', sans-serif;
+        --logo-font: 'Passion One', sans-serif;
+        --titles-font: 'Passion One', sans-serif;
+        --background-gray: #333333;
+        --background-black: #151515;
+        --main-white: #FFFFFF;
+        --secondary-white: #EFEFEF;
+        --post-black: #171717;
+        --font-gray: #B7B7B7;
+        --accent-color: #1877F2;
+    }
 `;
 
 export default GlobalStyles;
