@@ -3,16 +3,14 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
 import { SignWrapper } from "../../assets/styles/SignWrapper";
-import { signUp } from "../../services/api";
-import AsideTitle from "./AsideTitle";
+import { login } from "../../services/api";
+import AsideTitle from "../SignUp/AsideTitle";
 
-export default function SignUp() {
+export default function Login() {
     const [disabled, setDisabled] = useState(false);
     const [data, setData] = useState({
         email: '',
-        password: '',
-        username: '',
-        url: ''
+        password: ''
     });
     const navigate = useNavigate();
 
@@ -27,15 +25,16 @@ export default function SignUp() {
         e.preventDefault();
         setDisabled(true);
 
-        signUp(data)
-            .then(() => {
-                navigate("/");
+        login(data)
+            .then((answer) => {
+                const infoJSON = JSON.stringify({ token: answer.data.token });
+                localStorage.setItem("linkr", infoJSON);
+                navigate("/timeline");
             })
             .catch((error) => {
-                if (error.response.status === 409) {
-                    alert("This e-mail is already being used.");
+                if (error.response.status === 401) {
+                    alert("E-mail or password invalid.");
                 }
-                console.log(error);
                 setDisabled(false);
             });
     }
@@ -61,24 +60,8 @@ export default function SignUp() {
                     updateData={updateData}
                     disabled={disabled}
                 />
-                <Input
-                    type="text"
-                    placeholder="username"
-                    name="username"
-                    value={data.username}
-                    updateData={updateData}
-                    disabled={disabled}
-                />
-                <Input
-                    type="url"
-                    placeholder="picture url"
-                    name="url"
-                    value={data.url}
-                    updateData={updateData}
-                    disabled={disabled}
-                />
 
-                <Button>Sign Up</Button>
+                <Button>Log In</Button>
             </form>
         </SignWrapper>
     );
