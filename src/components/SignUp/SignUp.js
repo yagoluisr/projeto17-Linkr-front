@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import Logo from "../../assets/styles/Logo";
+import Title from "../../assets/styles/Title";
 
 export default function SignUp() {
     return (
         <Wrapper>
             <aside>
                 <Logo />
-                <h3>save, share and discover<br />the best links on the web</h3>
+                <Title>save, share and discover<br />the best links on the web</Title>
             </aside>
             <form>
                 
@@ -24,11 +25,17 @@ const Wrapper = styled.main`
         background-color: var(--background-black);
         width: 63%;
         height: 100%;
-        color: var(--main-white);
+        padding: 30vh 0 0 8vw;
     }
 
     aside h1 {
-        font-size: 116px;
+        font-size: 106px;
+        margin-bottom: 5px;
+    }
+
+    aside h2 {
+        font-size: 43px;
+        line-height: 64px;
     }
 
     form {
