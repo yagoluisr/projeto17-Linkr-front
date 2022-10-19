@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Input({ type, placeholder, name, value, updateData }) {
+export default function Input({ type, placeholder, name, value, updateData, disabled = false }) {
     return (
         <Wrapper
             type={type}
@@ -8,6 +8,7 @@ export default function Input({ type, placeholder, name, value, updateData }) {
             name={name}
             value={value}
             onChange={updateData}
+            disabled={disabled}
             required
         />
     );
@@ -24,5 +25,9 @@ const Wrapper = styled.input`
 
     &::placeholder {
         color: var(--placeholder-font-gray);
+    }
+
+    &:disabled {
+        background-color: var(--input-disabled-gray);
     }
 `;
