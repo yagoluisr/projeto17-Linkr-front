@@ -62,6 +62,8 @@ export default function Login() {
                 />
 
                 <Button>Log In</Button>
+
+                <p onClick={() => {navigate("/sign-up")}}>First time? Create an account!</p>
             </form>
         </SignWrapper>
     );

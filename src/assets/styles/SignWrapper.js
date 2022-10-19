@@ -22,6 +22,17 @@ export const SignWrapper = styled.main`
         margin-bottom: 14px;
     }
 
+    form p {
+        color: var(--main-white);
+        text-align: center;
+        font-family: var(--main-font);
+    }
+
+    form p:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
     @media (max-width: 614px) {
         flex-direction: column;
 

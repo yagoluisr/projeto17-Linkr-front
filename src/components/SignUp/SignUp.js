@@ -79,6 +79,8 @@ export default function SignUp() {
                 />
 
                 <Button>Sign Up</Button>
+
+                <p onClick={() => {navigate("/")}}>Switch back to log in</p>
             </form>
         </SignWrapper>
     );
