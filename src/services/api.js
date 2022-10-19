@@ -22,7 +22,14 @@ function login(body) {
     return promise;
 }
 
+function makePost(body) {
+    const config = createHeaders()
+    const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/timeline`, body, config);
+    return promise;
+}
+
 export {
     signUp,
     login,
+    makePost,
 }
