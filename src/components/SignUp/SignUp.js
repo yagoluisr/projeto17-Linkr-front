@@ -1,8 +1,21 @@
+import { useState } from "react";
 import styled from "styled-components";
+import Input from "../../assets/styles/Input";
 import Logo from "../../assets/styles/Logo";
 import Title from "../../assets/styles/Title";
 
 export default function SignUp() {
+    const [data, setData] = useState({
+        email: ''
+    });
+
+    function updateData(e) {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value
+        });
+    }
+
     return (
         <Wrapper>
             <aside>
@@ -10,7 +23,13 @@ export default function SignUp() {
                 <Title>save, share and discover<br />the best links on the web</Title>
             </aside>
             <form>
-                
+                <Input
+                    type="email"
+                    placeholder="e-mail"
+                    name="email"
+                    value={data.name}
+                    updateData={updateData}
+                />
             </form>
         </Wrapper>
     );
@@ -42,5 +61,6 @@ const Wrapper = styled.main`
         background-color: var(--background-gray);
         width: 37%;
         height: 100%;
+        padding: 30vh 3.7%;
     }
 `;

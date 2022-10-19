@@ -64,9 +64,11 @@ const GlobalStyles = createGlobalStyle`
         --background-black: #151515;
         --main-white: #FFFFFF;
         --secondary-white: #EFEFEF;
-        --post-black: #171717;
+        --post-background-black: #171717;
         --font-gray: #B7B7B7;
+        --font-black: #333333;
         --accent-color: #1877F2;
+        --placeholder-font-gray: #9F9F9F;
     }
 `;
 
