@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
+import { SignWrapper } from "../../assets/styles/SignWrapper";
 import { signUp } from "../../services/api";
 import AsideTitle from "./AsideTitle";
 
@@ -29,8 +29,7 @@ export default function SignUp() {
 
         signUp(data)
             .then(() => {
-                console.log("User created?");
-                // navigate("/");
+                navigate("/");
             })
             .catch((error) => {
                 if (error.response.status === 409) {
@@ -42,7 +41,7 @@ export default function SignUp() {
     }
 
     return (
-        <Wrapper>
+        <SignWrapper>
             <AsideTitle />
             
             <form onSubmit={handleSubmit}>
@@ -81,29 +80,6 @@ export default function SignUp() {
 
                 <Button>Sign Up</Button>
             </form>
-        </Wrapper>
+        </SignWrapper>
     );
 }
-
-const Wrapper = styled.main`
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-
-    form {
-        background-color: var(--background-gray);
-        width: 37%;
-        height: 100%;
-        padding: 30vh 3.7%;
-    }
-
-    form input {
-        margin-bottom: 13px;
-    }
-
-    form button {
-        width: 100%;
-        height: 65px;
-        margin-bottom: 14px;
-    }
-`;
