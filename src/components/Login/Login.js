@@ -27,10 +27,12 @@ export default function Login() {
 
         login(data)
             .then(() => {
-                console.log("Login success")
+                navigate("/timeline");
             })
             .catch((error) => {
-                console.log(error);
+                if (error.response.status === 401) {
+                    alert("E-mail or password invalid.");
+                }
                 setDisabled(false);
             });
     }
