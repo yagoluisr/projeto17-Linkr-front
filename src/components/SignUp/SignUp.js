@@ -1,12 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components";
+import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
 import Logo from "../../assets/styles/Logo";
 import Title from "../../assets/styles/Title";
 
 export default function SignUp() {
     const [data, setData] = useState({
-        email: ''
+        email: '',
+        password: '',
+        username: '',
+        url: ''
     });
 
     function updateData(e) {
@@ -16,20 +20,47 @@ export default function SignUp() {
         });
     }
 
+    function handleSubmit(e) {
+        e.preventDefault();
+    }
+
     return (
         <Wrapper>
             <aside>
                 <Logo />
                 <Title>save, share and discover<br />the best links on the web</Title>
             </aside>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Input
                     type="email"
                     placeholder="e-mail"
                     name="email"
-                    value={data.name}
+                    value={data.email}
                     updateData={updateData}
                 />
+                <Input
+                    type="password"
+                    placeholder="password"
+                    name="password"
+                    value={data.password}
+                    updateData={updateData}
+                />
+                <Input
+                    type="text"
+                    placeholder="username"
+                    name="username"
+                    value={data.username}
+                    updateData={updateData}
+                />
+                <Input
+                    type="url"
+                    placeholder="picture url"
+                    name="url"
+                    value={data.url}
+                    updateData={updateData}
+                />
+
+                <Button>Sign Up</Button>
             </form>
         </Wrapper>
     );
@@ -62,5 +93,15 @@ const Wrapper = styled.main`
         width: 37%;
         height: 100%;
         padding: 30vh 3.7%;
+    }
+
+    form input {
+        margin-bottom: 13px;
+    }
+
+    form button {
+        width: 100%;
+        height: 65px;
+        margin-bottom: 14px;
     }
 `;
