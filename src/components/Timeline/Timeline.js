@@ -12,7 +12,7 @@ export default function Timeline() {
             <Title>timeline</Title>
             <PublishBox>
                 <ProfilePic 
-                    src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ3Sdhy2sa03U_yWepZmnI-lV_-BzCCMtIDL3-oNLoH2HDRqZphOv-hMh39_ZIr18ifMI&usqp=CAU"
+                    src= ""
                     alt= ""
                 />
                 <FormBox />

@@ -18,7 +18,7 @@ export default function App() {
                     element={<SignUp />}
                 />
                 <Route
-                    path="/home"
+                    path="/timeline"
                     element={<Home />}
                 />
             </Routes>

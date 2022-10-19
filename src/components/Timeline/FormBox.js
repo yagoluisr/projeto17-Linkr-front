@@ -24,11 +24,13 @@ export default function FormBox(){
         setDisable(!disable)
         const body = {...post,}
         const promise = makePost(body)
-        promise.then(() => setPost({
+        promise.then(() => {setPost({
             link: '',
             description: ''
-        }))
-        promise.catch(() => alert('There have been a mistake'))
+        })
+        //atualizar timeline
+        })
+        promise.catch(() => alert('There have been an issue publishing your link'))
         setDisable(false)
     }
     return(
