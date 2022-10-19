@@ -1,7 +1,7 @@
 import axios from "axios";
 
 function createHeaders() {
-    const auth = JSON.parse(localStorage.getItem("shortly"));
+    const auth = JSON.parse(localStorage.getItem("linkr"));
     const config = {
         headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -12,6 +12,7 @@ function createHeaders() {
 }
 
 function signUp(body) {
+    console.log(process.env.REACT_APP_API_BASE_URL)
     const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/sign-up`, body);
     return promise;
 }
