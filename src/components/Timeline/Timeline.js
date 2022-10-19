@@ -43,7 +43,7 @@ const PublishBox = styled.div`
     height: fit-content;
     width: 35vw;
     min-width: 600px;
-    min-height: 210px;
+    min-height: fit-content;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
     img {

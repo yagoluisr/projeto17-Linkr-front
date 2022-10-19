@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { makePost } from "../../services/api";
 import styled from "styled-components";
 import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
 import UnrequiredInput from "../../assets/styles/UnrequiredInput";
-import axios from "axios";
 
 export default function FormBox(){
     const [disable, setDisable] = useState(false)
@@ -23,7 +23,7 @@ export default function FormBox(){
         e.preventDefault();
         setDisable(!disable)
         const body = {...post,}
-        const promise = axios.post("http://localhost:4000/timeline", body)
+        const promise = makePost(body)
         promise.then(() => setPost({
             link: '',
             description: ''
