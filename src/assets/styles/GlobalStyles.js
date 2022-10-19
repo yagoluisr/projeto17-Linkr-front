@@ -59,7 +59,7 @@ const GlobalStyles = createGlobalStyle`
     :root {
         --main-font: 'Lato', sans-serif;
         --logo-font: 'Passion One', sans-serif;
-        --titles-font: 'Passion One', sans-serif;
+        --titles-font: 'Oswald', sans-serif;
         --background-gray: #333333;
         --background-black: #151515;
         --main-white: #FFFFFF;

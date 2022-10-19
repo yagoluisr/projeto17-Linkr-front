@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import Logo from "../../assets/styles/Logo";
 
 export default function SignUp() {
     return (
         <Wrapper>
             <aside>
-                <h1>linkr</h1>
+                <Logo />
                 <h3>save, share and discover<br />the best links on the web</h3>
             </aside>
             <form>
@@ -24,6 +25,10 @@ const Wrapper = styled.main`
         width: 63%;
         height: 100%;
         color: var(--main-white);
+    }
+
+    aside h1 {
+        font-size: 116px;
     }
 
     form {
