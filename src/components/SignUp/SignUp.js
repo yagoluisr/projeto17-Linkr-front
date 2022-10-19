@@ -1,17 +1,20 @@
 import { useState } from "react";
-import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
-import Logo from "../../assets/styles/Logo";
-import Title from "../../assets/styles/Title";
+import { SignWrapper } from "../../assets/styles/SignWrapper";
+import { signUp } from "../../services/api";
+import AsideTitle from "./AsideTitle";
 
 export default function SignUp() {
+    const [disabled, setDisabled] = useState(false);
     const [data, setData] = useState({
         email: '',
         password: '',
         username: '',
         url: ''
     });
+    const navigate = useNavigate();
 
     function updateData(e) {
         setData({
@@ -22,14 +25,25 @@ export default function SignUp() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        setDisabled(true);
+
+        signUp(data)
+            .then(() => {
+                navigate("/");
+            })
+            .catch((error) => {
+                if (error.response.status === 409) {
+                    alert("This e-mail is already being used.");
+                }
+                console.log(error);
+                setDisabled(false);
+            });
     }
 
     return (
-        <Wrapper>
-            <aside>
-                <Logo />
-                <Title>save, share and discover<br />the best links on the web</Title>
-            </aside>
+        <SignWrapper>
+            <AsideTitle />
+            
             <form onSubmit={handleSubmit}>
                 <Input
                     type="email"
@@ -37,6 +51,7 @@ export default function SignUp() {
                     name="email"
                     value={data.email}
                     updateData={updateData}
+                    disabled={disabled}
                 />
                 <Input
                     type="password"
@@ -44,6 +59,7 @@ export default function SignUp() {
                     name="password"
                     value={data.password}
                     updateData={updateData}
+                    disabled={disabled}
                 />
                 <Input
                     type="text"
@@ -51,6 +67,7 @@ export default function SignUp() {
                     name="username"
                     value={data.username}
                     updateData={updateData}
+                    disabled={disabled}
                 />
                 <Input
                     type="url"
@@ -58,50 +75,11 @@ export default function SignUp() {
                     name="url"
                     value={data.url}
                     updateData={updateData}
+                    disabled={disabled}
                 />
 
                 <Button>Sign Up</Button>
             </form>
-        </Wrapper>
+        </SignWrapper>
     );
 }
-
-const Wrapper = styled.main`
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    
-    aside {
-        background-color: var(--background-black);
-        width: 63%;
-        height: 100%;
-        padding: 30vh 0 0 8vw;
-    }
-
-    aside h1 {
-        font-size: 106px;
-        margin-bottom: 5px;
-    }
-
-    aside h2 {
-        font-size: 43px;
-        line-height: 64px;
-    }
-
-    form {
-        background-color: var(--background-gray);
-        width: 37%;
-        height: 100%;
-        padding: 30vh 3.7%;
-    }
-
-    form input {
-        margin-bottom: 13px;
-    }
-
-    form button {
-        width: 100%;
-        height: 65px;
-        margin-bottom: 14px;
-    }
-`;

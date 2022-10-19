@@ -69,6 +69,7 @@ const GlobalStyles = createGlobalStyle`
         --font-black: #333333;
         --accent-color: #1877F2;
         --placeholder-font-gray: #9F9F9F;
+        --input-disabled-gray: lightgray;
     }
 `;
 
