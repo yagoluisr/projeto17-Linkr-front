@@ -26,7 +26,9 @@ export default function Login() {
         setDisabled(true);
 
         login(data)
-            .then(() => {
+            .then((answer) => {
+                const infoJSON = JSON.stringify({ token: answer.data.token });
+                localStorage.setItem("linkr", infoJSON);
                 navigate("/timeline");
             })
             .catch((error) => {
