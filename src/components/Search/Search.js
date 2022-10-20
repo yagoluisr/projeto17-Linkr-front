@@ -1,29 +1,60 @@
 import styled from 'styled-components';
 import { IoIosSearch } from 'react-icons/io';
 import ProfilePic from '../../assets/styles/ProfilePic';
+import { useEffect, useState } from 'react';
+import { DebounceInput } from 'react-debounce-input';
 
 export function SearchPeople () {
+    const arr = [
+        {
+            id:1,
+            name: 'Rocket',
+            url: "https://cdn.ome.lt/Lqdvo48Q-P232Yftee90aJPYKwo=/1200x630/smart/extras/conteudos/1_QLMBB49.jpg"
+        },
+        {
+            id:2,
+            name: 'Hulk',
+            url: "https://lumiere-a.akamaihd.net/v1/images/aiw_galeria_hulk_1920x1080_37dbd2f4.jpeg?region=0,0,1920,1080&width=960"
+        }
+    ];
+
+    const [search, setSearch] = useState('');
+
+    useEffect(()=>{
+        //requisição pro back
+    },[search])
+
+
     return (
         <Wrapper>
             <Search>
                 <div>
-                    <input 
-                        placeholder="Search for people"
+                    <DebounceInput 
+                        type = 'text'
+                        value = {search}
+                        onChange = {(e) => setSearch(e.target.value)}
+                        minLength = {3}
+                        debounceTimeout = {300}
+                        placeholder = "Search for people"
                     />
                     <div>
                         <IoIosSearch />
                     </div>
                 </div>
-                <Extension>
-                    <Profile>
-                        <ProfilePic src="https://cdn.ome.lt/Lqdvo48Q-P232Yftee90aJPYKwo=/1200x630/smart/extras/conteudos/1_QLMBB49.jpg"></ProfilePic>
-                        <p>NOME</p>
-                    </Profile>
-                    <Profile>
-                        <ProfilePic src="https://lumiere-a.akamaihd.net/v1/images/aiw_galeria_hulk_1920x1080_37dbd2f4.jpeg?region=0,0,1920,1080&width=960"></ProfilePic>
-                        <p>NOME</p>
-                    </Profile>
-                </Extension>
+                {
+                    search ? 
+                    <Extension>
+                        {arr.map((user, key) => 
+                            <Profile key={key}>
+                                <ProfilePic src={user.url}></ProfilePic>
+                                <p>{user.name}</p>
+                            </Profile>
+                        )}                        
+                    </Extension>
+                    :
+                    ''
+                }
+                
             </Search>
         </ Wrapper>
     )   
