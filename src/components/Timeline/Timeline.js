@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import Title from "../../assets/styles/Title";
-import TrendingHashtags from "../Trending/TrendingHashtags";
 import FormBox from "./FormBox";
 
 
@@ -18,7 +17,6 @@ export default function Timeline() {
                 />
                 <FormBox />
             </PublishBox>
-            <TrendingHashtags/>
         </Wrapper>
     )
 }

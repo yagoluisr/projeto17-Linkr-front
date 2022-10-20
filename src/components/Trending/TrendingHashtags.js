@@ -13,7 +13,7 @@ export default function TrendingHashtags() {
     getTrendingHashtags()
       .then((res) => {
         SetHashtags(res.data);
-        console.log(res.data);
+        console.log(res);
       })
       .catch((err) => {
         console.error(err.message);
@@ -36,13 +36,11 @@ export default function TrendingHashtags() {
         </TextContainer>
         <CrossLine></CrossLine>
         <TextContainer>
-          <span onClick={(e) => handleNavigate(e)}># aaa</span>
-          <span onClick={(e) => handleNavigate(e)}># aaa</span>
-          <span onClick={(e) => handleNavigate(e)}># aaa</span>
-          <span onClick={(e) => handleNavigate(e)}># aaa</span>
-          <span onClick={(e) => handleNavigate(e)}># aaa</span>
-          <span onClick={(e) => handleNavigate(e)}># aaa</span>
-          <span onClick={(e) => handleNavigate(e)}># aaa</span>
+          {hashtags.map((hashtag) => (
+            <span onClick={(e) => handleNavigate(e)}>
+              # {hashtag.hashtagName}
+            </span>
+          ))}
         </TextContainer>
       </Wrapper>
     </>
