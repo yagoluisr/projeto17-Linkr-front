@@ -61,7 +61,9 @@ export default function Login() {
                     disabled={disabled}
                 />
 
-                <Button>Log In</Button>
+                <Button disabled={disabled}>Log In</Button>
+
+                <p onClick={() => {navigate("/sign-up")}}>First time? Create an account!</p>
             </form>
         </SignWrapper>
     );
