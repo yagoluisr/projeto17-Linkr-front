@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-export default function ProfilePic ({ src, alt }) {
+export default function ProfilePic ({src}) {
     return (
         <Wrapper
-        src= { src }  
-        alt= { alt }
+        src= {src}
         />        
     );
 }
@@ -14,5 +13,5 @@ const Wrapper = styled.img`
     object-fit: cover;
     height: 65px;
     width: 65px;
-    border-radius: 50px;
+    border-radius:50px;
  `

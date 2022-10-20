@@ -1,8 +1,11 @@
 import styled from "styled-components";
 
-export default function Button ({ children, handleClick = null }) {
+export default function Button ({ children, handleClick = null, disabled = false}) {
     return (
-        <Wrapper onClick={handleClick}>
+        <Wrapper
+            onClick={handleClick}
+            disabled={disabled}
+        >
             { children }
         </Wrapper>    
     );

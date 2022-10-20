@@ -28,8 +28,22 @@ function makePost(body) {
     return promise;
 }
 
+function getUser() {
+    const config = createHeaders()
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user`, config);
+    return promise;
+}
+
+function getPosts() {
+    const config = createHeaders()
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/timeline`, config);
+    return promise;
+}
+
 export {
     signUp,
     login,
     makePost,
+    getUser,
+    getPosts,
 }
