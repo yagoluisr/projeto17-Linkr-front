@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import Logo from "../../assets/styles/Logo";
 import ProfilePic from "../../assets/styles/ProfilePic";
-import { IoIosArrowDown } from 'react-icons/io';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { SearchPeople } from "../Search/Search";
+import Logout from "./Logout";
+import { useState } from "react";
 
 export function Header () {
+    const [openLogout, setOpenLogout] = useState(false);
+
     return (
         <Wrapper>
             <Logo />
@@ -12,9 +16,15 @@ export function Header () {
             <SearchPeople />
 
             <div>
-                <IoIosArrowDown />  
+                {openLogout ? (
+                    <IoIosArrowUp onClick={() => setOpenLogout(false)} />
+                ) : (
+                    <IoIosArrowDown onClick={() => setOpenLogout(true)} />
+                )} 
                 <ProfilePic src="https://kanto.legiaodosherois.com.br/w760-h398-gnw-cfill-q95/wp-content/uploads/2017/06/legiao_nfoMvIZzlwUOC9ESNXdPT4ReLDqpyc15hsV0bmA8Br.png.jpeg"/>
+                <Logout open={openLogout} />
             </div>
+
         </Wrapper>
     );
 }
@@ -38,6 +48,8 @@ const Wrapper = styled.header`
     div {
         display: flex;
         align-items: center;
+        position: relative;
+        height: 100%;
     }
 
     div img {
@@ -50,5 +62,6 @@ const Wrapper = styled.header`
         color: var(--main-white);
 
         margin-right: 15px;
+        cursor: pointer;
     }
 `
