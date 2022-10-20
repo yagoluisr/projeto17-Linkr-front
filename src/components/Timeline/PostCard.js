@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
 
-
 export default function PostCard({image_url, username, description, link}) {
     return(
         <Wrapper>
@@ -11,7 +10,7 @@ export default function PostCard({image_url, username, description, link}) {
             <PostData>
                 <h3>{username}</h3>
                 <span>{description}</span>
-                <h4>{link}</h4>
+                <h4>{link}</h4>>
             </PostData>
         </Wrapper>
     )

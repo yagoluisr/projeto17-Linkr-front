@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { makePost } from "../../services/api";
+import { makePost, getPosts } from "../../services/api";
 import styled from "styled-components";
 import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
 import UnrequiredInput from "../../assets/styles/UnrequiredInput";
 
-export default function FormBox(){
+export default function FormBox({updatePosts}){
     const [disable, setDisable] = useState(false)
     const [post, setPost] = useState({
         link: '',
@@ -19,18 +19,27 @@ export default function FormBox(){
         });
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         setDisable(!disable)
         const body = {...post,}
-        const promise = makePost(body)
-        promise.then(() => {setPost({
-            link: '',
-            description: ''
-        })
-        //atualizar timeline
-        })
-        promise.catch(() => alert('There have been an issue publishing your link'))
+        try {
+            await makePost(body)
+            setPost({
+                link: '',
+                description: ''
+            })
+        } catch (error) {
+            console.error(error)
+            alert('There have been an issue publishing your link')
+        }
+        try {
+            const promise = await getPosts()
+            updatePosts(promise.data)
+        } catch (error) {
+            console.log(error);
+            alert('An error occured while trying to fetch the posts, please refresh the page')
+        }
         setDisable(false)
     }
     return(
