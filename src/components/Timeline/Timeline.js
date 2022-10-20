@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import Title from "../../assets/styles/Title";
+import TrendingHashtags from "../Trending/TrendingHashtags";
 import FormBox from "./FormBox";
 
 
@@ -17,6 +18,7 @@ export default function Timeline() {
                 />
                 <FormBox />
             </PublishBox>
+            <TrendingHashtags/>
         </Wrapper>
     )
 }
@@ -29,7 +31,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    h2 {
+    >h2 {
         font-size: 60px;
         width: 35vw;
         text-align: left;

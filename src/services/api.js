@@ -28,8 +28,14 @@ function makePost(body) {
     return promise;
 }
 
+function getTrendingHashtags(){
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/trending`);
+    return promise;
+}
+
 export {
     signUp,
     login,
     makePost,
+    getTrendingHashtags
 }
