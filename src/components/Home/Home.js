@@ -6,7 +6,7 @@ export default function Home(){
         <Wrapper>
             <Timeline/>
         </Wrapper>
-    )
+    );
 }
 
 const Wrapper = styled.div`
