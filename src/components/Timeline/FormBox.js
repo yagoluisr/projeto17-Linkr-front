@@ -70,7 +70,7 @@ const Wrapper = styled.div`
     h3{
         font-family: var(--main-font);
         font-size: 30px;
-        font-weight: 300;
+        font-weight: 200;
         margin-bottom: 15px;
     }
     input {
