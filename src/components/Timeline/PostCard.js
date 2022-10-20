@@ -10,7 +10,7 @@ export default function PostCard({image_url, username, description, link}) {
             <PostData>
                 <h3>{username}</h3>
                 <span>{description}</span>
-                <h4>{link}</h4>>
+                <h4>{link}</h4>
             </PostData>
         </Wrapper>
     )
@@ -30,7 +30,6 @@ const Wrapper = styled.div`
     img {
         margin-top: 16px;
         margin-left: 18px;
-        background-color: red;
     }
 `
 const PostData = styled.div`

@@ -75,7 +75,6 @@ const PublishBox = styled.div`
     img {
         margin-top: 16px;
         margin-left: 18px;
-        background-color: red;
     }
 `
 
