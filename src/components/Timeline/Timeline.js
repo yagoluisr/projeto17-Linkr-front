@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { getUser, getPosts } from "../../services/api";
-import PostCard from "./PostCard";
+import PostsBox from "./PostsBox"
 import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import Title from "../../assets/styles/Title";
+import TimelineMessage from "../../assets/styles/TimelineMessage";
 import FormBox from "./FormBox";
 
 
 export default function Timeline() {
 
     const [userImage, setUserImage] = useState()
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState(null)
 
     useEffect(() => {
         const promise = getUser()
@@ -26,6 +27,7 @@ export default function Timeline() {
             })
             request.catch((error) => {
                 console.log(error);
+                alert('There have been an issue fetching your timeline, please refresh the page');
             })
     }, [])
 
@@ -36,10 +38,10 @@ export default function Timeline() {
                 <ProfilePic 
                     src={userImage}
                 />
-                <FormBox />
+                <FormBox updatePosts={setPosts}/>
             </PublishBox>
             <Posts>
-                {posts.map((post, id) => <PostCard key={id} image_url={post.image_url} username={post.name} description={post.description} link={post.link}/>)}
+                {posts ? <PostsBox posts={posts}/> : <TimelineMessage>Loading...</TimelineMessage>}
             </Posts>
         </Wrapper>
     )
@@ -83,5 +85,9 @@ const Posts = styled.div`
     width: 35vw;
     min-width: 600px;
     min-height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
+
 
