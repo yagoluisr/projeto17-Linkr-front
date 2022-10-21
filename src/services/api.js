@@ -40,10 +40,17 @@ function getPosts() {
     return promise;
 }
 
+function logout() {
+    const config = createHeaders()
+    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, config);
+    return promise;
+}
+
 export {
     signUp,
     login,
     makePost,
     getUser,
     getPosts,
+    logout
 }
