@@ -4,17 +4,30 @@ import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
 import Home from "./components/Home/Home";
 import TrendingHashtags from "./components/Trending/TrendingHashtags";
+import PrivatePage from "./components/privatePage/PrivatePage";
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <GlobalStyles />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/timeline" element={<Home />} />
-        <Route path="/hashtag/:hashtag" element={<TrendingHashtags />} />
-      </Routes>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <GlobalStyles />
+            <Routes>
+                <Route
+                    path="/"
+                    element={<Login />}
+                />
+                <Route
+                    path="/sign-up"
+                    element={<SignUp />}
+                />
+                <Route
+                    path="/timeline"
+                    element={
+                        <PrivatePage>
+                            <Home />
+                        </PrivatePage>
+                    }
+                />
+            </Routes>
+        </BrowserRouter>
+    );
 }

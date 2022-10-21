@@ -29,7 +29,20 @@ function makePost(body) {
 }
 
 function getTrendingHashtags(){
-    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/trending`);
+    const config = createHeaders()
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/trending`, config);
+    return promise;
+}
+
+function getUser() {
+    const config = createHeaders()
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user`, config);
+    return promise;
+}
+
+function getPosts() {
+    const config = createHeaders()
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/timeline`, config);
     return promise;
 }
 
@@ -37,5 +50,7 @@ export {
     signUp,
     login,
     makePost,
+    getUser,
+    getPosts,
     getTrendingHashtags
 }
