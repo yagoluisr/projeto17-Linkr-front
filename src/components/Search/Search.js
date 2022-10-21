@@ -92,8 +92,8 @@ const Search = styled.div`
     }
 `
 
-const Extension = styled.div`
-    min-height: 100px;
+const Extension = styled.ul`
+    min-height: fit-content;
     width: 100%;
 
     display: flex;
@@ -116,7 +116,7 @@ const Wrapper = styled.div`
     left: 0;
 `
 
-const Profile = styled.ul`
+const Profile = styled.li`
     height: 40px;
     width: 95%;
 
