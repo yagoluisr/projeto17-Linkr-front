@@ -86,6 +86,13 @@ function logout() {
     return promise;
 }
 
+function getByUserName(body) {
+    console.log(body)
+    const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
+    return promise;
+}
+
 export {
     signUp,
     login,
@@ -94,5 +101,6 @@ export {
     getPosts,
     deletePost,
     getTrendingHashtags,
-    logout
+    logout,
+    getByUserName
 }

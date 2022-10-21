@@ -77,29 +77,47 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 22px;
-  margin-left: 18px;
+  margin-left: 1.5vw;
   height: fit-content;
   width: 100%;
   h3 {
     font-family: var(--main-font);
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 200;
     margin-bottom: 15px;
   }
   input {
-    font-size: 24px;
+    font-size: 22px;
     font-family: var(--main-font);
     background-color: var(--secondary-white);
     width: 96%;
     margin-bottom: 5px;
   }
   button {
-    width: 180px;
-    height: 55px;
+    width: 160px;
+    height: 40px;
     font-family: var(--main-font);
     margin-top: 10px;
     margin-bottom: 18px;
     font-weight: 700;
     font-size: 22px;
   }
+  @media (max-width: 614px) {
+    display: flex;
+    align-items: center;
+    margin-left: none;
+        h3 {
+          font-size: 22px;
+        }
+        input {
+          font-size: 18px;
+          height: 40px;
+          width: 98%;
+        }
+        button {
+            width: 120px;
+            height: 38px;
+            font-size: 18px;
+        }
+    }
 `;
