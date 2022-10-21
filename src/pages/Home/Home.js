@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import Timeline from "../Timeline/Timeline"
+import Timeline from "../../components/Timeline/Timeline"
 
 export default function Home(){
     return (
