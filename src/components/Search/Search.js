@@ -3,27 +3,25 @@ import { IoIosSearch } from 'react-icons/io';
 import ProfilePic from '../../assets/styles/ProfilePic';
 import { useEffect, useState } from 'react';
 import { DebounceInput } from 'react-debounce-input';
+import { getByUserName } from '../../services/api';
 
 export function SearchPeople () {
-    const arr = [
-        {
-            id:1,
-            name: 'Rocket',
-            url: "https://cdn.ome.lt/Lqdvo48Q-P232Yftee90aJPYKwo=/1200x630/smart/extras/conteudos/1_QLMBB49.jpg"
-        },
-        {
-            id:2,
-            name: 'Hulk',
-            url: "https://lumiere-a.akamaihd.net/v1/images/aiw_galeria_hulk_1920x1080_37dbd2f4.jpeg?region=0,0,1920,1080&width=960"
-        }
-    ];
-
     const [search, setSearch] = useState('');
+    const [arrUsers, setArrUsers] = useState([]);
 
     useEffect(()=>{
-        //requisição pro back
+        getByUserName(search)
+            .then(res => {
+                setArrUsers(res.data)
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+            
+        if(search.length < 3) {
+            setArrUsers([])
+        }
     },[search])
-
 
     return (
         <Wrapper>
@@ -42,14 +40,14 @@ export function SearchPeople () {
                     </div>
                 </div>
                 {
-                    search ? 
+                    arrUsers.length > 0 ? 
                     <Extension>
-                        {arr.map((user, key) => 
+                        {arrUsers.map((user, key) => 
                             <Profile key={key}>
-                                <ProfilePic src={user.url}></ProfilePic>
+                                <ProfilePic src={user.image_url}></ProfilePic>
                                 <p>{user.name}</p>
                             </Profile>
-                        )}                        
+                        )}
                     </Extension>
                     :
                     ''
