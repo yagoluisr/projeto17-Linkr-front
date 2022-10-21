@@ -7,27 +7,21 @@ import TrendingHashtags from "./components/Trending/TrendingHashtags";
 import PrivatePage from "./components/privatePage/PrivatePage";
 
 export default function App() {
-    return (
-        <BrowserRouter>
-            <GlobalStyles />
-            <Routes>
-                <Route
-                    path="/"
-                    element={<Login />}
-                />
-                <Route
-                    path="/sign-up"
-                    element={<SignUp />}
-                />
-                <Route
-                    path="/timeline"
-                    element={
-                        <PrivatePage>
-                            <Home />
-                        </PrivatePage>
-                    }
-                />
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+      <BrowserRouter>
+        <GlobalStyles />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route
+            path="/timeline"
+            element={
+              <PrivatePage>
+                <Home />
+              </PrivatePage>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+  );
 }
