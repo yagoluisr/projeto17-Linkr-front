@@ -86,5 +86,7 @@ export {
     makePost,
     getUser,
     getPosts,
-    logout
+    logout,
+    deletePost,
+    updatePost
 }

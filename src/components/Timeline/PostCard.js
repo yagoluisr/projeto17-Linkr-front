@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Microlink from '@microlink/react'
 import { useState } from "react";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import { FiMoreVertical } from "react-icons/fi";
@@ -118,7 +119,13 @@ export default function PostCard({
           )}
         </HeaderContainer>
         <span>{description}</span>
-        <h4>{link}</h4>
+
+        <LinkCard 
+            url={link} 
+            fetch-data="true"
+            size="normal"
+            media="logo"
+            direction="rtl" />
       </PostData>
     </Wrapper>
   );
@@ -185,7 +192,8 @@ const PostData = styled.div`
   justify-content: space-between;
   h3 {
     color: var(--main-white);
-    margin-top: 13px;
+    margin-top: 10px;
+    margin-bottom: 7px;
     font-size: 20px;
     font-weight: bold;
   }
@@ -193,14 +201,22 @@ const PostData = styled.div`
     color: var(--font-gray);
     margin-bottom: 10px;
   }
-  h4 {
-    color: var(--main-white);
-    font-weight: bold;
-    background-color: blue;
-    height: 100px;
-    margin-right: 18px;
-  }
 `;
+const LinkCard = styled(Microlink)`
+    display: flex;
+    border: 1px solid #4D4D4D;
+    border-radius: 9px;
+    width: 470px;
+    --microlink-background-color: #151515;
+    --microlink-color: #FFFFFF;
+    --microlink-hover-background-color: none;
+    --microlink-max-width: 470px;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    img{
+      border-radius: 0px 12px 13px 0px;
+    }
+`
 const HeaderContainer = styled.div`
   width: 100%;
   height: 100%;
