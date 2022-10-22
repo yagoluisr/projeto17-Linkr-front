@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
 import { SignWrapper } from "../../assets/styles/SignWrapper";
-import { login } from "../../services/api";
-import AsideTitle from "../SignUp/AsideTitle";
+import { signUp } from "../../services/api";
+import AsideTitle from "../../components/TitlePage/AsideTitle";
 
-export default function Login() {
+export default function SignUp() {
   const [disabled, setDisabled] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
+    username: "",
+    url: "",
   });
   const navigate = useNavigate();
 
@@ -25,16 +27,15 @@ export default function Login() {
     e.preventDefault();
     setDisabled(true);
 
-    login(data)
-      .then((answer) => {
-        const infoJSON = JSON.stringify({ token: answer.data.token });
-        localStorage.setItem("linkr", infoJSON);
-        navigate("/timeline");
+    signUp(data)
+      .then(() => {
+        navigate("/");
       })
       .catch((error) => {
-        if (error.response.status === 401) {
-          alert("E-mail or password invalid.");
+        if (error.response.status === 409) {
+          alert("This e-mail is already being used.");
         }
+        console.log(error);
         setDisabled(false);
       });
   }
@@ -60,15 +61,31 @@ export default function Login() {
           updateData={updateData}
           disabled={disabled}
         />
+        <Input
+          type="text"
+          placeholder="username"
+          name="username"
+          value={data.username}
+          updateData={updateData}
+          disabled={disabled}
+        />
+        <Input
+          type="url"
+          placeholder="picture url"
+          name="url"
+          value={data.url}
+          updateData={updateData}
+          disabled={disabled}
+        />
 
-        <Button disabled={disabled}>Log In</Button>
+        <Button disabled={disabled}>Sign Up</Button>
 
         <p
           onClick={() => {
-            navigate("/sign-up");
+            navigate("/");
           }}
         >
-          First time? Create an account!
+          Switch back to log in
         </p>
       </form>
     </SignWrapper>

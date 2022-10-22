@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import Timeline from "../Timeline/Timeline"
-import TrendingHashtags from "../Trending/TrendingHashtags";
+import styled from "styled-components";
+import Timeline from "../../components/Timeline/Timeline";
+import TrendingHashtags from "../../components/Trending/TrendingHashtags";
 
 export default function Home(){
     return (
