@@ -86,10 +86,13 @@ function logout() {
     return promise;
 }
 
-function getByUserName(body) {
+function getByUserName(id) {
     const config = createHeaders();
-    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
-    return promise;
+  const promise = axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`,
+    config
+  );
+  return promise;
 }
 
 function getPostLike(id) {
