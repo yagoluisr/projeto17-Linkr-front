@@ -8,6 +8,10 @@ import { BsTrash } from "react-icons/bs";
 import { deletePost } from "../../services/api";
 import Modal from "react-modal";
 import { Watch } from "react-loader-spinner";
+import { ReactTagify } from "react-tagify";
+import { useNavigate } from "react-router-dom";
+
+
 export default function PostCard({
   id,
   image_url,
@@ -23,6 +27,12 @@ export default function PostCard({
   const [isOpen, setOpen] = useState(false);
   const customStyles = {
     content: {},
+  };
+  const navigate = useNavigate();
+  const tagStyle = {
+    color: '#FFFFFF',
+    fontWeight: 700,
+    cursor: 'pointer'
   };
   function openModal() {
     setOpen(true);
@@ -117,7 +127,14 @@ export default function PostCard({
             ""
           )}
         </HeaderContainer>
+        
+        <div>
+      <ReactTagify 
+        tagStyle={tagStyle} 
+        tagClicked={(tag)=>navigate(`/hashtag/${tag.replace('#',"")}`)}>
         <span>{description}</span>
+      </ReactTagify>
+    </div>
 
         <LinkCard 
             url={link} 
