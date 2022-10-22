@@ -5,7 +5,7 @@ import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
 import UnrequiredInput from "../../assets/styles/UnrequiredInput";
 
-export default function FormBox({ updatePosts }) {
+export default function FormBox({ refresh, setRefresh, updatePosts }) {
   const [disable, setDisable] = useState(false);
   const [post, setPost] = useState({
     link: "",
@@ -29,6 +29,7 @@ export default function FormBox({ updatePosts }) {
         link: "",
         description: "",
       });
+      setRefresh(!refresh);
     } catch (error) {
       console.error(error);
       alert("There have been an issue publishing your link");

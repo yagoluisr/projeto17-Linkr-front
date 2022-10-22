@@ -8,6 +8,7 @@ export default function DeleteModal({
   isOpen,
   setOpen,
   setHidePopUp,
+  refresh,
   setRefresh,
   postId,
 }) {
@@ -41,7 +42,7 @@ export default function DeleteModal({
                 setloading(true);
                 deletePost(postId)
                   .then(() => {
-                    setRefresh(true);
+                    setRefresh(!refresh);
                     closeModal();
                   })
                   .catch((error) => {

@@ -7,21 +7,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import DeleteModal from "./DeleteModal";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core";
-import { updatePost } from "../../services/api";
-
-const useStyles = makeStyles({
-  input: {
-    "& .MuiInputBase-root": {
-      color: "#B7B7B7",
-      border: 0,
-    },
-    "& .MuiInputBase-root.Mui-focused": {
-      backgroundColor: "#EFEFEF",
-      color: "#9F9F9F",
-    },
-  },
-});
+import PostEditField from "./PostEditField";
 
 export default function PostCard({
   id,
@@ -30,16 +16,15 @@ export default function PostCard({
   userPostEmail,
   postDescription,
   link,
+  refresh,
   setRefresh,
   userEmail,
 }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);
-  const [defaultValue, setDefaultValue] = useState();
+  const [value, setValue] = useState(postDescription);
   const [description, setDescription] = useState();
-  const [value, setValue] = useState();
   const [isOpen, setOpen] = useState(false);
-  const classes = useStyles();
   const inputRef = useRef();
   function openModal() {
     setOpen(true);
@@ -73,13 +58,9 @@ export default function PostCard({
       </PopUpList>
     );
   }
-  function handleOnChange(event) {
-    setDescription(event.target.value);
-  }
 
   useEffect(() => {
     setValue(postDescription);
-    setDefaultValue(postDescription);
     if (!editPost) {
       inputRef.current.focus();
     }
@@ -88,6 +69,7 @@ export default function PostCard({
   document.querySelector("html").onclick = function (e) {
     if (e.target.className === document.querySelector(".jAnEYi").className) {
       setEditPost(true);
+      setRefresh(!refresh);
     }
   };
   return (
@@ -109,6 +91,7 @@ export default function PostCard({
                   isOpen={isOpen}
                   setOpen={setOpen}
                   setHidePopUp={setHidePopUp}
+                  refresh={refresh}
                   setRefresh={setRefresh}
                   postId={id}
                 />
@@ -121,35 +104,18 @@ export default function PostCard({
             ""
           )}
         </HeaderContainer>
-        <PostTextField
-          id="outlined-multiline-flexible"
-          maxRows={4}
+        <PostEditField
+          id={id}
           inputRef={inputRef}
-          className={classes.input}
-          placeholder={value}
-          defaultValue={value}
-          onChange={handleOnChange}
-          variant="outlined"
-          autoComplete="off"
-          disabled={editPost}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              const body = { description };
-              updatePost({ id, body })
-                .then(() => {
-                  setRefresh(true);
-                  setEditPost(true);
-                })
-                .catch((error) => {
-                  console.error(error);
-                  alert(
-                    "There was an error trying to update the your post, please try again"
-                  );
-                });
-              event.preventDefault();
-            }
-          }}
-          multiline
+          postDescription={postDescription}
+          setRefresh={setRefresh}
+          refresh={refresh}
+          setValue={setValue}
+          value={value}
+          editPost={editPost}
+          setEditPost={setEditPost}
+          description={description}
+          setDescription={setDescription}
         />
         <LinkCard
           url={link}
@@ -309,14 +275,5 @@ const PopUpList = styled.ul`
   }
   p {
     font-size: 14px;
-  }
-`;
-const PostTextField = styled(TextField)`
-  width: 91%;
-  fieldset {
-    border-style: none;
-  }
-  .MuiOutlinedInput-multiline {
-    padding: 12px 10px 12px 5px;
   }
 `;
