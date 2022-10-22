@@ -12,7 +12,6 @@ function createHeaders() {
 }
 
 function signUp(body) {
-  console.log(process.env.REACT_APP_API_BASE_URL);
   const promise = axios.post(
     `${process.env.REACT_APP_API_BASE_URL}/sign-up`,
     body
@@ -36,6 +35,12 @@ function makePost(body) {
     config
   );
   return promise;
+}
+
+function getTrendingHashtags(){
+    const config = createHeaders()
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/trending`, config);
+    return promise;
 }
 
 function getUser() {
@@ -76,32 +81,47 @@ function deletePost(id) {
 }
 
 function logout() {
-  const config = createHeaders();
-  const promise = axios.delete(
-    `${process.env.REACT_APP_API_BASE_URL}/sign-in`,
-    config
-  );
-  return promise;
+    const config = createHeaders();
+    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, config);
+    return promise;
 }
 
 function getByUserName(body) {
-  console.log(body);
-  const config = createHeaders();
-  const promise = axios.get(
-    `${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}`,
-    config
-  );
-  return promise;
+    const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
+    return promise;
+}
+
+function getPostLike(id) {
+    const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
+    return promise;
+}
+
+function postPostLike(id) {
+    const config = createHeaders();
+    const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, {}, config);
+    return promise;
+}
+
+function deletePostLike(id) {
+    const config = createHeaders();
+    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
+    return promise;
 }
 
 export {
-  signUp,
-  login,
-  makePost,
-  getUser,
-  getPosts,
-  updatePost,
-  deletePost,
-  logout,
-  getByUserName,
-};
+    signUp,
+    login,
+    makePost,
+    getUser,
+    getPosts,
+    updatePost,
+    deletePost,
+    logout,
+    getByUserName,
+    getTrendingHashtags,
+    getPostLike,
+    postPostLike,
+    deletePostLike
+}

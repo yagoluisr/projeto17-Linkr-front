@@ -5,9 +5,11 @@ import ProfilePic from "../../assets/styles/ProfilePic";
 import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
-import DeleteModal from "./DeleteModal";
-import TextField from "@material-ui/core/TextField";
+import Like from "./PostLike";
+import { ReactTagify } from "react-tagify";
+import { useNavigate } from "react-router-dom";
 import PostEditField from "./PostEditField";
+import DeleteModal from "./DeleteModal";
 
 export default function PostCard({
   id,
@@ -22,10 +24,21 @@ export default function PostCard({
 }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);
-  const [value, setValue] = useState(postDescription);
   const [description, setDescription] = useState();
+  const [value, setValue] = useState(postDescription);
+  const [disable, setDisable] = useState(true);
+  const [loading, setloading] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const inputRef = useRef();
+  const customStyles = {
+    content: {},
+  };
+  const navigate = useNavigate();
+  const tagStyle = {
+    color: "#FFFFFF",
+    fontWeight: 700,
+    cursor: "pointer",
+  };
   function openModal() {
     setOpen(true);
   }
@@ -72,30 +85,35 @@ export default function PostCard({
       setRefresh(!refresh);
     }
   };
+
   return (
     <Wrapper>
-      <ProfilePic src={image_url} />
+      <section>
+        <ProfilePic src={image_url} />
+        <Like id={id} />
+      </section>
+
       <PostData>
         <HeaderContainer>
           <h3>{username}</h3>
           {userPostEmail === userEmail ? (
-            <PopUpContainer
-              className="pop-up"
-              onClick={() => {
-                setHidePopUp(!hidePopUp);
-              }}
-            >
-              <div className="react-icon">
+            <PopUpContainer className="pop-up">
+              <div
+                className="react-icon"
+                onClick={() => {
+                  setHidePopUp(!hidePopUp);
+                }}
+              >
                 <FiMoreVertical />
-                <DeleteModal
-                  isOpen={isOpen}
-                  setOpen={setOpen}
-                  setHidePopUp={setHidePopUp}
-                  refresh={refresh}
-                  setRefresh={setRefresh}
-                  postId={id}
-                />
               </div>
+              <DeleteModal
+                isOpen={isOpen}
+                setOpen={setOpen}
+                setHidePopUp={setHidePopUp}
+                refresh={refresh}
+                setRefresh={setRefresh}
+                postId={id}
+              />
               <PopUpMenuContainer hidden={hidePopUp}>
                 <PopUpMenu />
               </PopUpMenuContainer>
@@ -122,14 +140,12 @@ export default function PostCard({
           fetch-data="true"
           size="normal"
           media="logo"
-          value={"red"}
           direction="rtl"
         />
       </PostData>
     </Wrapper>
   );
 }
-
 const Wrapper = styled.div`
   position: relative;
   font-family: Lato, sans-serif;
@@ -142,9 +158,13 @@ const Wrapper = styled.div`
   min-height: 220px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
-  img {
-    margin-top: 16px;
-    margin-left: 1.5vw;
+
+  section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0 0 1.5vw;
   }
 
   @media (max-width: 614px) {
@@ -176,15 +196,7 @@ const PostData = styled.div`
     margin-bottom: 25px;
     margin-right: 5px;
   }
-  input {
-    color: var(--font-gray);
-    margin: 0 15px 25px 0;
-    font-size: 15px;
-    background-color: #151515;
-  }
-  input::placeholder {
-    color: var(--font-gray);
-  }
+
   @media (max-width: 614px) {
     margin-left: 3vw;
     img {
@@ -201,7 +213,8 @@ const LinkCard = styled(Microlink)`
   --microlink-color: #ffffff;
   --microlink-hover-background-color: none;
   --microlink-max-width: none;
-  margin: 20px 30px 20px 0;
+  margin-right: 30px;
+  margin-bottom: 20px;
   img {
     border-radius: 0px 12px 13px 0px;
   }
@@ -222,7 +235,6 @@ const HeaderContainer = styled.div`
 `;
 const PopUpContainer = styled.div`
   height: 33px;
-  margin-right: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

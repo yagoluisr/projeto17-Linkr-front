@@ -5,7 +5,7 @@ import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
 import UnrequiredInput from "../../assets/styles/UnrequiredInput";
 
-export default function FormBox({ refresh, setRefresh, updatePosts }) {
+export default function FormBox({ updatePosts }) {
   const [disable, setDisable] = useState(false);
   const [post, setPost] = useState({
     link: "",
@@ -29,7 +29,6 @@ export default function FormBox({ refresh, setRefresh, updatePosts }) {
         link: "",
         description: "",
       });
-      setRefresh(!refresh);
     } catch (error) {
       console.error(error);
       alert("There have been an issue publishing your link");
@@ -107,18 +106,18 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     margin-left: none;
-    h3 {
-      font-size: 22px;
+        h3 {
+          font-size: 22px;
+        }
+        input {
+          font-size: 18px;
+          height: 40px;
+          width: 98%;
+        }
+        button {
+            width: 120px;
+            height: 38px;
+            font-size: 18px;
+        }
     }
-    input {
-      font-size: 18px;
-      height: 40px;
-      width: 98%;
-    }
-    button {
-      width: 120px;
-      height: 38px;
-      font-size: 18px;
-    }
-  }
 `;
