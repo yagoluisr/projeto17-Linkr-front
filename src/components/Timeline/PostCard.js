@@ -1,11 +1,11 @@
 import styled from "styled-components";
+import Microlink from '@microlink/react'
 import { useState } from "react";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { deletePost } from "../../services/api";
-
 import Modal from "react-modal";
 import { Watch } from "react-loader-spinner";
 export default function PostCard({
@@ -118,7 +118,13 @@ export default function PostCard({
           )}
         </HeaderContainer>
         <span>{description}</span>
-        <h4>{link}</h4>
+
+        <LinkCard 
+            url={link} 
+            fetch-data="true"
+            size="normal"
+            media="logo"
+            direction="rtl" />
       </PostData>
     </Wrapper>
   );
@@ -165,20 +171,29 @@ const Wrapper = styled.div`
   display: flex;
   background-color: var(--post-background-black);
   height: fit-content;
-  width: 35vw;
-  min-width: 600px;
+  width: 40vw;
+  min-width: 25vw;
   min-height: 220px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
   img {
     margin-top: 16px;
-    margin-left: 18px;
-    background-color: red;
+    margin-left: 1.5vw;
   }
+
+  @media (max-width: 614px) {
+        width: 100vw;
+        border-radius: 0;
+        min-height: fit-content;
+        img {
+          margin-top: 22px;
+          margin-left: 4vw;
+        }
+    }
 `;
 const PostData = styled.div`
   margin-top: 20px;
-  margin-left: 17px;
+  margin-left: 1.5vw;
   display: flex;
   flex-direction: column;
   height: fit-content;
@@ -186,21 +201,44 @@ const PostData = styled.div`
   justify-content: space-between;
   h3 {
     color: var(--main-white);
-    margin-top: 13px;
+    margin-bottom: 12px;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 400;
   }
   span {
     color: var(--font-gray);
-    margin-bottom: 10px;
+    margin-bottom: 25px;
+    margin-right: 5px;
   }
-  h4 {
-    color: var(--main-white);
-    font-weight: bold;
-    background-color: blue;
-    height: 100px;
-    margin-right: 18px;
-  }
+
+  @media (max-width: 614px) {
+        margin-left: 3vw;
+        img {
+          margin-top: 16px;  
+        }
+    }
+`;
+const LinkCard = styled(Microlink)`
+    display: flex;
+    border: 1px solid #4D4D4D;
+    border-radius: 9px;
+    width: 30vw;
+    --microlink-background-color: #151515;
+    --microlink-color: #FFFFFF;
+    --microlink-hover-background-color: none;
+    --microlink-max-width: none;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    img{
+      border-radius: 0px 12px 13px 0px;
+    }
+    @media (max-width: 614px) {
+        width: 76vw;
+        img {
+          margin-top: 16px;
+          
+        }
+    }
 `;
 const HeaderContainer = styled.div`
   width: 100%;

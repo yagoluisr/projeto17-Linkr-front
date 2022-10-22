@@ -12,7 +12,6 @@ function createHeaders() {
 }
 
 function signUp(body) {
-  console.log(process.env.REACT_APP_API_BASE_URL);
   const promise = axios.post(
     `${process.env.REACT_APP_API_BASE_URL}/sign-up`,
     body
@@ -36,6 +35,12 @@ function makePost(body) {
     config
   );
   return promise;
+}
+
+function getTrendingHashtags(){
+    const config = createHeaders()
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/trending`, config);
+    return promise;
 }
 
 function getUser() {
@@ -80,6 +85,12 @@ function logout() {
     return promise;
 }
 
+function getByUserName(body) {
+    const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
+    return promise;
+}
+
 export {
     signUp,
     login,
@@ -88,5 +99,7 @@ export {
     getPosts,
     updatePost,
     deletePost,
-    logout
+    logout,
+    getByUserName,
+    getTrendingHashtags
 }
