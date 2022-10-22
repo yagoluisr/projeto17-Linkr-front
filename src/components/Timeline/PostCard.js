@@ -8,8 +8,10 @@ import { BsTrash } from "react-icons/bs";
 import { deletePost } from "../../services/api";
 import Modal from "react-modal";
 import { Watch } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 export default function PostCard({
   id,
+  user_id,
   image_url,
   username,
   userPostEmail,
@@ -60,7 +62,9 @@ export default function PostCard({
       <ProfilePic src={image_url} />
       <PostData>
         <HeaderContainer>
-          <h3>{username}</h3>
+          <Link to={`/user/${user_id}`}>
+            <h3>{username}</h3>
+          </Link>
           {userPostEmail === userEmail ? (
             <PopUpContainer>
               <div className="react-icon" onClick={() => setDisable(!disable)}>

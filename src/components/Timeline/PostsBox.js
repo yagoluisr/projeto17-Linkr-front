@@ -7,10 +7,12 @@ export default function PostsBox({ setRefresh, posts, userEmail }) {
     <Wrapper>
       {posts.length > 0 ? (
         posts.map((post, id) => {
+          console.log(post)
           return (
             <PostCard
               key={id}
               id={post.id}
+              user_id={post.user_id}
               image_url={post.image_url}
               userPostEmail={post.email}
               username={post.name}

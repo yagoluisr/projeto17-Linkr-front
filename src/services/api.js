@@ -81,16 +81,21 @@ function deletePost(id) {
 }
 
 function logout() {
-    const config = createHeaders()
-    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, config);
-    return promise;
+  const config = createHeaders()
+  const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, config);
+  return promise;
 }
 
 function getByUserName(body) {
-    console.log(body)
-    const config = createHeaders();
-    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
-    return promise;
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
+  return promise;
+}
+
+function getUserById (body) {
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${body}`, config);
+  return promise;
 }
 
 export {
@@ -102,5 +107,6 @@ export {
     deletePost,
     getTrendingHashtags,
     logout,
-    getByUserName
+    getByUserName,
+    getUserById
 }

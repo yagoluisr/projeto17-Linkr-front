@@ -5,6 +5,7 @@ import SignUp from "./components/SignUp/SignUp";
 import Home from "./components/Home/Home";
 import TrendingHashtags from "./components/Trending/TrendingHashtags";
 import PrivatePage from "./components/privatePage/PrivatePage";
+import UserPage from "./components/userPage/userPosts";
 
 export default function App() {
   return (
@@ -18,6 +19,14 @@ export default function App() {
             element={
               <PrivatePage>
                 <Home />
+              </PrivatePage>
+            }
+          />
+          <Route
+            path="/user/:id"
+            element={
+              <PrivatePage>
+                <UserPage />
               </PrivatePage>
             }
           />
