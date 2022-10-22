@@ -12,7 +12,6 @@ function createHeaders() {
 }
 
 function signUp(body) {
-  console.log(process.env.REACT_APP_API_BASE_URL);
   const promise = axios.post(
     `${process.env.REACT_APP_API_BASE_URL}/sign-up`,
     body
@@ -87,7 +86,6 @@ function logout() {
 }
 
 function getByUserName(body) {
-    console.log(body)
     const config = createHeaders();
     const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
     return promise;
@@ -99,8 +97,9 @@ export {
     makePost,
     getUser,
     getPosts,
+    updatePost,
     deletePost,
-    getTrendingHashtags,
     logout,
-    getByUserName
+    getByUserName,
+    getTrendingHashtags
 }
