@@ -57,7 +57,7 @@ const Wrapper = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   //margin-left: 100px;
-  margin-top: 120px;
+  margin-top: 170px;
   h2 {
     font-size: 27px;
   }

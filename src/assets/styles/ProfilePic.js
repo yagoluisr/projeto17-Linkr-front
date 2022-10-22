@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function ProfilePic ({src}) {
     return (
         <Wrapper
-        src= {src}
+        src={src}
         />        
     );
 }
