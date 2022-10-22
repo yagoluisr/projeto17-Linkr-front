@@ -3,6 +3,7 @@ import GlobalStyles from "./assets/styles/GlobalStyles";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
 import Home from "./components/Home/Home";
+import TrendingHashtags from "./components/Trending/TrendingHashtags";
 import PrivatePage from "./components/privatePage/PrivatePage";
 
 export default function App() {

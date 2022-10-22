@@ -38,6 +38,12 @@ function makePost(body) {
   return promise;
 }
 
+function getTrendingHashtags(){
+    const config = createHeaders()
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/trending`, config);
+    return promise;
+}
+
 function getUser() {
   const config = createHeaders();
   const promise = axios.get(
@@ -94,6 +100,7 @@ export {
     getUser,
     getPosts,
     deletePost,
+    getTrendingHashtags,
     logout,
     getByUserName
 }
