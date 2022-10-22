@@ -14,6 +14,7 @@ const useStyles = makeStyles({
   input: {
     "& .MuiInputBase-root": {
       color: "#B7B7B7",
+      border: 0,
     },
     "& .MuiInputBase-root.Mui-focused": {
       backgroundColor: "#EFEFEF",
@@ -131,8 +132,8 @@ export default function PostCard({
           variant="outlined"
           autoComplete="off"
           disabled={editPost}
-          onKeyDown={(ev) => {
-            if (ev.key === "Enter") {
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
               const body = { description };
               updatePost({ id, body })
                 .then(() => {
@@ -140,11 +141,12 @@ export default function PostCard({
                   setEditPost(true);
                 })
                 .catch((error) => {
+                  console.error(error);
                   alert(
                     "There was an error trying to update the your post, please try again"
                   );
                 });
-              ev.preventDefault();
+              event.preventDefault();
             }
           }}
           multiline
@@ -311,4 +313,10 @@ const PopUpList = styled.ul`
 `;
 const PostTextField = styled(TextField)`
   width: 91%;
+  fieldset {
+    border-style: none;
+  }
+  .MuiOutlinedInput-multiline {
+    padding: 12px 10px 12px 5px;
+  }
 `;
