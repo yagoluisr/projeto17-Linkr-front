@@ -113,6 +113,12 @@ function deletePostLike(id) {
     return promise;
 }
 
+function getUserById (body) {
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${body}`, config);
+  return promise;
+}
+
 export {
     signUp,
     login,
