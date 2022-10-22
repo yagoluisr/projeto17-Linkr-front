@@ -28,7 +28,7 @@ export default function PrivatePage ({children}) {
     }, [auth, setUser, user]);
 
     if (!auth) {
-        return <Navigate to="/sign-in" />
+        return <Navigate to="/" />
     }
 
     if (auth) {
