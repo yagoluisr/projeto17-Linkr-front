@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import Microlink from "@microlink/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useContext, useState } from "react";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
-import Like from "./PostLike";
-import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
-import PostEditField from "./PostEditField";
 import DeleteModal from "./DeleteModal";
+import PostEditField from "./PostEditField";
+import Like from "./PostLike";
+import { userContext } from "../../context/userContext";
 
 export default function PostCard({
   id,
@@ -26,13 +26,10 @@ export default function PostCard({
   const [editPost, setEditPost] = useState(true);
   const [description, setDescription] = useState();
   const [value, setValue] = useState(postDescription);
-  const [disable, setDisable] = useState(true);
-  const [loading, setloading] = useState(false);
+  const { user } = useContext(userContext);
   const [isOpen, setOpen] = useState(false);
   const inputRef = useRef();
-  const customStyles = {
-    content: {},
-  };
+
   const navigate = useNavigate();
   const tagStyle = {
     color: "#FFFFFF",
@@ -71,6 +68,9 @@ export default function PostCard({
       </PopUpList>
     );
   }
+
+  console.log(userPostEmail);
+  console.log(userEmail)
 
   useEffect(() => {
     setValue(postDescription);
