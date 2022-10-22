@@ -8,7 +8,7 @@ import { BsTrash } from "react-icons/bs";
 import { deletePost } from "../../services/api";
 import Modal from "react-modal";
 import { Watch } from "react-loader-spinner";
-import Like from "./Like";
+import Like from "./PostLike";
 export default function PostCard({
   id,
   image_url,
@@ -17,7 +17,7 @@ export default function PostCard({
   description,
   link,
   setRefresh,
-  userEmail,
+  userEmail
 }) {
   const [disable, setDisable] = useState(true);
   const [loading, setloading] = useState(false);
@@ -60,7 +60,7 @@ export default function PostCard({
     <Wrapper>
       <section>
         <ProfilePic src={image_url} />
-        <Like />
+        <Like id={id} />
       </section>
 
     

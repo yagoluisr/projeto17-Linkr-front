@@ -80,7 +80,7 @@ function deletePost(id) {
 }
 
 function logout() {
-    const config = createHeaders()
+    const config = createHeaders();
     const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, config);
     return promise;
 }
@@ -88,6 +88,24 @@ function logout() {
 function getByUserName(body) {
     const config = createHeaders();
     const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
+    return promise;
+}
+
+function getPostLike(id) {
+    const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
+    return promise;
+}
+
+function postPostLike(id) {
+    const config = createHeaders();
+    const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, {}, config);
+    return promise;
+}
+
+function deletePostLike(id) {
+    const config = createHeaders();
+    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
     return promise;
 }
 
@@ -101,5 +119,8 @@ export {
     deletePost,
     logout,
     getByUserName,
-    getTrendingHashtags
+    getTrendingHashtags,
+    getPostLike,
+    postPostLike,
+    deletePostLike
 }

@@ -16,7 +16,7 @@ export default function Timeline() {
   useEffect(() => {
     setRefresh(false);
     const promise = getUser();
-    getUser().then((user) => {
+    promise.then((user) => {
       setUserEmail(user.data.email);
       setUserImage(user.data.image_url);
     });
