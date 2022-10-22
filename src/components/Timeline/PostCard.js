@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Microlink from '@microlink/react'
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -8,6 +8,7 @@ import { BsTrash } from "react-icons/bs";
 import { deletePost } from "../../services/api";
 import Modal from "react-modal";
 import { Watch } from "react-loader-spinner";
+import { userContext } from "../../context/userContext";
 import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
 
@@ -20,8 +21,8 @@ export default function PostCard({
   description,
   link,
   setRefresh,
-  userEmail,
 }) {
+  const { user } = useContext(userContext);
   const [disable, setDisable] = useState(true);
   const [loading, setloading] = useState(false);
   const [isOpen, setOpen] = useState(false);
@@ -71,7 +72,7 @@ export default function PostCard({
       <PostData>
         <HeaderContainer>
           <h3>{username}</h3>
-          {userPostEmail === userEmail ? (
+          {userPostEmail === user.email ? (
             <PopUpContainer>
               <div className="react-icon" onClick={() => setDisable(!disable)}>
                 <FiMoreVertical />

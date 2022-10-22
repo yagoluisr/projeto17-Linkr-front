@@ -2,7 +2,7 @@ import styled from "styled-components";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
 import PostCard from "./PostCard";
 
-export default function PostsBox({ setRefresh, posts, userEmail }) {
+export default function PostsBox({ setRefresh, posts }) {
   return (
     <Wrapper>
       {posts.length > 0 ? (
@@ -17,7 +17,6 @@ export default function PostsBox({ setRefresh, posts, userEmail }) {
               description={post.description}
               link={post.link}
               setRefresh={setRefresh}
-              userEmail={userEmail}
             />
           );
         })
