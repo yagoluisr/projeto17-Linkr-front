@@ -8,6 +8,7 @@ import { BsTrash } from "react-icons/bs";
 import { deletePost } from "../../services/api";
 import Modal from "react-modal";
 import { Watch } from "react-loader-spinner";
+import Like from "./Like";
 export default function PostCard({
   id,
   image_url,
@@ -57,7 +58,12 @@ export default function PostCard({
 
   return (
     <Wrapper>
-      <ProfilePic src={image_url} />
+      <section>
+        <ProfilePic src={image_url} />
+        <Like />
+      </section>
+
+    
       <PostData>
         <HeaderContainer>
           <h3>{username}</h3>
@@ -176,9 +182,13 @@ const Wrapper = styled.div`
   min-height: 220px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
-  img {
-    margin-top: 16px;
-    margin-left: 1.5vw;
+
+  section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0 0 1.5vw;
   }
 
   @media (max-width: 614px) {

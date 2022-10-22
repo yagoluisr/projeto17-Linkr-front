@@ -71,6 +71,7 @@ const GlobalStyles = createGlobalStyle`
         --placeholder-font-gray: #9F9F9F;
         --input-disabled-gray: lightgray;
         --trending-hr: #484848;
+        --like-red: #AC0000;
     }
 `;
 
