@@ -17,15 +17,16 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "react-tagify": "^0.1.4",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
-  "scripts": { 
-    "start": "react-app-rewired start", 
-    "build": "react-app-rewired build", 
-    "test": "react-app-rewired test", 
-    "eject": "react-scripts eject" 
-   },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
