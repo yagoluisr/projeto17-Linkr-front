@@ -106,18 +106,18 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     margin-left: none;
-        h3 {
-          font-size: 22px;
-        }
-        input {
-          font-size: 18px;
-          height: 40px;
-          width: 98%;
-        }
-        button {
-            width: 120px;
-            height: 38px;
-            font-size: 18px;
-        }
+    h3 {
+      font-size: 22px;
     }
+    input {
+      font-size: 18px;
+      height: 40px;
+      width: 98%;
+    }
+    button {
+      width: 120px;
+      height: 38px;
+      font-size: 18px;
+    }
+  }
 `;

@@ -1,42 +1,68 @@
 import styled from "styled-components";
 import Microlink from "@microlink/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import DeleteModal from "./DeleteModal";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core";
+import { updatePost } from "../../services/api";
+
+const useStyles = makeStyles({
+  input: {
+    "& .MuiInputBase-root": {
+      color: "#B7B7B7",
+    },
+    "& .MuiInputBase-root.Mui-focused": {
+      backgroundColor: "#EFEFEF",
+      color: "#9F9F9F",
+    },
+  },
+});
 
 export default function PostCard({
   id,
   image_url,
   username,
   userPostEmail,
-  description,
+  postDescription,
   link,
   setRefresh,
   userEmail,
 }) {
-  const [disable, setDisable] = useState(true);
+  const [hidePopUp, setHidePopUp] = useState(true);
+  const [editPost, setEditPost] = useState(true);
+  const [defaultValue, setDefaultValue] = useState();
+  const [description, setDescription] = useState();
+  const [value, setValue] = useState();
   const [isOpen, setOpen] = useState(false);
-
+  const classes = useStyles();
+  const inputRef = useRef();
   function openModal() {
     setOpen(true);
   }
-
   function PopUpMenu() {
     return (
       <PopUpList>
         <li>
-          <div>
-            <AiOutlineEdit />
-            <p>Edit post</p>
+          <div
+            className="edit-post"
+            onClick={() => {
+              setEditPost(false);
+              setHidePopUp(true);
+            }}
+          >
+            <AiOutlineEdit className="edit-post" />
+            <p className="edit-post">Edit post</p>
           </div>
         </li>
         <li>
           <div
             onClick={() => {
               openModal();
+              setHidePopUp(true);
             }}
           >
             <BsTrash />
@@ -46,7 +72,23 @@ export default function PostCard({
       </PopUpList>
     );
   }
+  function handleOnChange(event) {
+    setDescription(event.target.value);
+  }
 
+  useEffect(() => {
+    setValue(postDescription);
+    setDefaultValue(postDescription);
+    if (!editPost) {
+      inputRef.current.focus();
+    }
+  }, [editPost, postDescription]);
+
+  document.querySelector("html").onclick = function (e) {
+    if (e.target.className === document.querySelector(".jAnEYi").className) {
+      setEditPost(true);
+    }
+  };
   return (
     <Wrapper>
       <ProfilePic src={image_url} />
@@ -54,18 +96,23 @@ export default function PostCard({
         <HeaderContainer>
           <h3>{username}</h3>
           {userPostEmail === userEmail ? (
-            <PopUpContainer>
-              <div className="react-icon" onClick={() => setDisable(!disable)}>
+            <PopUpContainer
+              className="pop-up"
+              onClick={() => {
+                setHidePopUp(!hidePopUp);
+              }}
+            >
+              <div className="react-icon">
                 <FiMoreVertical />
                 <DeleteModal
                   isOpen={isOpen}
                   setOpen={setOpen}
-                  setDisable={setDisable}
+                  setHidePopUp={setHidePopUp}
                   setRefresh={setRefresh}
                   postId={id}
                 />
               </div>
-              <PopUpMenuContainer hidden={disable}>
+              <PopUpMenuContainer hidden={hidePopUp}>
                 <PopUpMenu />
               </PopUpMenuContainer>
             </PopUpContainer>
@@ -73,13 +120,41 @@ export default function PostCard({
             ""
           )}
         </HeaderContainer>
-        <span>{description}</span>
-
+        <PostTextField
+          id="outlined-multiline-flexible"
+          maxRows={4}
+          inputRef={inputRef}
+          className={classes.input}
+          placeholder={value}
+          defaultValue={value}
+          onChange={handleOnChange}
+          variant="outlined"
+          autoComplete="off"
+          disabled={editPost}
+          onKeyDown={(ev) => {
+            if (ev.key === "Enter") {
+              const body = { description };
+              updatePost({ id, body })
+                .then(() => {
+                  setRefresh(true);
+                  setEditPost(true);
+                })
+                .catch((error) => {
+                  alert(
+                    "There was an error trying to update the your post, please try again"
+                  );
+                });
+              ev.preventDefault();
+            }
+          }}
+          multiline
+        />
         <LinkCard
           url={link}
           fetch-data="true"
           size="normal"
           media="logo"
+          value={"red"}
           direction="rtl"
         />
       </PostData>
@@ -133,7 +208,15 @@ const PostData = styled.div`
     margin-bottom: 25px;
     margin-right: 5px;
   }
-
+  input {
+    color: var(--font-gray);
+    margin: 0 15px 25px 0;
+    font-size: 15px;
+    background-color: #151515;
+  }
+  input::placeholder {
+    color: var(--font-gray);
+  }
   @media (max-width: 614px) {
     margin-left: 3vw;
     img {
@@ -150,8 +233,7 @@ const LinkCard = styled(Microlink)`
   --microlink-color: #ffffff;
   --microlink-hover-background-color: none;
   --microlink-max-width: none;
-  margin-right: 30px;
-  margin-bottom: 20px;
+  margin: 20px 30px 20px 0;
   img {
     border-radius: 0px 12px 13px 0px;
   }
@@ -171,8 +253,8 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
 `;
 const PopUpContainer = styled.div`
-  width: 100%;
   height: 33px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -193,6 +275,7 @@ const PopUpContainer = styled.div`
 `;
 const PopUpMenuContainer = styled.div`
   position: absolute;
+  z-index: 1;
   width: 150px;
   top: 0;
   margin: 56px 6px 0px 0px;
@@ -225,4 +308,7 @@ const PopUpList = styled.ul`
   p {
     font-size: 14px;
   }
+`;
+const PostTextField = styled(TextField)`
+  width: 91%;
 `;

@@ -14,7 +14,7 @@ export default function PostsBox({ setRefresh, posts, userEmail }) {
               image_url={post.image_url}
               userPostEmail={post.email}
               username={post.name}
-              description={post.description}
+              postDescription={post.description}
               link={post.link}
               setRefresh={setRefresh}
               userEmail={userEmail}

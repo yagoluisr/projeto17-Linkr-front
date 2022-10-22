@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function DeleteModal({
   isOpen,
   setOpen,
-  setDisable,
+  setHidePopUp,
   setRefresh,
   postId,
 }) {
@@ -15,7 +15,7 @@ export default function DeleteModal({
 
   function closeModal() {
     setOpen(false);
-    setDisable(true);
+    setHidePopUp(true);
     setloading(false);
   }
   return (

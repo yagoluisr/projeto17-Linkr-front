@@ -56,14 +56,15 @@ function getPosts() {
   return promise;
 }
 
-function updatePost(id) {
-    const config = createHeaders();
-    const promise = axios.delete(
-      `${process.env.REACT_APP_API_BASE_URL}/timeline/${id}`,
-      config
-    );
-    return promise;
-  }
+function updatePost({ id, body }) {
+  const config = createHeaders();
+  const promise = axios.put(
+    `${process.env.REACT_APP_API_BASE_URL}/timeline/${id}`,
+    body,
+    config
+  );
+  return promise;
+}
 
 function deletePost(id) {
   const config = createHeaders();
@@ -75,25 +76,32 @@ function deletePost(id) {
 }
 
 function logout() {
-    const config = createHeaders()
-    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, config);
-    return promise;
+  const config = createHeaders();
+  const promise = axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/sign-in`,
+    config
+  );
+  return promise;
 }
 
 function getByUserName(body) {
-    console.log(body)
-    const config = createHeaders();
-    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
-    return promise;
+  console.log(body);
+  const config = createHeaders();
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}`,
+    config
+  );
+  return promise;
 }
 
 export {
-    signUp,
-    login,
-    makePost,
-    getUser,
-    getPosts,
-    deletePost,
-    logout,
-    getByUserName
-}
+  signUp,
+  login,
+  makePost,
+  getUser,
+  getPosts,
+  updatePost,
+  deletePost,
+  logout,
+  getByUserName,
+};

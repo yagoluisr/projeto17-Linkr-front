@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
     "@microlink/react": "^5.5.9",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -20,12 +21,12 @@
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
-  "scripts": { 
-    "start": "react-app-rewired start", 
-    "build": "react-app-rewired build", 
-    "test": "react-app-rewired test", 
-    "eject": "react-scripts eject" 
-   },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
