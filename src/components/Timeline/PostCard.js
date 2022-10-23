@@ -5,6 +5,10 @@ import ProfilePic from "../../assets/styles/ProfilePic";
 import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
+import { deletePost } from "../../services/api";
+import Modal from "react-modal";
+import { Watch } from "react-loader-spinner";
+import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "./DeleteModal";
 import PostEditField from "./PostEditField";
@@ -20,7 +24,7 @@ export default function PostCard({
   link,
   refresh,
   setRefresh,
-  userEmail,
+  userEmail
 }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);

@@ -113,6 +113,24 @@ function deletePostLike(id) {
     return promise;
 }
 
+function getPostLike(id) {
+    const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
+    return promise;
+}
+
+function postPostLike(id) {
+    const config = createHeaders();
+    const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, {}, config);
+    return promise;
+}
+
+function deletePostLike(id) {
+    const config = createHeaders();
+    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
+    return promise;
+}
+
 export {
     signUp,
     login,
