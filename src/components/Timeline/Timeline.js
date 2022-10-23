@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { getUser, getPosts } from "../../services/api";
+import { getPosts } from "../../services/api";
 import PostsBox from "./PostsBox";
 import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
@@ -10,21 +10,11 @@ import { userContext } from "../../context/userContext";
 
 export default function Timeline() {
   const { user } = useContext(userContext);
-  const [userEmail, setUserEmail] = useState();
-  const [userImage, setUserImage] = useState();
   const [refresh, setRefresh] = useState(false);
   const [posts, setPosts] = useState(null);
 
   useEffect(() => {
     setRefresh(false);
-    const promise = getUser();
-    promise.then((user) => {
-      setUserEmail(user.data.email);
-      setUserImage(user.data.image_url);
-    });
-    promise.catch((error) => {
-      console.log(error);
-    });
     const request = getPosts();
     request.then((posts) => {
       setPosts(posts.data);
@@ -35,7 +25,7 @@ export default function Timeline() {
         "There have been an issue fetching your timeline, please refresh the page"
       );
     });
-  }, [refresh, setUserEmail]);
+  }, [refresh]);
   return (
     <Wrapper>
       <Title>timeline</Title>
@@ -47,7 +37,6 @@ export default function Timeline() {
         {posts ? (
           <PostsBox
             setRefresh={setRefresh}
-            userEmail={userEmail}
             posts={posts}
           />
         ) : (
