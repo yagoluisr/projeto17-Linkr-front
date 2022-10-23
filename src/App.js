@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home/Home";
 import PrivatePage from "./components/privatePage/PrivatePage";
 import UserPage from "./components/userPage/userPosts";
+import HashtagsPage from "./pages/hashtagsPage/hashtagsPage";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -31,6 +32,14 @@ export default function App() {
             element={
               <PrivatePage>
                 <UserPage />
+              </PrivatePage>
+            }
+          />
+          <Route
+            path="/hashtag/:hashtag"
+            element={
+              <PrivatePage>
+                <HashtagsPage />
               </PrivatePage>
             }
           />
