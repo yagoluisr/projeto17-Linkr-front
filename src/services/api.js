@@ -12,7 +12,6 @@ function createHeaders() {
 }
 
 function signUp(body) {
-  console.log(process.env.REACT_APP_API_BASE_URL);
   const promise = axios.post(
     `${process.env.REACT_APP_API_BASE_URL}/sign-up`,
     body
@@ -38,6 +37,12 @@ function makePost(body) {
   return promise;
 }
 
+function getTrendingHashtags(){
+    const config = createHeaders()
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/trending`, config);
+    return promise;
+}
+
 function getUser() {
   const config = createHeaders();
   const promise = axios.get(
@@ -56,14 +61,15 @@ function getPosts() {
   return promise;
 }
 
-function updatePost(id) {
-    const config = createHeaders();
-    const promise = axios.delete(
-      `${process.env.REACT_APP_API_BASE_URL}/timeline/${id}`,
-      config
-    );
-    return promise;
-  }
+function updatePost({ id, body }) {
+  const config = createHeaders();
+  const promise = axios.put(
+    `${process.env.REACT_APP_API_BASE_URL}/timeline/${id}`,
+    body,
+    config
+  );
+  return promise;
+}
 
 function deletePost(id) {
   const config = createHeaders();
@@ -75,15 +81,35 @@ function deletePost(id) {
 }
 
 function logout() {
-    const config = createHeaders()
+    const config = createHeaders();
     const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, config);
     return promise;
 }
 
-function getByUserName(body) {
-    console.log(body)
+function getByUserName(id) {
     const config = createHeaders();
-    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}` ,config )
+  const promise = axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`,
+    config
+  );
+  return promise;
+}
+
+function getPostLike(id) {
+    const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
+    return promise;
+}
+
+function postPostLike(id) {
+    const config = createHeaders();
+    const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, {}, config);
+    return promise;
+}
+
+function deletePostLike(id) {
+    const config = createHeaders();
+    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
     return promise;
 }
 
@@ -93,7 +119,12 @@ export {
     makePost,
     getUser,
     getPosts,
+    updatePost,
     deletePost,
     logout,
-    getByUserName
+    getByUserName,
+    getTrendingHashtags,
+    getPostLike,
+    postPostLike,
+    deletePostLike
 }
