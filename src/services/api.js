@@ -113,6 +113,12 @@ function deletePostLike(id) {
     return promise;
 }
 
+function getPostsbyHashtag(hashtag){
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`, config);
+  return promise;
+}
+
 export {
     signUp,
     login,
@@ -126,5 +132,6 @@ export {
     getTrendingHashtags,
     getPostLike,
     postPostLike,
-    deletePostLike
+    deletePostLike,
+    getPostsbyHashtag
 }

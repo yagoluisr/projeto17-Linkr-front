@@ -73,9 +73,6 @@ export default function PostCard({
     );
   }
 
-  console.log(userPostEmail);
-  console.log(userEmail)
-
   useEffect(() => {
     setValue(postDescription);
     if (!editPost) {
