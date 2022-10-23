@@ -72,7 +72,6 @@ export default function PostCard({
   }, [editPost, postDescription]);
 
 
-
   return (
     <Wrapper>
       <section>
