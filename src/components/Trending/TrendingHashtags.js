@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useCallback, useState } from "react";
 import { getTrendingHashtags } from "../../services/api.js";
 
-export default function TrendingHashtags() {
+export default function TrendingHashtags({refresh}) {
   const navigate = useNavigate();
   const [hashtags, SetHashtags] = useState([]);
 
@@ -13,13 +13,12 @@ export default function TrendingHashtags() {
     getTrendingHashtags()
       .then((res) => {
         SetHashtags(res.data);
-        console.log(res);
       })
       .catch((err) => {
         console.error(err.message);
         alert("Error in fetching your trending hashtags from API, please restart the app");
       });
-  }, []);
+  }, [refresh]);
 
   useEffect(getHashtags, [getHashtags]);
 
