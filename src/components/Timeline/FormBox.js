@@ -64,10 +64,11 @@ export default function FormBox({ updatePosts }) {
           updateData={updatePost}
           disabled={disable ? true : false}
         />
-
-        <Button type="submit" disabled={disable ? true : false}>
-          {disable ? "Publishing..." : "Publish"}
-        </Button>
+        <div>
+          <Button type="submit" disabled={disable ? true : false}>
+            {disable ? "Publishing..." : "Publish"}
+          </Button>
+        </div>
       </form>
     </Wrapper>
   );
@@ -93,11 +94,16 @@ const Wrapper = styled.div`
     width: 96%;
     margin-bottom: 5px;
   }
+  div{
+    width: 96%;
+    display: flex;
+    justify-content: flex-end;
+  }
   button {
     width: 160px;
     height: 40px;
     font-family: var(--main-font);
-    margin-top: 10px;
+    margin-top: 7px;
     margin-bottom: 18px;
     font-weight: 700;
     font-size: 22px;
