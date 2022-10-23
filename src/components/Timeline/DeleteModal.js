@@ -2,17 +2,19 @@ import Modal from "react-modal";
 import { deletePost } from "../../services/api";
 import { Watch } from "react-loader-spinner";
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { renderTimeLineContext } from "../../context/userContext";
 
 export default function DeleteModal({
   isOpen,
   setOpen,
   setHidePopUp,
-  refresh,
-  setRefresh,
+  // refresh,
+  // setRefresh,
   postId,
 }) {
   const [loading, setloading] = useState(false);
+  const { renderTimeline, setRender } = useContext(renderTimeLineContext);
 
   function closeModal() {
     setOpen(false);
@@ -42,7 +44,8 @@ export default function DeleteModal({
                 setloading(true);
                 deletePost(postId)
                   .then(() => {
-                    setRefresh(!refresh);
+                    // setRefresh(!refresh);
+                    setRender(!renderTimeline);
                     closeModal();
                   })
                   .catch((error) => {
