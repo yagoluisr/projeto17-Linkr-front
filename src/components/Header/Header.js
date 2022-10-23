@@ -44,7 +44,7 @@ const Wrapper = styled.header`
     position: fixed;
     top: 0;
     left: 0;
-
+    z-index: 2;
     background-color: var(--background-black);
 
     div {
@@ -60,7 +60,7 @@ const Wrapper = styled.header`
         width: 53px;
     }
     
-    div svg{
+    & > div > svg{
         font-size: 30px;
         color: var(--main-white);
 

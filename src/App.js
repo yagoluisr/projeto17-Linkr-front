@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home/Home";
 import PrivatePage from "./components/privatePage/PrivatePage";
+import UserPage from "./components/userPage/userPosts";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -22,6 +23,14 @@ export default function App() {
             element={
               <PrivatePage>
                 <Home />
+              </PrivatePage>
+            }
+          />
+          <Route
+            path="/user/:id"
+            element={
+              <PrivatePage>
+                <UserPage />
               </PrivatePage>
             }
           />
