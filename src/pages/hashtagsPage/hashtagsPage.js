@@ -1,42 +1,38 @@
 import { useState, useEffect } from "react";
-import { getUserById } from "../../services/api";
-import PostsBox from "../Timeline/PostsBox";
+import { getPostsbyHashtag } from "../../services/api";
+import PostsBox from "../../components/Timeline/PostsBox";
 import styled from "styled-components";
-import ProfilePic from "../../assets/styles/ProfilePic";
 import Title from "../../assets/styles/Title";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
-import TrendingHashtags from "../Trending/TrendingHashtags";
+import TrendingHashtags from "../../components/Trending/TrendingHashtags";
 import { useParams } from "react-router-dom";
 
-export default function UserPage(){
+export default function HashtagsPage(){
     const [refresh, setRefresh] = useState(false);
     const [posts, setPosts] = useState(null);
-
     const [user, setUser] = useState([]);
-    const userId = useParams().id;
+    const hashtag = useParams().hashtag;
 
     useEffect(() => {
         setRefresh(false);
 
-        getUserById(parseInt(userId))
-            .then((user) => {
-                setUser(user.data)
-                setPosts(user.data.posts);
+        getPostsbyHashtag(hashtag)
+            .then((res) => {
+                console.log(user)
+                //setUser(user.data)
+                setPosts(res.data);
             }
         )
         .catch((error) => {
-            console.log(error);
+            console.error(error.message);
         });
-    }, [refresh, userId]);
+
+    }, [hashtag, refresh]);
 
     return (
         <Wrapper>
             <Container>
-                <Title>
-                    <ProfilePic src={user.image_url} />
-                    <p>{user.name}'s posts</p>
-                </Title>
-                
+                <Title># {hashtag}</Title>
                 <Posts>
                     {posts ? (
                     <PostsBox
@@ -73,19 +69,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  
-  & > h2 {
-    display: flex;
-    align-items: center;
-    margin-bottom: 40px;
-    margin-left: 15px;
-    font-size: 50px;
+  h2 {
+    font-size: 60px;
+    text-align: left;
   }
-
-  & > h2 > p {
-    margin-left: 20px;
-  }
-
   @media (max-width: 614px) {
         width: 100vw;
         margin-top: 30px;
@@ -96,36 +83,14 @@ const Container = styled.div`
     }
 `;
 
-const PublishBox = styled.div`  
-    margin-top: 60px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--main-white);
-    height: fit-content;
-    width: 40vw;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 16px;
-    img {
-        display: none;
-    }
-
-    @media (max-width: 614px) {
-      width: 100vw;
-      margin-top: 35px;
-      border-radius: 0px;
-    }
-`
-
 const Posts = styled.div`
   margin-top: 15px;
   height: fit-content;
   width: 40vw;
+  margin-top: 55px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
   @media (max-width: 614px) {
         width: 100vw;
     }

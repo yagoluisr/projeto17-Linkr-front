@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useCallback, useState } from "react";
 import { getTrendingHashtags } from "../../services/api.js";
 
-export default function TrendingHashtags() {
+export default function TrendingHashtags({refresh}) {
   const navigate = useNavigate();
   const [hashtags, SetHashtags] = useState([]);
 
@@ -13,13 +13,12 @@ export default function TrendingHashtags() {
     getTrendingHashtags()
       .then((res) => {
         SetHashtags(res.data);
-        console.log(res);
       })
       .catch((err) => {
         console.error(err.message);
-        alert("Erro ao buscar as hashtags na API");
+        alert("Error in fetching your trending hashtags from API, please restart the app");
       });
-  }, []);
+  }, [refresh]);
 
   useEffect(getHashtags, [getHashtags]);
 
@@ -56,11 +55,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  //margin-left: 100px;
   margin-top: 170px;
   h2 {
     font-size: 27px;
   }
+  @media (max-width: 614px) {
+        display: none;
+    }
 `;
 
 const CrossLine = styled.div`

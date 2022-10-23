@@ -1,11 +1,14 @@
 import { makeStyles, TextField } from "@material-ui/core";
 import { updatePost } from "../../services/api";
 import styled from "styled-components";
+import { ReactTagify } from "react-tagify";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   input: {
     "& .MuiInputBase-root": {
       color: "#B7B7B7",
+      margin: "0 0 15px 0",
     },
     "& .MuiInputBase-root.Mui-focused": {
       backgroundColor: "#EFEFEF",
@@ -28,13 +31,24 @@ export default function PostEditField({
   setDescription,
 }) {
   const classes = useStyles();
-
+  const navigate = useNavigate();
+  const tagStyle = {
+    color: "#FFFFFF",
+    fontWeight: 700,
+    cursor: "pointer",
+  };
   function handleOnChange(event) {
     setValue(event.target.value);
     setDescription(event.target.value);
   }
-
-  return (
+  return editPost ? (
+    <ReactTagify
+      tagStyle={tagStyle}
+      tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
+    >
+      <ReactTagifyContainer>{postDescription}</ReactTagifyContainer>
+    </ReactTagify>
+  ) : (
     <PostTextField
       id="outlined-multiline-flexible"
       maxRows={6}
@@ -84,4 +98,10 @@ const PostTextField = styled(TextField)`
   .MuiOutlinedInput-multiline {
     padding: 12px 10px 12px 5px;
   }
+`;
+
+const ReactTagifyContainer = styled.div`
+  margin-top: 10px;
+  padding-right: 26px;
+  line-height: 20px;
 `;
