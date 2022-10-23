@@ -8,9 +8,8 @@ import TimelineMessage from "../../assets/styles/TimelineMessage";
 import FormBox from "./FormBox";
 import { userContext } from "../../context/userContext";
 
-export default function Timeline() {
+export default function Timeline({refresh, setRefresh}) {
   const { user } = useContext(userContext);
-  const [refresh, setRefresh] = useState(false);
   const [posts, setPosts] = useState(null);
 
   useEffect(() => {
