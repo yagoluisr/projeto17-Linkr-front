@@ -25,8 +25,7 @@ export default function PostCard({
   postDescription,
   link,
   refresh,
-  setRefresh,
-  userEmail
+  setRefresh
 }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);
@@ -75,9 +74,6 @@ export default function PostCard({
     );
   }
 
-  console.log(userPostEmail);
-  console.log(userEmail)
-
   useEffect(() => {
     setValue(postDescription);
     if (!editPost) {
@@ -104,7 +100,7 @@ export default function PostCard({
           <Link to={`/user/${user_id}`}>
             <h3>{username}</h3>
           </Link>
-          {userPostEmail === userEmail ? (
+          {userPostEmail === user.email ? (
             <PopUpContainer className="pop-up">
               <div
                 className="react-icon"
