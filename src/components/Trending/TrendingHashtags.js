@@ -17,7 +17,7 @@ export default function TrendingHashtags() {
       })
       .catch((err) => {
         console.error(err.message);
-        alert("Erro ao buscar as hashtags na API");
+        alert("Error in fetching your trending hashtags from API, please restart the app");
       });
   }, []);
 
@@ -56,11 +56,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  //margin-left: 100px;
   margin-top: 170px;
   h2 {
     font-size: 27px;
   }
+  @media (max-width: 614px) {
+        display: none;
+    }
 `;
 
 const CrossLine = styled.div`
