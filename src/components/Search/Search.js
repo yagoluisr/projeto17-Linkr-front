@@ -42,7 +42,11 @@ export function SearchPeople () {
                     arrUsers.length > 0 ? 
                     <Extension>
                         {arrUsers.map((user, key) => 
-                            <Link to = {`/user/${user.id}`} key={key}>
+                            <Link to = {`/user/${user.id}`} 
+                                key={key} 
+                                onClick={()=> 
+                                    setSearch('')}
+                                >
                                 <Profile>
                                     <ProfilePic src={user.image_url}></ProfilePic>
                                     <p>{user.name}</p>
