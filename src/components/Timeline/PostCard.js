@@ -6,11 +6,7 @@ import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { deletePost } from "../../services/api";
-import Modal from "react-modal";
-import { Watch } from "react-loader-spinner";
-import { ReactTagify } from "react-tagify";
-import { useNavigate } from "react-router-dom";
+
 import DeleteModal from "./DeleteModal";
 import PostEditField from "./PostEditField";
 import Like from "./PostLike";
@@ -25,7 +21,7 @@ export default function PostCard({
   postDescription,
   link,
   refresh,
-  setRefresh
+  setRefresh,
 }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);
@@ -35,12 +31,6 @@ export default function PostCard({
   const [isOpen, setOpen] = useState(false);
   const inputRef = useRef();
 
-  const navigate = useNavigate();
-  const tagStyle = {
-    color: "#FFFFFF",
-    fontWeight: 700,
-    cursor: "pointer",
-  };
   function openModal() {
     setOpen(true);
   }
@@ -162,7 +152,6 @@ const Wrapper = styled.div`
   min-height: 220px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
-
   section {
     width: 100%;
     display: flex;
@@ -236,6 +225,7 @@ const HeaderContainer = styled.div`
   color: #ffffff;
   align-items: center;
   justify-content: space-between;
+  padding-right: 20px;
 `;
 const PopUpContainer = styled.div`
   height: 33px;
