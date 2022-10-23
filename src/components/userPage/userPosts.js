@@ -27,7 +27,6 @@ export default function UserPage(){
         .catch((error) => {
             console.log(error);
         });
-
     }, [refresh, userId]);
 
     return (
@@ -80,7 +79,7 @@ const Container = styled.div`
     align-items: center;
     margin-bottom: 40px;
     margin-left: 15px;
-    font-size: 60px;
+    font-size: 50px;
   }
 
   & > h2 > p {
