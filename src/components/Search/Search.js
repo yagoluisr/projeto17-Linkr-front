@@ -4,6 +4,7 @@ import ProfilePic from '../../assets/styles/ProfilePic';
 import { useEffect, useState } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { getByUserName } from '../../services/api';
+import { Link } from 'react-router-dom';
 
 export function SearchPeople () {
     const [search, setSearch] = useState('');
@@ -35,18 +36,18 @@ export function SearchPeople () {
                         debounceTimeout = {300}
                         placeholder = "Search for people"
                     />
-                    <div>
                         <IoIosSearch />
-                    </div>
                 </div>
                 {
                     arrUsers.length > 0 ? 
                     <Extension>
                         {arrUsers.map((user, key) => 
-                            <Profile key={key}>
-                                <ProfilePic src={user.image_url}></ProfilePic>
-                                <p>{user.name}</p>
-                            </Profile>
+                            <Link to = {`/user/${user.id}`}>
+                                <Profile key={key}>
+                                    <ProfilePic src={user.image_url}></ProfilePic>
+                                    <p>{user.name}</p>
+                                </Profile>
+                            </Link>
                         )}
                     </Extension>
                     :
@@ -77,7 +78,7 @@ const Search = styled.div`
 
         font-size: 19px;
 
-        padding: 11px 15px;
+        padding: 11px 50px 11px 15px;
 
         ::placeholder {
             color: var(--placeholder-font-gray);
@@ -87,7 +88,18 @@ const Search = styled.div`
         border-radius: 8px;
     }
 
-    div svg {
+
+    & > div {
+        position: relative;
+    }
+
+    & > div > svg {
+        font-size: 30px;
+
+        position: absolute;
+        top: 7px;
+        right: 15px;
+
         color: var(--placeholder-font-gray);
     }
 `

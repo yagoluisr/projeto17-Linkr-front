@@ -5,6 +5,11 @@ import ProfilePic from "../../assets/styles/ProfilePic";
 import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { deletePost } from "../../services/api";
+import Modal from "react-modal";
+import { Watch } from "react-loader-spinner";
+import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "./DeleteModal";
 import PostEditField from "./PostEditField";
@@ -13,6 +18,7 @@ import { userContext } from "../../context/userContext";
 
 export default function PostCard({
   id,
+  user_id,
   image_url,
   username,
   userPostEmail,
@@ -20,7 +26,7 @@ export default function PostCard({
   link,
   refresh,
   setRefresh,
-  userEmail,
+  userEmail
 }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);
@@ -95,7 +101,9 @@ export default function PostCard({
 
       <PostData>
         <HeaderContainer>
-          <h3>{username}</h3>
+          <Link to={`/user/${user_id}`}>
+            <h3>{username}</h3>
+          </Link>
           {userPostEmail === userEmail ? (
             <PopUpContainer className="pop-up">
               <div
