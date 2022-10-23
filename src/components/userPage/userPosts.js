@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getUser, getPosts, getUserById } from "../../services/api";
+import { getUserById } from "../../services/api";
 import PostsBox from "../Timeline/PostsBox";
 import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
@@ -22,8 +22,8 @@ export default function UserPage(){
             .then((user) => {
                 setUser(user.data)
                 setPosts(user.data.posts);
-
-        })
+            }
+        )
         .catch((error) => {
             console.log(error);
         });
@@ -41,7 +41,6 @@ export default function UserPage(){
                         setRefresh={setRefresh}
                         userEmail={user.email}
                         posts={posts}
-                        
                     />
                     ) : (
                     <TimelineMessage>Loading...</TimelineMessage>
