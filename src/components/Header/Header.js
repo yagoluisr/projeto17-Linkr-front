@@ -4,9 +4,11 @@ import ProfilePic from "../../assets/styles/ProfilePic";
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { SearchPeople } from "../Search/Search";
 import Logout from "./Logout";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { userContext } from "../../context/userContext";
 
 export function Header () {
+    const { user } = useContext(userContext);
     const [open, setOpen] = useState(false);
     const menuRef = useRef();
 
@@ -22,7 +24,7 @@ export function Header () {
                 ) : (
                     <IoIosArrowDown />
                 )} 
-                <ProfilePic src="https://kanto.legiaodosherois.com.br/w760-h398-gnw-cfill-q95/wp-content/uploads/2017/06/legiao_nfoMvIZzlwUOC9ESNXdPT4ReLDqpyc15hsV0bmA8Br.png.jpeg"/>
+                <ProfilePic src={user.image_url} />
                 <Logout open={open} setOpen={setOpen} menuRef={menuRef} />
             </div>
         </Wrapper>

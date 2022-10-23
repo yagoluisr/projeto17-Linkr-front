@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Microlink from '@microlink/react'
-import { useState } from "react";
+import Microlink from "@microlink/react";
+import { useEffect, useRef, useContext, useState } from "react";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -8,54 +8,61 @@ import { BsTrash } from "react-icons/bs";
 import { deletePost } from "../../services/api";
 import Modal from "react-modal";
 import { Watch } from "react-loader-spinner";
-import Like from "./PostLike";
 import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
-
+import DeleteModal from "./DeleteModal";
+import PostEditField from "./PostEditField";
+import Like from "./PostLike";
+import { userContext } from "../../context/userContext";
 
 export default function PostCard({
   id,
   image_url,
   username,
   userPostEmail,
-  description,
+  postDescription,
   link,
+  refresh,
   setRefresh,
   userEmail
 }) {
-  const [disable, setDisable] = useState(true);
-  const [loading, setloading] = useState(false);
+  const [hidePopUp, setHidePopUp] = useState(true);
+  const [editPost, setEditPost] = useState(true);
+  const [description, setDescription] = useState();
+  const [value, setValue] = useState(postDescription);
+  const { user } = useContext(userContext);
   const [isOpen, setOpen] = useState(false);
-  const customStyles = {
-    content: {},
-  };
+  const inputRef = useRef();
+
   const navigate = useNavigate();
   const tagStyle = {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontWeight: 700,
-    cursor: 'pointer'
+    cursor: "pointer",
   };
   function openModal() {
     setOpen(true);
-  }
-  function closeModal() {
-    setOpen(false);
-    setDisable(true);
-    setloading(false);
   }
   function PopUpMenu() {
     return (
       <PopUpList>
         <li>
-          <div>
-            <AiOutlineEdit />
-            <p>Edit post</p>
+          <div
+            className="edit-post"
+            onClick={() => {
+              setEditPost(false);
+              setHidePopUp(true);
+            }}
+          >
+            <AiOutlineEdit className="edit-post" />
+            <p className="edit-post">Edit post</p>
           </div>
         </li>
         <li>
           <div
             onClick={() => {
               openModal();
+              setHidePopUp(true);
             }}
           >
             <BsTrash />
@@ -66,6 +73,23 @@ export default function PostCard({
     );
   }
 
+  console.log(userPostEmail);
+  console.log(userEmail)
+
+  useEffect(() => {
+    setValue(postDescription);
+    if (!editPost) {
+      inputRef.current.focus();
+    }
+  }, [editPost, postDescription]);
+
+  document.querySelector("html").onclick = function (e) {
+    if (e.target.className === document.querySelector(".jAnEYi").className) {
+      setEditPost(true);
+      setRefresh(!refresh);
+    }
+  };
+
   return (
     <Wrapper>
       <section>
@@ -73,59 +97,28 @@ export default function PostCard({
         <Like id={id} />
       </section>
 
-    
       <PostData>
         <HeaderContainer>
           <h3>{username}</h3>
           {userPostEmail === userEmail ? (
-            <PopUpContainer>
-              <div className="react-icon" onClick={() => setDisable(!disable)}>
+            <PopUpContainer className="pop-up">
+              <div
+                className="react-icon"
+                onClick={() => {
+                  setHidePopUp(!hidePopUp);
+                }}
+              >
                 <FiMoreVertical />
               </div>
-              <PopUpMenuContainer hidden={disable}>
-                <ModalBox
-                  isOpen={isOpen}
-                  onRequestClose={closeModal}
-                  style={customStyles}
-                  ariaHideApp={false}
-                  contentLabel="401 Login Modal"
-                >
-                  <span>Are you sure you want to delete this post?</span>
-
-                  <div>
-                    {loading === true ? (
-                      <SpinnerWrapper>
-                        <Watch width="50px" height="50px" color="#1877f2" />
-                      </SpinnerWrapper>
-                    ) : (
-                      <>
-                        <Button onClick={() => closeModal()}>
-                          No, go back
-                        </Button>
-                        <Button
-                          color="#ffffff"
-                          onClick={() => {
-                            setloading(true);
-                            deletePost(id)
-                              .then(() => {
-                                setRefresh(true);
-                                closeModal();
-                              })
-                              .catch((error) => {
-                                console.error(error);
-                                alert(
-                                  "Server couldn't delete the post, please try later"
-                                );
-                                closeModal();
-                              });
-                          }}
-                        >
-                          Yes, delete it
-                        </Button>
-                      </>
-                    )}
-                  </div>
-                </ModalBox>
+              <DeleteModal
+                isOpen={isOpen}
+                setOpen={setOpen}
+                setHidePopUp={setHidePopUp}
+                refresh={refresh}
+                setRefresh={setRefresh}
+                postId={id}
+              />
+              <PopUpMenuContainer hidden={hidePopUp}>
                 <PopUpMenu />
               </PopUpMenuContainer>
             </PopUpContainer>
@@ -133,60 +126,30 @@ export default function PostCard({
             ""
           )}
         </HeaderContainer>
-        
-        <div>
-      <ReactTagify 
-        tagStyle={tagStyle} 
-        tagClicked={(tag)=>navigate(`/hashtag/${tag.replace('#',"")}`)}>
-        <span>{description}</span>
-      </ReactTagify>
-    </div>
-
-        <LinkCard 
-            url={link} 
-            fetch-data="true"
-            size="normal"
-            media="logo"
-            direction="rtl" />
+        <PostEditField
+          id={id}
+          inputRef={inputRef}
+          postDescription={postDescription}
+          setRefresh={setRefresh}
+          refresh={refresh}
+          setValue={setValue}
+          value={value}
+          editPost={editPost}
+          setEditPost={setEditPost}
+          description={description}
+          setDescription={setDescription}
+        />
+        <LinkCard
+          url={link}
+          fetch-data="true"
+          size="normal"
+          media="logo"
+          direction="rtl"
+        />
       </PostData>
     </Wrapper>
   );
 }
-const SpinnerWrapper = styled.div`
-  svg {
-    margin-left: 85px;
-  }
-`;
-const ModalBox = styled(Modal)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  height: 160px;
-  width: 400px;
-  border-radius: 25px;
-  background-color: #303030;
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  transform: translate(-50%, -50%);
-  span {
-    width: 300px;
-    color: white;
-    font-size: 26px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  div {
-    width: 230px;
-    display: flex;
-    justify-content: space-between;
-  }
-  svg {
-  }
-`;
 const Wrapper = styled.div`
   position: relative;
   font-family: Lato, sans-serif;
@@ -209,14 +172,14 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 614px) {
-        width: 100vw;
-        border-radius: 0;
-        min-height: fit-content;
-        img {
-          margin-top: 22px;
-          margin-left: 4vw;
-        }
+    width: 100vw;
+    border-radius: 0;
+    min-height: fit-content;
+    img {
+      margin-top: 22px;
+      margin-left: 4vw;
     }
+  }
 `;
 const PostData = styled.div`
   margin-top: 20px;
@@ -239,33 +202,32 @@ const PostData = styled.div`
   }
 
   @media (max-width: 614px) {
-        margin-left: 3vw;
-        img {
-          margin-top: 16px;  
-        }
+    margin-left: 3vw;
+    img {
+      margin-top: 16px;
     }
+  }
 `;
 const LinkCard = styled(Microlink)`
-    display: flex;
-    border: 1px solid #4D4D4D;
-    border-radius: 9px;
-    width: 30vw;
-    --microlink-background-color: #151515;
-    --microlink-color: #FFFFFF;
-    --microlink-hover-background-color: none;
-    --microlink-max-width: none;
-    margin-right: 30px;
-    margin-bottom: 20px;
-    img{
-      border-radius: 0px 12px 13px 0px;
+  display: flex;
+  border: 1px solid #4d4d4d;
+  border-radius: 9px;
+  width: 30vw;
+  --microlink-background-color: #151515;
+  --microlink-color: #ffffff;
+  --microlink-hover-background-color: none;
+  --microlink-max-width: none;
+  margin-right: 30px;
+  margin-bottom: 20px;
+  img {
+    border-radius: 0px 12px 13px 0px;
+  }
+  @media (max-width: 614px) {
+    width: 76vw;
+    img {
+      margin-top: 16px;
     }
-    @media (max-width: 614px) {
-        width: 76vw;
-        img {
-          margin-top: 16px;
-          
-        }
-    }
+  }
 `;
 const HeaderContainer = styled.div`
   width: 100%;
@@ -276,7 +238,6 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
 `;
 const PopUpContainer = styled.div`
-  width: 100%;
   height: 33px;
   display: flex;
   flex-direction: column;
@@ -298,6 +259,7 @@ const PopUpContainer = styled.div`
 `;
 const PopUpMenuContainer = styled.div`
   position: absolute;
+  z-index: 1;
   width: 150px;
   top: 0;
   margin: 56px 6px 0px 0px;
@@ -329,20 +291,5 @@ const PopUpList = styled.ul`
   }
   p {
     font-size: 14px;
-  }
-`;
-const Button = styled.button`
-  height: 30px;
-  width: 100px;
-  background-color: #1877f2;
-  border: none;
-  border-radius: 6px;
-  color: ${(props) => (props.color === "#ffffff" ? "#ffffff" : "#1877f2")};
-  background-color: ${(props) =>
-    props.color === "#ffffff" ? "#1877f2" : "#ffffff"};
-  font-size: 14px;
-  &:hover {
-    cursor: pointer;
-    filter: brightness(1.2);
   }
 `;
