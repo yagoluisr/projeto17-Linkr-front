@@ -71,12 +71,7 @@ export default function PostCard({
     }
   }, [editPost, postDescription]);
 
-  // document.querySelector("html").onclick = function (e) {
-  //   if (e.target.className === document.querySelector(".jAnEYi").className) {
-  //     setEditPost(true);
-  //     setRefresh(!refresh);
-  //   }
-  // };
+
 
   return (
     <Wrapper>
