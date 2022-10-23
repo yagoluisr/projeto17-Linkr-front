@@ -28,13 +28,16 @@ export default function UserPage(){
             console.log(error);
         });
 
-    }, [refresh]);
+    }, [refresh, userId]);
 
     return (
         <Wrapper>
             <Container>
-                <Title>{user.name}'s posts</Title>
-                {/* <ProfilePic src={userImage} /> */}
+                <Title>
+                    <ProfilePic src={user.image_url} />
+                    <p>{user.name}'s posts</p>
+                </Title>
+                
                 <Posts>
                     {posts ? (
                     <PostsBox
@@ -71,9 +74,17 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  h2 {
+  
+  & > h2 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    margin-left: 15px;
     font-size: 60px;
-    text-align: left;
+  }
+
+  & > h2 > p {
+    margin-left: 20px;
   }
 
   @media (max-width: 614px) {
