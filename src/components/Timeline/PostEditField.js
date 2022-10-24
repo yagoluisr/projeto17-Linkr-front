@@ -44,12 +44,13 @@ export default function PostEditField({
     setDescription(event.target.value);
   }
   return editPost ? (
-    <ReactTagify
-      tagStyle={tagStyle}
-      tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
-    >
-      <ReactTagifyContainer>{postDescription}</ReactTagifyContainer>
-    </ReactTagify>
+    postDescription === "" ? "" :
+      <ReactTagify
+        tagStyle={tagStyle}
+        tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
+      >
+        <ReactTagifyContainer>{postDescription}</ReactTagifyContainer>
+      </ReactTagify>
   ) : (
     <PostTextField
       id="outlined-multiline-flexible"
