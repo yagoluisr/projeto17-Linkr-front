@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { userContext } from '../../context/userContext';
 import { getUser } from '../../services/api';
@@ -7,19 +7,22 @@ import { Header } from '../Header/Header';
 
 
 export default function PrivatePage ({children}) {
-    const auth = JSON.parse(localStorage.getItem("linkr"));
+    const token = JSON.parse(localStorage.getItem("linkr"));
+    const [auth, setAuth] = useState(!!token);
     const { user, setUser } = useContext(userContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function getUserAPI() {
-            try {
-                const answer = (await getUser());
-                setUser(answer.data);
-                console.log(answer.data)
-
-            } catch (error) {
-                console.log(error);
-            }
+            getUser()
+                .then((answer) => {
+                    setUser(answer.data);
+                })
+                .catch(() => {
+                    localStorage.removeItem("linkr");
+                    setAuth(false);
+                    navigate("/");
+                });
         }
 
         if(auth && !user) {

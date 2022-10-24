@@ -19,12 +19,18 @@ export default function Logout({ open, setOpen, menuRef }) {
     }
 
     useEffect(() => {
+        function handler(e) {
+            if (!menuRef?.current.contains(e.target)) {
+                setOpen(false);
+            }
+        }
+
         if (open) {
-            document.addEventListener("mousedown", (e) => {
-                if (!menuRef.current.contains(e.target)) {
-                    setOpen(false);
-                }
-            });
+            document.addEventListener("mousedown", handler);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
         }
     }, [open]);
 
