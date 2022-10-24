@@ -6,7 +6,6 @@ import { FiMoreVertical } from "react-icons/fi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
 import DeleteModal from "./DeleteModal";
 import PostEditField from "./PostEditField";
 import Like from "./PostLike";
@@ -20,9 +19,8 @@ export default function PostCard({
   userPostEmail,
   postDescription,
   link,
-  // refresh,
-  // setRefresh,
 }) {
+
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);
   const [description, setDescription] = useState();
@@ -74,7 +72,7 @@ export default function PostCard({
     <Wrapper>
       <section>
         <ProfilePic src={image_url} />
-        <Like id={id} />
+          <Like id={id} />
       </section>
 
       <PostData>
@@ -96,8 +94,6 @@ export default function PostCard({
                 isOpen={isOpen}
                 setOpen={setOpen}
                 setHidePopUp={setHidePopUp}
-                // refresh={refresh}
-                // setRefresh={setRefresh}
                 postId={id}
               />
               <PopUpMenuContainer hidden={hidePopUp}>
@@ -112,8 +108,6 @@ export default function PostCard({
           id={id}
           inputRef={inputRef}
           postDescription={postDescription}
-          // setRefresh={setRefresh}
-          // refresh={refresh}
           setValue={setValue}
           value={value}
           editPost={editPost}

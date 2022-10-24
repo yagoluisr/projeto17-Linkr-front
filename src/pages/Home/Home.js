@@ -1,15 +1,10 @@
 import styled from "styled-components";
 import Timeline from "../../components/Timeline/Timeline";
 import TrendingHashtags from "../../components/Trending/TrendingHashtags";
-import { useState } from "react";
 
 export default function Home() {
-  //const [refresh, setRefresh] = useState(false);
-
   return (
     <Wrapper>
-      {/* <Timeline refresh={refresh} setRefresh={setRefresh}/> */}
-      {/* <TrendingHashtags refresh={refresh}/> */}
       <Timeline />
       <TrendingHashtags />
     </Wrapper>

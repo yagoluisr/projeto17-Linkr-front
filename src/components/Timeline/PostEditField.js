@@ -23,8 +23,6 @@ export default function PostEditField({
   id,
   inputRef,
   postDescription,
-  // setRefresh,
-  // refresh,
   setValue,
   value,
   editPost,
@@ -69,7 +67,6 @@ export default function PostEditField({
           updatePost({ id, body })
             .then(() => {
               setEditPost(true);
-              // setRefresh(!refresh);
               setRender(!renderTimeline)
             })
             .catch((error) => {
@@ -83,7 +80,6 @@ export default function PostEditField({
         if (event.key === "Escape") {
           setValue(postDescription);
           setEditPost(true);
-          // setRefresh(!refresh);
           setRender(!renderTimeline)
         }
       }}
