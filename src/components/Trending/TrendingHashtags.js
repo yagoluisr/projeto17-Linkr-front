@@ -6,7 +6,6 @@ import { useEffect, useCallback, useState, useContext } from "react";
 import { getTrendingHashtags } from "../../services/api.js";
 import { renderTimeLineContext } from "../../context/userContext";
 
-// export default function TrendingHashtags({refresh}) {
 export default function TrendingHashtags() {
   const navigate = useNavigate();
   const { renderTimeline } = useContext(renderTimeLineContext);
@@ -24,7 +23,6 @@ export default function TrendingHashtags() {
         );
       });
   }, []);
-  // [refresh]);
 
   useEffect(getHashtags, [getHashtags, renderTimeline]);
 
@@ -41,8 +39,8 @@ export default function TrendingHashtags() {
         </TextContainer>
         <CrossLine></CrossLine>
         <TextContainer>
-          {hashtags.map((hashtag) => (
-            <span onClick={(e) => handleNavigate(e)}>
+          {hashtags.map((hashtag, index) => (
+            <span key={index} onClick={(e) => handleNavigate(e)}>
               # {hashtag.hashtagName}
             </span>
           ))}

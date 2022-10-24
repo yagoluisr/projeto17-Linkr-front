@@ -17,9 +17,9 @@ export default function PrivatePage ({children}) {
             getUser()
                 .then((answer) => {
                     setUser(answer.data);
-                    console.log(answer)
                 })
                 .catch(() => {
+                    localStorage.removeItem("linkr");
                     setAuth(false);
                     navigate("/");
                 });
@@ -29,8 +29,6 @@ export default function PrivatePage ({children}) {
             getUserAPI();
         }
     }, [auth, setUser, user]);
-
-    console.log(auth);
 
     if (!auth) {
         return <Navigate to="/" />

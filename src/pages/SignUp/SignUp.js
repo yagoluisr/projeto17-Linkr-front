@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
 import { SignWrapper } from "../../assets/styles/SignWrapper";
@@ -7,6 +7,7 @@ import { signUp } from "../../services/api";
 import AsideTitle from "../../components/TitlePage/AsideTitle";
 
 export default function SignUp() {
+  const auth = JSON.parse(localStorage.getItem("linkr"));
   const [disabled, setDisabled] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -38,6 +39,10 @@ export default function SignUp() {
         console.log(error);
         setDisabled(false);
       });
+  }
+
+  if (auth) {
+    return (<Navigate to="/timeline" />);
   }
 
   return (
