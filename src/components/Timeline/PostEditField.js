@@ -44,7 +44,7 @@ export default function PostEditField({
     setDescription(event.target.value);
   }
   return editPost ? (
-    postDescription === "" ? "" :
+    !postDescription ? "" :
       <ReactTagify
         tagStyle={tagStyle}
         tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
