@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-export default function UnrequiredInput({ type, placeholder, name, value, updateData }) {
+export default function UnrequiredInput({ type, placeholder, name, value, updateData, autoComplete }) {
     return (
         <Wrapper
             type={type}
             placeholder={placeholder}
             name={name}
             value={value}
+            autoComplete={autoComplete}
             onChange={updateData}
         />
     );

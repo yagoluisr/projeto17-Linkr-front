@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { makePost, getPosts } from "../../services/api";
 import styled from "styled-components";
 import Button from "../../assets/styles/Button";
 import Input from "../../assets/styles/Input";
 import UnrequiredInput from "../../assets/styles/UnrequiredInput";
+import { renderTimeLineContext } from "../../context/userContext";
 
 export default function FormBox({ updatePosts }) {
   const [disable, setDisable] = useState(false);
+  const { renderTimeline, setRender } = useContext(renderTimeLineContext);
   const [post, setPost] = useState({
     link: "",
     description: "",
@@ -22,6 +24,7 @@ export default function FormBox({ updatePosts }) {
   async function handleSubmit(e) {
     e.preventDefault();
     setDisable(!disable);
+    setRender(!renderTimeline);
     const body = { ...post };
     try {
       await makePost(body);
@@ -61,6 +64,7 @@ export default function FormBox({ updatePosts }) {
           placeholder="Description"
           name="description"
           value={post.description}
+          autoComplete="off"
           updateData={updatePost}
           disabled={disable ? true : false}
         />
@@ -112,18 +116,18 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     margin-left: none;
-        h3 {
-          font-size: 22px;
-        }
-        input {
-          font-size: 18px;
-          height: 40px;
-          width: 98%;
-        }
-        button {
-            width: 120px;
-            height: 38px;
-            font-size: 18px;
-        }
+    h3 {
+      font-size: 22px;
     }
+    input {
+      font-size: 18px;
+      height: 40px;
+      width: 98%;
+    }
+    button {
+      width: 120px;
+      height: 38px;
+      font-size: 18px;
+    }
+  }
 `;

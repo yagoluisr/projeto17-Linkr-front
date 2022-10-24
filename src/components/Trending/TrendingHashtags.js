@@ -2,11 +2,14 @@ import styled from "styled-components";
 import Title from "../../assets/styles/Title";
 import TextContainer from "./TrendingTxtContainer";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useContext } from "react";
 import { getTrendingHashtags } from "../../services/api.js";
+import { renderTimeLineContext } from "../../context/userContext";
 
-export default function TrendingHashtags({refresh}) {
+// export default function TrendingHashtags({refresh}) {
+export default function TrendingHashtags() {
   const navigate = useNavigate();
+  const { renderTimeline } = useContext(renderTimeLineContext);
   const [hashtags, SetHashtags] = useState([]);
 
   const getHashtags = useCallback(() => {
@@ -16,11 +19,14 @@ export default function TrendingHashtags({refresh}) {
       })
       .catch((err) => {
         console.error(err.message);
-        alert("Error in fetching your trending hashtags from API, please restart the app");
+        alert(
+          "Error in fetching your trending hashtags from API, please restart the app"
+        );
       });
-  }, [refresh]);
+  }, []);
+  // [refresh]);
 
-  useEffect(getHashtags, [getHashtags]);
+  useEffect(getHashtags, [getHashtags, renderTimeline]);
 
   function handleNavigate(event) {
     const hashtagName = event.target.innerText.replace("# ", "");
@@ -60,8 +66,8 @@ const Wrapper = styled.div`
     font-size: 27px;
   }
   @media (max-width: 614px) {
-        display: none;
-    }
+    display: none;
+  }
 `;
 
 const CrossLine = styled.div`

@@ -2,7 +2,8 @@ import styled from "styled-components";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
 import PostCard from "./PostCard";
 
-export default function PostsBox({ setRefresh, posts }) {
+// export default function PostsBox({ setRefresh, posts }) {
+export default function PostsBox({ posts }) {
   return (
     <Wrapper>
       {posts.length > 0 ? (
@@ -12,12 +13,12 @@ export default function PostsBox({ setRefresh, posts }) {
               key={id}
               id={post.id}
               user_id={post.user_id}
+              username={post.name}
               image_url={post.image_url}
               userPostEmail={post.email}
-              username={post.name}
               postDescription={post.description}
               link={post.link}
-              setRefresh={setRefresh}
+              // setRefresh={setRefresh}
             />
           );
         })

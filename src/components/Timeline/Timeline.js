@@ -6,14 +6,17 @@ import ProfilePic from "../../assets/styles/ProfilePic";
 import Title from "../../assets/styles/Title";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
 import FormBox from "./FormBox";
-import { userContext } from "../../context/userContext";
+import { userContext, renderTimeLineContext } from "../../context/userContext";
 
-export default function Timeline({refresh, setRefresh}) {
+// export default function Timeline({refresh, setRefresh}) {
+export default function Timeline() {
   const { user } = useContext(userContext);
+  const { renderTimeline } = useContext(renderTimeLineContext);
+
   const [posts, setPosts] = useState(null);
 
   useEffect(() => {
-    setRefresh(false);
+    //setRefresh(false);
     const request = getPosts();
     request.then((posts) => {
       setPosts(posts.data);
@@ -24,7 +27,8 @@ export default function Timeline({refresh, setRefresh}) {
         "There have been an issue fetching your timeline, please refresh the page"
       );
     });
-  }, [refresh]);
+  }, [renderTimeline]);
+  // [setRefresh]);
   return (
     <Wrapper>
       <Title>timeline</Title>
@@ -34,10 +38,8 @@ export default function Timeline({refresh, setRefresh}) {
       </PublishBox>
       <Posts>
         {posts ? (
-          <PostsBox
-            setRefresh={setRefresh}
-            posts={posts}
-          />
+          // <PostsBox setRefresh={setRefresh} posts={posts} />
+          <PostsBox posts={posts} />
         ) : (
           <TimelineMessage>Loading...</TimelineMessage>
         )}
@@ -61,13 +63,13 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 614px) {
-        width: 100vw;
-        margin-top: 30px;
-        h2{
-          font-size: 40px;
-          margin-left: 10px;
-        }
+    width: 100vw;
+    margin-top: 30px;
+    h2 {
+      font-size: 40px;
+      margin-left: 10px;
     }
+  }
 `;
 
 const PublishBox = styled.div`  
@@ -95,7 +97,7 @@ const PublishBox = styled.div`
         display: none;
     }
     }
-`
+`;
 
 const Posts = styled.div`
   margin-top: 15px;
@@ -106,6 +108,6 @@ const Posts = styled.div`
   align-items: center;
 
   @media (max-width: 614px) {
-        width: 100vw;
-    }
+    width: 100vw;
+  }
 `;

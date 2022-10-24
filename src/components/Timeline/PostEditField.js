@@ -3,6 +3,8 @@ import { updatePost } from "../../services/api";
 import styled from "styled-components";
 import { ReactTagify } from "react-tagify";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { renderTimeLineContext } from "../../context/userContext";
 
 const useStyles = makeStyles({
   input: {
@@ -21,8 +23,8 @@ export default function PostEditField({
   id,
   inputRef,
   postDescription,
-  setRefresh,
-  refresh,
+  // setRefresh,
+  // refresh,
   setValue,
   value,
   editPost,
@@ -32,6 +34,8 @@ export default function PostEditField({
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { renderTimeline, setRender } = useContext(renderTimeLineContext);
+
   const tagStyle = {
     color: "#FFFFFF",
     fontWeight: 700,
@@ -65,7 +69,8 @@ export default function PostEditField({
           updatePost({ id, body })
             .then(() => {
               setEditPost(true);
-              setRefresh(!refresh);
+              // setRefresh(!refresh);
+              setRender(!renderTimeline)
             })
             .catch((error) => {
               console.error(error);
@@ -78,7 +83,8 @@ export default function PostEditField({
         if (event.key === "Escape") {
           setValue(postDescription);
           setEditPost(true);
-          setRefresh(!refresh);
+          // setRefresh(!refresh);
+          setRender(!renderTimeline)
         }
       }}
       multiline

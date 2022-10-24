@@ -20,8 +20,8 @@ export default function PostCard({
   userPostEmail,
   postDescription,
   link,
-  refresh,
-  setRefresh,
+  // refresh,
+  // setRefresh,
 }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);
@@ -30,7 +30,6 @@ export default function PostCard({
   const { user } = useContext(userContext);
   const [isOpen, setOpen] = useState(false);
   const inputRef = useRef();
-
   function openModal() {
     setOpen(true);
   }
@@ -71,7 +70,6 @@ export default function PostCard({
     }
   }, [editPost, postDescription]);
 
-
   return (
     <Wrapper>
       <section>
@@ -98,8 +96,8 @@ export default function PostCard({
                 isOpen={isOpen}
                 setOpen={setOpen}
                 setHidePopUp={setHidePopUp}
-                refresh={refresh}
-                setRefresh={setRefresh}
+                // refresh={refresh}
+                // setRefresh={setRefresh}
                 postId={id}
               />
               <PopUpMenuContainer hidden={hidePopUp}>
@@ -114,8 +112,8 @@ export default function PostCard({
           id={id}
           inputRef={inputRef}
           postDescription={postDescription}
-          setRefresh={setRefresh}
-          refresh={refresh}
+          // setRefresh={setRefresh}
+          // refresh={refresh}
           setValue={setValue}
           value={value}
           editPost={editPost}
