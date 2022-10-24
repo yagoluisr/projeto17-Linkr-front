@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 export default function HashtagsPage(){
     const [refresh, setRefresh] = useState(false);
     const [posts, setPosts] = useState(null);
-    const [user, setUser] = useState([]);
     const hashtag = useParams().hashtag;
 
     useEffect(() => {
@@ -18,8 +17,6 @@ export default function HashtagsPage(){
 
         getPostsbyHashtag(hashtag)
             .then((res) => {
-                console.log(user)
-                //setUser(user.data)
                 setPosts(res.data);
             }
         )
@@ -37,7 +34,6 @@ export default function HashtagsPage(){
                     {posts ? (
                     <PostsBox
                         setRefresh={setRefresh}
-                        userEmail={user.email}
                         posts={posts}
                     />
                     ) : (

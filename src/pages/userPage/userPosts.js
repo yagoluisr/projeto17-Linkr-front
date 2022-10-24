@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { getUserById } from "../../services/api";
-import PostsBox from "../Timeline/PostsBox";
+import PostsBox from "../../components/Timeline/PostsBox";
 import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import Title from "../../assets/styles/Title";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
-import TrendingHashtags from "../Trending/TrendingHashtags";
+import TrendingHashtags from "../../components/Trending/TrendingHashtags";
 import { useParams } from "react-router-dom";
 
 export default function UserPage(){

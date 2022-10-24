@@ -6,15 +6,17 @@ import { SearchPeople } from "../Search/Search";
 import Logout from "./Logout";
 import { useState, useRef, useContext } from "react";
 import { userContext } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 export function Header () {
     const { user } = useContext(userContext);
     const [open, setOpen] = useState(false);
     const menuRef = useRef();
+    const navigate = useNavigate();
 
     return (
         <Wrapper>
-            <Logo />
+            <Logo onClick={() => navigate('/timeline')}/>
 
             <SearchPeople />
 
