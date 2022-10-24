@@ -72,26 +72,31 @@ const Wrapper = styled.div`
   }
 `;
 
-const PublishBox = styled.div`
-  margin-top: 60px;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--main-white);
-  height: fit-content;
-  width: 40vw;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 16px;
-  img {
-    display: none;
-  }
+const PublishBox = styled.div`  
+    margin-top: 60px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: var(--main-white);
+    height: fit-content;
+    width: 40vw;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    img {
+        margin-top: 20px;
+        margin-left: 1.5vw;
+    }
+ 
 
-  @media (max-width: 614px) {
-    width: 100vw;
-    margin-top: 35px;
-    border-radius: 0px;
-  }
+    @media (max-width: 614px) {
+      width: 100vw;
+      margin-top: 35px;
+      border-radius: 0px;
+      img {
+        display: none;
+    }
+    }
 `;
 
 const Posts = styled.div`
