@@ -8,7 +8,6 @@ import TimelineMessage from "../../assets/styles/TimelineMessage";
 import FormBox from "./FormBox";
 import { userContext, renderTimeLineContext } from "../../context/userContext";
 
-// export default function Timeline({refresh, setRefresh}) {
 export default function Timeline() {
   const { user } = useContext(userContext);
   const { renderTimeline } = useContext(renderTimeLineContext);
@@ -16,7 +15,6 @@ export default function Timeline() {
   const [posts, setPosts] = useState(null);
 
   useEffect(() => {
-    //setRefresh(false);
     const request = getPosts();
     request.then((posts) => {
       setPosts(posts.data);
@@ -28,7 +26,6 @@ export default function Timeline() {
       );
     });
   }, [renderTimeline]);
-  // [setRefresh]);
   return (
     <Wrapper>
       <Title>timeline</Title>
@@ -38,7 +35,6 @@ export default function Timeline() {
       </PublishBox>
       <Posts>
         {posts ? (
-          // <PostsBox setRefresh={setRefresh} posts={posts} />
           <PostsBox posts={posts} />
         ) : (
           <TimelineMessage>Loading...</TimelineMessage>

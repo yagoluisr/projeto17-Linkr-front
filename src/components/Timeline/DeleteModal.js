@@ -9,8 +9,6 @@ export default function DeleteModal({
   isOpen,
   setOpen,
   setHidePopUp,
-  // refresh,
-  // setRefresh,
   postId,
 }) {
   const [loading, setloading] = useState(false);
@@ -44,7 +42,6 @@ export default function DeleteModal({
                 setloading(true);
                 deletePost(postId)
                   .then(() => {
-                    // setRefresh(!refresh);
                     setRender(!renderTimeline);
                     closeModal();
                   })
