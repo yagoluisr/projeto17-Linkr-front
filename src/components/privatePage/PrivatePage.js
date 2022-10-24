@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { userContext } from '../../context/userContext';
@@ -7,26 +7,30 @@ import { Header } from '../Header/Header';
 
 
 export default function PrivatePage ({children}) {
-    const auth = JSON.parse(localStorage.getItem("linkr"));
+    const token = JSON.parse(localStorage.getItem("linkr"));
+    const [auth, setAuth] = useState(!!token);
     const { user, setUser } = useContext(userContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         async function getUserAPI() {
-            try {
-                const answer = (await getUser());
-                setUser(answer.data);
-                console.log(answer.data)
-
-            } catch {
-                navigate("/");
-            }
+            getUser()
+                .then((answer) => {
+                    setUser(answer.data);
+                    console.log(answer)
+                })
+                .catch(() => {
+                    setAuth(false);
+                    navigate("/");
+                });
         }
 
         if(auth && !user) {
             getUserAPI();
         }
     }, [auth, setUser, user]);
+
+    console.log(auth);
 
     if (!auth) {
         return <Navigate to="/" />
