@@ -182,6 +182,7 @@ const PostData = styled.div`
     color: var(--font-gray);
     margin-bottom: 25px;
     margin-right: 5px;
+    width: 30vw;
   }
 
   @media (max-width: 614px) {
