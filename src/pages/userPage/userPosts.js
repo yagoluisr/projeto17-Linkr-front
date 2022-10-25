@@ -1,27 +1,31 @@
-import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import styled from "styled-components";
 import { getUserById } from "../../services/api";
 import PostsBox from "../../components/Timeline/PostsBox";
-import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
-import Title from "../../assets/styles/Title";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
 import TrendingHashtags from "../../components/Trending/TrendingHashtags";
-import { useParams } from "react-router-dom";
+import { userContext } from "../../context/userContext";
 
 export default function UserPage(){
+    const { user } = useContext(userContext);
+
     const [refresh, setRefresh] = useState(false);
     const [posts, setPosts] = useState(null);
 
-    const [user, setUser] = useState([]);
-    const userId = useParams().id;
+    const [profile, setProfile] = useState([]);
+    const userId = Number(useParams().id);
+
+    let status = false;
 
     useEffect(() => {
         setRefresh(false);
 
         getUserById(parseInt(userId))
-            .then((user) => {
-                setUser(user.data)
-                setPosts(user.data.posts);
+            .then((profile) => {
+                setProfile(profile.data)
+                setPosts(profile.data.posts);
             }
         )
         .catch((error) => {
@@ -29,30 +33,106 @@ export default function UserPage(){
         });
     }, [refresh, userId]);
 
+
+    // console.log(userId)
+    // console.log(user.id)
+    // console.log(userId === user.id)
+    // console.log('---------')
     return (
         <Wrapper>
-            <Container>
-                <Title>
-                    <ProfilePic src={user.image_url} />
-                    <p>{user.name}'s posts</p>
-                </Title>
-                
-                <Posts>
-                    {posts ? (
-                    <PostsBox
-                        setRefresh={setRefresh}
-                        userEmail={user.email}
-                        posts={posts}
-                    />
-                    ) : (
-                    <TimelineMessage>Loading...</TimelineMessage>
-                    )}
-                </Posts>
-            </Container>
-            <TrendingHashtags refresh={refresh}/>
+            <NewTitle>
+                <div>
+                    <ProfilePic src={profile.image_url} />
+                    <p>{profile.name}'s posts</p>
+                </div>
+
+                {userId === user.id ? 
+                '' 
+                : 
+                    <FollowButton status={status}>
+                        {status ? 'Unfollow' : 'Follow'}
+                    </FollowButton>
+                }
+            </NewTitle>
+            <main>
+                <Container>
+                    <Posts>
+                        {posts ? (
+                        <PostsBox
+                            setRefresh={setRefresh}
+                            userEmail={profile.email}
+                            posts={posts}
+                        />
+                        ) : (
+                        <TimelineMessage>Loading...</TimelineMessage>
+                        )}
+                    </Posts>
+                </Container>
+                <TrendingHashtags refresh={refresh}/>
+            </main>
         </Wrapper>
     );
 }
+
+const NewTitle = styled.h2`
+    height: 120px;
+    width: 70vw;
+    //background-color: aquamarine;
+    margin-top: 30px;
+    
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 50px;
+
+    font-family: var(--titles-font);
+    color: var(--main-white);
+    font-weight: 700;
+    font-size: 50px;
+
+    & > div {
+        display: flex;
+    }
+
+    & > div > p {
+        margin-left: 15px;
+    }
+
+    @media (max-width: 614px) {
+        width: 100vw;
+        margin-top: 30px;
+        padding: 20px;
+        
+        & > div > p {
+          font-size: 40px;
+          margin-left: 10px;
+        }
+    }
+`
+
+const FollowButton = styled.button`
+    height: 45px;
+    width: 150px;
+
+    color: ${props => props.status ? 'var(--accent-color)' : 'var(--main-white)'};
+    background-color: ${props => props.status ? 'var(--main-white)' : 'var(--accent-color)'};
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: var(--titles-font);
+
+    &:active {
+        font-size: calc(27px / 0.97);
+        transform: scale(0.97);
+    }
+
+    &:hover {
+        cursor: pointer;
+        filter: brightness(1.3);
+    }
+`
 
 const Wrapper = styled.div`
     height: fit-content;
@@ -60,8 +140,14 @@ const Wrapper = styled.div`
     width: 100vw;
     background-color: var(--background-gray);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     column-gap: 80px;
+
+    main {
+        display: flex;
+        //background-color: antiquewhite;
+    }
 `
 
 const Container = styled.div`
@@ -73,6 +159,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+
+  
   
   & > h2 {
     display: flex;
