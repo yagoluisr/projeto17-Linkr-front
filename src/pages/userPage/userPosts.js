@@ -181,16 +181,20 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    column-gap: 80px;
 
     main {
         display: flex;
+        column-gap: 80px;
+    }
+
+    & > main > div {
+        margin-top: 15px;
     }
 `
 
-const Container = styled.div`
+const Container = styled.section`
   height: fit-content;
-  margin-top: 50px;
+  margin-top: 0px;
   width: 40vw;
   background-color: var(--background-gray);
   display: flex;
