@@ -17,6 +17,7 @@ export default function PostsBox({ posts }) {
               userPostEmail={post.email}
               postDescription={post.description}
               link={post.link}
+              comments_number={post.comments_number}
             />
           );
         })
