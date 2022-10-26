@@ -10,6 +10,7 @@ import DeleteModal from "./DeleteModal";
 import PostEditField from "./PostEditField";
 import Like from "./PostLike";
 import { userContext } from "../../context/userContext";
+import PostShared from "./PostShared";
 
 export default function PostCard({
   id,
@@ -20,7 +21,6 @@ export default function PostCard({
   postDescription,
   link,
 }) {
-
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);
   const [description, setDescription] = useState();
@@ -31,7 +31,7 @@ export default function PostCard({
   function openModal() {
     setOpen(true);
   }
-  function PopUpMenu() {
+  function PostPopUp() {
     return (
       <PopUpList>
         <li>
@@ -72,7 +72,8 @@ export default function PostCard({
     <Wrapper>
       <section>
         <ProfilePic src={image_url} />
-          <Like id={id} />
+        <Like id={id} />
+        <PostShared />
       </section>
 
       <PostData>
@@ -97,7 +98,7 @@ export default function PostCard({
                 postId={id}
               />
               <PopUpMenuContainer hidden={hidePopUp}>
-                <PopUpMenu />
+                <PostPopUp />
               </PopUpMenuContainer>
             </PopUpContainer>
           ) : (
