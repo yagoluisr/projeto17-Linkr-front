@@ -165,6 +165,5 @@ export {
     getFollowById,
     insertFollow,
     deleteFollow,
-    getUserFollows,
-    getPostsbyHashtag
+    getUserFollows
 }
