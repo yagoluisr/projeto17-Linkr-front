@@ -21,7 +21,7 @@ export default function PostsBox({ posts }) {
           );
         })
       ) : (
-        <TimelineMessage>There are no posts yet</TimelineMessage>
+        <TimelineMessage>No posts found from your friends</TimelineMessage>
       )}
     </Wrapper>
   );
