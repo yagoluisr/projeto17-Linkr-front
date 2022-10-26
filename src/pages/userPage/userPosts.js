@@ -17,6 +17,7 @@ export default function UserPage(){
     const [profile, setProfile] = useState([]);
     const userId = Number(useParams().id);
     const [follow, setFollow] = useState([]);
+    const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
         setRefresh(false);
@@ -25,14 +26,14 @@ export default function UserPage(){
             .then((profile) => {
                 setProfile(profile.data)
                 setPosts(profile.data.posts);
-
+                
                 getFollowById(profile.data.id)
                     .then(res => {
                         setFollow(res.data);
                     }
                 )
                 .catch((error) => {
-                    console.log(error);
+                    console.error(error);
                 });
             }
         )
@@ -43,11 +44,28 @@ export default function UserPage(){
 
 
     function handleFollowButton () {
+        setDisabled(true)
+
         if(follow[0]) {
-            console.log('unfollow')
             deleteFollow(profile.id)
+                .then(()=> {
+                    setDisabled(false)
+                })
+                .catch(() => {
+                    alert('Operation could not be performed');
+                    setDisabled(false)
+                })
+            ;
         } else {
             insertFollow(profile.id)
+                .then(() => {
+                    setDisabled(false)
+                })
+                .catch(() => {
+                    alert('Operation could not be performed');
+                    setDisabled(false)
+                })
+            ;
         }
     }
 
@@ -64,10 +82,12 @@ export default function UserPage(){
                 : 
                     <FollowButton 
                         follow={follow} 
-                        onClick={handleFollowButton}>
-                            {
-                                follow[0] ? 'Unfollow' : 'Follow'
-                            }
+                        onClick={handleFollowButton}
+                        disabled={disabled}
+                    >
+                        {
+                            follow[0] ? 'Unfollow' : 'Follow'
+                        }
                     </FollowButton>
                 }
             </NewTitle>
@@ -94,9 +114,7 @@ export default function UserPage(){
 const NewTitle = styled.h2`
     height: 120px;
     width: 70vw;
-    //background-color: aquamarine;
     margin-top: 30px;
-    
     
     display: flex;
     align-items: center;
@@ -143,6 +161,10 @@ const FollowButton = styled.button`
     &:active {
         font-size: calc(27px / 0.97);
         transform: scale(0.97);
+    }
+
+    &:disabled {
+        background-color: var(--input-disabled-gray);
     }
 
     &:hover {
