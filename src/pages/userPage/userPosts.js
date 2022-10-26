@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { getFollowById, getUserById } from "../../services/api";
+import { getFollowById, getUserById, insertFollow } from "../../services/api";
 import PostsBox from "../../components/Timeline/PostsBox";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
@@ -17,7 +17,7 @@ export default function UserPage(){
     const [profile, setProfile] = useState([]);
     const userId = Number(useParams().id);
     const [follow, setFollow] = useState([]);
-    
+
     useEffect(() => {
         setRefresh(false);
 
@@ -39,7 +39,16 @@ export default function UserPage(){
         .catch((error) => {
             console.log(error);
         });
-    }, [refresh, userId]);
+    }, [refresh, userId, follow]);
+
+
+    function handleFollowButton () {
+        if(follow[0]) {
+            console.log('unfollow')
+        } else {
+            insertFollow(profile.id)
+        }
+    }
 
     return (
         <Wrapper>
@@ -52,7 +61,7 @@ export default function UserPage(){
                 {userId === user.id ? 
                 '' 
                 : 
-                    <FollowButton follow={follow}>
+                    <FollowButton follow={follow} onClick={handleFollowButton}>
                         {follow[0] ? 'Unfollow' : 'Follow'}
                     </FollowButton>
                 }

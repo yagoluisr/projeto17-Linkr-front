@@ -128,6 +128,13 @@ function getFollowById (profileId) {
   return promise;
 }
 
+function insertFollow (profileId) {
+  console.log(profileId)
+  const config = createHeaders();
+  const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, {}, config);
+  return promise;
+}
+
 export {
     signUp,
     login,
@@ -145,4 +152,5 @@ export {
     deletePostLike,
     getPostsbyHashtag,
     getFollowById,
+    insertFollow,
 }
