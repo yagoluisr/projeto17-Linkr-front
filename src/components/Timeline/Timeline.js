@@ -14,19 +14,6 @@ export default function Timeline() {
 
   const [posts, setPosts] = useState(null);
   const [follows, setFollows] = useState(null);
-
-  // useEffect(() => {
-  //   const request = getPosts();
-  //   request.then((posts) => {
-  //     setPosts(posts.data);
-  //   });
-  //   request.catch((error) => {
-  //     console.log(error);
-  //     alert(
-  //       "There have been an issue fetching your timeline, please refresh the page"
-  //     );
-  //   });
-  // }, [renderTimeline]);
   
   const getDataFromAPI = useCallback(async()=>{
     try {
@@ -59,7 +46,7 @@ export default function Timeline() {
           <div>
             {follows?.length === 0 ? (
               <TimelineMessage>
-                You Don't Follow anyone yet. Search for new Friends!
+                You don't follow anyone yet. Search for new Friends!
               </TimelineMessage>
             ) : (
               <PostsBox posts={posts} />
