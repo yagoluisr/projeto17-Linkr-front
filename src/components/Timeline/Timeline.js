@@ -13,10 +13,11 @@ export default function Timeline() {
   const { user } = useContext(userContext);
   const { renderTimeline } = useContext(renderTimeLineContext);
 
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [pages, setPages] = useState(1)
 
   useEffect(() => {
-    const request = getPosts();
+    const request = getPosts(pages);
     request.then((posts) => {
       setPosts(posts.data);
     });
@@ -35,18 +36,19 @@ export default function Timeline() {
         <FormBox updatePosts={setPosts} />
       </PublishBox>
       <Updater posts={posts} updatePosts={setPosts}/>
-      <Posts>
-        {posts ? (
-          <PostsBox posts={posts}/>
-        ) : (
-          <TimelineMessage>Loading...</TimelineMessage>
-        )}
-      </Posts>
+        <Posts>
+          {posts ? (
+            <PostsBox identifier={"timeline"} posts={posts} setPosts={setPosts} pages={pages} setPages={setPages}/>
+          ) : (
+            <TimelineMessage>Loading...</TimelineMessage>
+          )}
+        </Posts>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
+  overflow: auto;
   height: fit-content;
   margin-top: 50px;
   width: 40vw;
@@ -104,6 +106,7 @@ const Posts = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: auto;
 
   @media (max-width: 614px) {
     width: 100vw;

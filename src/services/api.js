@@ -52,10 +52,10 @@ function getUser() {
   return promise;
 }
 
-function getPosts() {
+function getPosts(pages) {
   const config = createHeaders();
   const promise = axios.get(
-    `${process.env.REACT_APP_API_BASE_URL}/timeline`,
+    `${process.env.REACT_APP_API_BASE_URL}/timeline/${pages}`,
     config
   );
   return promise;
@@ -116,9 +116,9 @@ function getUserById (body) {
   return promise;
 }
 
-function getPostsbyHashtag(hashtag){
+function getPostsbyHashtag(hashtag, pages){
   const config = createHeaders();
-  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`, config);
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}/${pages}`, config);
   return promise;
 }
 

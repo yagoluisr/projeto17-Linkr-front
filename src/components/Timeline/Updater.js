@@ -8,7 +8,7 @@ export default function Updater({posts, updatePosts}) {
 
     useInterval(() => {
         let newPosts
-        const promise = getPosts()
+        const promise = getPosts(1)
         promise.then(result => {
             newPosts = result.data;
             const difference = newPosts[0].id - posts[0].id;
@@ -18,7 +18,7 @@ export default function Updater({posts, updatePosts}) {
 
       async function handleClick(){
         try {
-            const promise = await getPosts()
+            const promise = await getPosts(1)
             updatePosts(promise.data)
             setNewPostsCount(0)
         } catch (error) {

@@ -43,6 +43,7 @@ export default function UserPage(){
                         setRefresh={setRefresh}
                         userEmail={user.email}
                         posts={posts}
+                        identifier={'user'}
                     />
                     ) : (
                     <TimelineMessage>Loading...</TimelineMessage>
