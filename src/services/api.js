@@ -129,9 +129,14 @@ function getFollowById (profileId) {
 }
 
 function insertFollow (profileId) {
-  console.log(profileId)
   const config = createHeaders();
   const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, {}, config);
+  return promise;
+}
+
+function deleteFollow (profileId) {
+  const config = createHeaders();
+  const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/user/unfollow/${profileId}`, config);
   return promise;
 }
 
@@ -153,4 +158,5 @@ export {
     getPostsbyHashtag,
     getFollowById,
     insertFollow,
+    deleteFollow
 }
