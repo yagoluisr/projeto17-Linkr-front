@@ -6,6 +6,7 @@ import ProfilePic from "../../assets/styles/ProfilePic";
 import Title from "../../assets/styles/Title";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
 import FormBox from "./FormBox";
+import Updater from "./Updater";
 import { userContext, renderTimeLineContext } from "../../context/userContext";
 
 export default function Timeline() {
@@ -33,9 +34,10 @@ export default function Timeline() {
         <ProfilePic src={user.image_url} />
         <FormBox updatePosts={setPosts} />
       </PublishBox>
+      <Updater posts={posts} updatePosts={setPosts}/>
       <Posts>
         {posts ? (
-          <PostsBox posts={posts} />
+          <PostsBox posts={posts}/>
         ) : (
           <TimelineMessage>Loading...</TimelineMessage>
         )}
