@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { getUserById } from "../../services/api";
+import { getFollowById, getUserById } from "../../services/api";
 import PostsBox from "../../components/Timeline/PostsBox";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
@@ -16,9 +16,8 @@ export default function UserPage(){
 
     const [profile, setProfile] = useState([]);
     const userId = Number(useParams().id);
-
-    let status = false;
-
+    const [follow, setFollow] = useState([]);
+    
     useEffect(() => {
         setRefresh(false);
 
@@ -26,6 +25,15 @@ export default function UserPage(){
             .then((profile) => {
                 setProfile(profile.data)
                 setPosts(profile.data.posts);
+
+                getFollowById(profile.data.id)
+                    .then(res => {
+                        setFollow(res.data);
+                    }
+                )
+                .catch((error) => {
+                    console.log(error);
+                });
             }
         )
         .catch((error) => {
@@ -33,11 +41,6 @@ export default function UserPage(){
         });
     }, [refresh, userId]);
 
-
-    // console.log(userId)
-    // console.log(user.id)
-    // console.log(userId === user.id)
-    // console.log('---------')
     return (
         <Wrapper>
             <NewTitle>
@@ -49,8 +52,8 @@ export default function UserPage(){
                 {userId === user.id ? 
                 '' 
                 : 
-                    <FollowButton status={status}>
-                        {status ? 'Unfollow' : 'Follow'}
+                    <FollowButton follow={follow}>
+                        {follow[0] ? 'Unfollow' : 'Follow'}
                     </FollowButton>
                 }
             </NewTitle>
@@ -115,8 +118,8 @@ const FollowButton = styled.button`
     height: 45px;
     width: 150px;
 
-    color: ${props => props.status ? 'var(--accent-color)' : 'var(--main-white)'};
-    background-color: ${props => props.status ? 'var(--main-white)' : 'var(--accent-color)'};
+    color: ${props => props.follow[0] ? 'var(--accent-color)' : 'var(--main-white)'};
+    background-color: ${props => props.follow[0] ? 'var(--main-white)' : 'var(--accent-color)'};
     border: none;
     border-radius: 6px;
     font-size: 20px;
@@ -146,7 +149,6 @@ const Wrapper = styled.div`
 
     main {
         display: flex;
-        //background-color: antiquewhite;
     }
 `
 

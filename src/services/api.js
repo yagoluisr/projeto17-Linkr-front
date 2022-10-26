@@ -122,6 +122,12 @@ function getPostsbyHashtag(hashtag){
   return promise;
 }
 
+function getFollowById (profileId) {
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, config);
+  return promise;
+}
+
 export {
     signUp,
     login,
@@ -137,5 +143,6 @@ export {
     getPostLike,
     postPostLike,
     deletePostLike,
-    getPostsbyHashtag
+    getPostsbyHashtag,
+    getFollowById,
 }
