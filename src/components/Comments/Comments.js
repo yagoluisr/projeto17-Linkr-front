@@ -4,12 +4,10 @@ import InputComent from "./InputComment";
 
 export default function Comments({ id, comments_number }) {
 
-
-
     return (
         <Wrapper>
 
-            <InputComent />
+            <InputComent id={id} />
         </Wrapper>
     );
 }

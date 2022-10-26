@@ -4,8 +4,9 @@ import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import UnrequiredInput from "../../assets/styles/UnrequiredInput";
 import { userContext } from "../../context/userContext";
+import { postComment } from "../../services/api";
 
-export default function InputComent() {
+export default function InputComent({ id }) {
     const { user } = useContext(userContext);
     const [data, setData] = useState({
         comment: ""
@@ -18,6 +19,19 @@ export default function InputComent() {
         });
     }
 
+    function handleSubmit() {
+        if (data.comment.length === 0) return;
+
+        postComment(id, data)
+            .then(() => {
+            
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Your message was not sent. Please try again later");
+            });
+    }
+
     return (
         <Wrapper>
             <ProfilePic src={user.image_url} />
@@ -26,15 +40,15 @@ export default function InputComent() {
                 placeholder="write a comment..."
                 name="comment"
                 value={data.name}
-                autoComplete={false}
+                autoComplete="off"
                 updateData={updateData}
             />
-            <IoPaperPlaneOutline />
+            <IoPaperPlaneOutline onClick={handleSubmit} />
         </Wrapper>
     );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
     display: flex;
     align-items: center;
     justify-content: space-between;

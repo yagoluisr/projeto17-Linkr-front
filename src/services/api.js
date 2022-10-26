@@ -122,6 +122,12 @@ function getPostsbyHashtag(hashtag){
   return promise;
 }
 
+function postComment(id, body) {
+    const config = createHeaders();
+    const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`, body, config);
+    return promise;
+}
+
 export {
     signUp,
     login,
@@ -137,5 +143,6 @@ export {
     getPostLike,
     postPostLike,
     deletePostLike,
-    getPostsbyHashtag
+    getPostsbyHashtag,
+    postComment
 }
