@@ -10,6 +10,7 @@ import DeleteModal from "./DeleteModal";
 import PostEditField from "./PostEditField";
 import Like from "./PostLike";
 import { userContext } from "../../context/userContext";
+import CommentsCounter from "./PostComments";
 
 export default function PostCard({
   id,
@@ -27,6 +28,7 @@ export default function PostCard({
   const [value, setValue] = useState(postDescription);
   const { user } = useContext(userContext);
   const [isOpen, setOpen] = useState(false);
+  const [openComments, setOpenComments] = useState(false);
   const inputRef = useRef();
   function openModal() {
     setOpen(true);
@@ -72,7 +74,8 @@ export default function PostCard({
     <Wrapper>
       <section>
         <ProfilePic src={image_url} />
-          <Like id={id} />
+        <Like id={id} />
+        <CommentsCounter openComments={openComments} setOpenComments={setOpenComments} />
       </section>
 
       <PostData>
