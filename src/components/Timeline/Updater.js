@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { getPosts } from "../../services/api";
 import { useState } from "react";
 import useInterval from "use-interval";
+import {TfiReload} from 'react-icons/tfi'
 
 export default function Updater({posts, updatePosts}) {
     const [newPostsCount, setNewPostsCount] = useState(0)
@@ -32,7 +33,7 @@ export default function Updater({posts, updatePosts}) {
 
     return (
         <Wrapper hidden={newPostsCount === 0} onClick={()=> handleClick()}>
-            <span>{newPostsCount} new posts, load more!</span>
+            <span>{newPostsCount} new posts, load more!</span> <TfiReload />
         </Wrapper>
     )
 }
@@ -62,6 +63,11 @@ const Wrapper = styled.div`
         font-size: 19px;
         margin: 15px 0;
     }
+    svg {
+        color: var(--main-white);
+        font-size: 20px;
+        margin-left: 15px;
+        }
 
     @media (max-width: 614px) {
       width: 100vw;

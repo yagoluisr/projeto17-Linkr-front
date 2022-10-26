@@ -4,6 +4,7 @@ import PostCard from "./PostCard";
 import { useState } from "react";
 import InfiniteScroll from 'react-infinite-scroller';
 import { getPosts, getPostsbyHashtag } from "../../services/api";
+import { Watch } from "react-loader-spinner";
 
 export default function PostsBox({ identifier, hashtag, posts, pages, setPages, setPosts }) {
 
@@ -63,6 +64,9 @@ export default function PostsBox({ identifier, hashtag, posts, pages, setPages, 
 
 
       <LoadingMessage prop={loading}>
+          <SpinnerWrapper>
+            <Watch width="50px" height="50px" color="#ffffff" />
+          </SpinnerWrapper>
         <TimelineMessage>
             Loading more posts...
         </TimelineMessage>
@@ -84,4 +88,11 @@ const Wrapper = styled.div`
 const LoadingMessage = styled.div`
     margin: 80px 0;
     display: ${props => props.prop ? 'flex' : 'none'};
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 `
+
+const SpinnerWrapper = styled.div`
+margin-bottom: 15px;
+`;
