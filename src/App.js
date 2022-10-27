@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import GlobalStyles from "./assets/styles/GlobalStyles";
-import { userContext, renderTimeLineContext } from "./context/userContext";
+import { userContext, renderTimeLineContext} from "./context/userContext";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home/Home";
@@ -12,6 +12,7 @@ import HashtagsPage from "./pages/hashtagsPage/hashtagsPage";
 export default function App() {
   const [user, setUser] = useState(null);
   const [renderTimeline, setRender] = useState(false);
+
   return (
     <userContext.Provider value={{ user, setUser }}>
       <renderTimeLineContext.Provider value={{ renderTimeline, setRender }}>

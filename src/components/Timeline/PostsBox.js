@@ -54,6 +54,7 @@ export default function PostsBox({ identifier, hashtag, posts, pages, setPages, 
                 userPostEmail={post.email}
                 postDescription={post.description}
                 link={post.link}
+                comments_number={post.comments_number}
               />
             );
           })

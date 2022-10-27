@@ -8,6 +8,8 @@ import TimelineMessage from "../../assets/styles/TimelineMessage";
 import FormBox from "./FormBox";
 import Updater from "./Updater";
 import { userContext, renderTimeLineContext } from "../../context/userContext";
+import { SearchPeople } from "../Search/Search";
+import { Mobile } from "../../pages/userPage/userPosts";
 
 export default function Timeline() {
   const { user } = useContext(userContext);
@@ -29,12 +31,15 @@ export default function Timeline() {
         "There have been an issue loading your timeline, please refresh the page"
       );
     }
-  },[pages, user.id])
+  },[pages])
 
   useEffect( ()=>{getDataFromAPI()}, [getDataFromAPI, renderTimeline]);
 
   return (
     <Wrapper>
+      <MobileSearch>
+        <SearchPeople />
+      </MobileSearch>
       <Title>timeline</Title>
       <PublishBox>
         <ProfilePic src={user.image_url} />
@@ -77,7 +82,7 @@ const Wrapper = styled.div`
 
   @media (max-width: 614px) {
     width: 100vw;
-    margin-top: 30px;
+    margin-top: 5px;
     h2 {
       font-size: 40px;
       margin-left: 10px;
@@ -124,3 +129,19 @@ const Posts = styled.div`
     width: 100vw;
   }
 `;
+
+const MobileSearch = styled(Mobile)`
+  display: none;
+  
+    @media (max-width: 614px) {
+      display: block;
+      width: 90%;
+
+      margin: 0 auto 40px auto;
+
+      div input {
+        width: 80vw;
+      }
+
+  }
+`

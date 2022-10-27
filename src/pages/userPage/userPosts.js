@@ -7,13 +7,14 @@ import ProfilePic from "../../assets/styles/ProfilePic";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
 import TrendingHashtags from "../../components/Trending/TrendingHashtags";
 import { userContext } from "../../context/userContext";
+import { Search, SearchPeople } from "../../components/Search/Search";
 
 export default function UserPage(){
     const { user } = useContext(userContext);
 
     const [refresh, setRefresh] = useState(false);
     const [posts, setPosts] = useState(null);
-
+    const [pages, setPages] = useState(1)
     const [profile, setProfile] = useState([]);
     const userId = Number(useParams().id);
     const [follow, setFollow] = useState([]);
@@ -71,6 +72,9 @@ export default function UserPage(){
 
     return (
         <Wrapper>
+                <Mobile>
+                    <SearchPeople />
+                </Mobile>
             <NewTitle>
                 <div>
                     <ProfilePic src={profile.image_url} />
@@ -85,9 +89,7 @@ export default function UserPage(){
                         onClick={handleFollowButton}
                         disabled={disabled}
                     >
-                        {
-                            follow[0] ? 'Unfollow' : 'Follow'
-                        }
+                        {follow[0] ? 'Unfollow' : 'Follow'}
                     </FollowButton>
                 }
             </NewTitle>
@@ -99,7 +101,9 @@ export default function UserPage(){
                             setRefresh={setRefresh}
                             userEmail={profile.email}
                             posts={posts}
-                            identifier={'user'}
+                            setPages={setPages}
+                            pages={pages}
+                            identifier={"user"}
                         />
                         ) : (
                         <TimelineMessage>Loading...</TimelineMessage>
@@ -261,3 +265,17 @@ const Posts = styled.div`
         width: 100vw;
     }
 `;
+
+export const Mobile = styled(Search)`
+    display: none;
+    z-index: 1;
+
+    @media (max-width: 614px) {
+        display: block;
+        width: 90%;
+
+        div input {
+            width: 80vw;
+        }
+    }
+`
