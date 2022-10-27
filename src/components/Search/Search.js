@@ -50,6 +50,7 @@ export function SearchPeople () {
                                 <Profile>
                                     <ProfilePic src={user.image_url}></ProfilePic>
                                     <p>{user.name}</p>
+                                    {user.follow ? (<Follow><p>• following</p></Follow>) : (<div></div>)}
                                 </Profile>
                             </Link>
                         )}
@@ -134,7 +135,7 @@ const Wrapper = styled.div`
 
 const Profile = styled.li`
     height: 40px;
-    width: 95%;
+    //width: 95%;
 
     display: flex;
     align-items: center;
@@ -151,4 +152,20 @@ const Profile = styled.li`
 
         color: #515151;
     }
+`
+
+const Follow = styled.div`
+    height: 40px;
+    display: flex;
+    align-items: center;
+
+    p {
+        font-family: var(--main-font);
+        font-weight: 400;
+        font-size: 19px;
+        line-height: 22px;
+        margin-left: 15px;
+        color: #C5C5C5;
+    }
+
 `

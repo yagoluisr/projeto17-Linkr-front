@@ -12,7 +12,7 @@ export default function Updater({posts, updatePosts}) {
         const promise = getPosts(1)
         promise.then(result => {
             newPosts = result.data;
-            const difference = newPosts[0].id - posts[0].id;
+            const difference = newPosts[0]?.id - posts[0]?.id;
             setNewPostsCount(difference)
         })
       }, 7500);
