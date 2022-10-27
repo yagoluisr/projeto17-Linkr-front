@@ -52,10 +52,10 @@ function getUser() {
   return promise;
 }
 
-function getPosts() {
+function getPosts(pages) {
   const config = createHeaders();
   const promise = axios.get(
-    `${process.env.REACT_APP_API_BASE_URL}/timeline`,
+    `${process.env.REACT_APP_API_BASE_URL}/timeline/${pages}`,
     config
   );
   return promise;
@@ -116,12 +116,13 @@ function getUserById (body) {
   return promise;
 }
 
-function getPostsbyHashtag(hashtag){
+function getPostsbyHashtag(hashtag, pages){
   const config = createHeaders();
-  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`, config);
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}/${pages}`, config);
   return promise;
 }
 
+<<<<<<< HEAD
 function postComment(id, body) {
     const config = createHeaders();
     const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`, body, config);
@@ -131,6 +132,29 @@ function postComment(id, body) {
 function getPostComments(id) {
     const config = createHeaders();
     const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`, config);
+=======
+function getFollowById (profileId) {
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, config);
+  return promise;
+}
+
+function insertFollow (profileId) {
+  const config = createHeaders();
+  const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, {}, config);
+  return promise;
+}
+
+function deleteFollow (profileId) {
+  const config = createHeaders();
+  const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/user/unfollow/${profileId}`, config);
+  return promise;
+}
+
+function getUserFollows(id){
+  const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/follows/${id}`, config);
+>>>>>>> main
     return promise;
 }
 
@@ -150,6 +174,14 @@ export {
     postPostLike,
     deletePostLike,
     getPostsbyHashtag,
+<<<<<<< HEAD
     postComment,
     getPostComments
 };
+=======
+    getFollowById,
+    insertFollow,
+    deleteFollow,
+    getUserFollows
+}
+>>>>>>> main

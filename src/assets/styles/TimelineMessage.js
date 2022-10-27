@@ -9,7 +9,9 @@ export default function TimelineMessage({ children }) {
 }
 
 const Wrapper = styled.span`
+    text-align: center;
     margin-top: 70px;
+    margin-bottom: 80px;
     font-family: var(--main-font);
     color: var(--main-white);
     font-weight: 200;
