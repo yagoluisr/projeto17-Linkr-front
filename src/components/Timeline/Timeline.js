@@ -6,18 +6,20 @@ import ProfilePic from "../../assets/styles/ProfilePic";
 import Title from "../../assets/styles/Title";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
 import FormBox from "./FormBox";
+import Updater from "./Updater";
 import { userContext, renderTimeLineContext } from "../../context/userContext";
 
 export default function Timeline() {
   const { user } = useContext(userContext);
   const { renderTimeline } = useContext(renderTimeLineContext);
 
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
   const [follows, setFollows] = useState(null);
-  
+  const [pages, setPages] = useState(1)
+
   const getDataFromAPI = useCallback(async()=>{
     try {
-      const postsData = await getPosts();
+      const postsData = await getPosts(pages);
       setPosts(postsData.data);
       console.log(postsData.data);
 
@@ -41,6 +43,7 @@ export default function Timeline() {
         <ProfilePic src={user.image_url} />
         <FormBox updatePosts={setPosts} />
       </PublishBox>
+      <Updater posts={posts} updatePosts={setPosts} />
       <Posts>
         {posts ? (
           <div>
@@ -49,7 +52,7 @@ export default function Timeline() {
                 You don't follow anyone yet. Search for new Friends!
               </TimelineMessage>
             ) : (
-              <PostsBox posts={posts} />
+              <PostsBox identifier={"timeline"} posts={posts} setPosts={setPosts} pages={pages} setPages={setPages} />
             )}
           </div>
         ) : (
@@ -61,6 +64,7 @@ export default function Timeline() {
 }
 
 const Wrapper = styled.div`
+  overflow: auto;
   height: fit-content;
   margin-top: 50px;
   width: 40vw;
@@ -117,6 +121,7 @@ const Posts = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: auto;
 
   @media (max-width: 614px) {
     width: 100vw;

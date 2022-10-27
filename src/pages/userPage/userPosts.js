@@ -99,6 +99,7 @@ export default function UserPage(){
                             setRefresh={setRefresh}
                             userEmail={profile.email}
                             posts={posts}
+                            identifier={'user'}
                         />
                         ) : (
                         <TimelineMessage>Loading...</TimelineMessage>

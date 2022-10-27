@@ -37,7 +37,7 @@ export default function FormBox({ updatePosts }) {
       alert("There have been an issue publishing your link");
     }
     try {
-      const promise = await getPosts();
+      const promise = await getPosts(1);
       updatePosts(promise.data);
     } catch (error) {
       console.error(error);
