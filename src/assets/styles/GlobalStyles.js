@@ -76,8 +76,10 @@ const GlobalStyles = createGlobalStyle`
         --background-comments-gray: #1E1E1E;
         --background-comments-input: #252525;
         --font-comments-gray: #ACACAC;
+        --font-comments-span: #565656;
         --font-comments-white: #F3F3F3;
         --font-comments-input: #575757;
+        --comments-border: #353535;
     }
 `;
 

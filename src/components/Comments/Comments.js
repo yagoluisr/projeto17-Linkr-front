@@ -22,7 +22,7 @@ export default function Comments({ id, comments_number }) {
         <Wrapper>
             <ul>
                 {comments.map(comment => (
-                    <Comment {...comment} />
+                    <Comment key={comment.id} {...comment} />
                 ))}
             </ul>
                 
