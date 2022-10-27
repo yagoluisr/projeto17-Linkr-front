@@ -89,9 +89,7 @@ export default function UserPage(){
                         onClick={handleFollowButton}
                         disabled={disabled}
                     >
-                        {
-                            follow[0] ? 'Unfollow' : 'Follow'
-                        }
+                        {follow[0] ? 'Unfollow' : 'Follow'}
                     </FollowButton>
                 }
             </NewTitle>
