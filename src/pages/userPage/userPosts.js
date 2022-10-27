@@ -14,7 +14,7 @@ export default function UserPage(){
 
     const [refresh, setRefresh] = useState(false);
     const [posts, setPosts] = useState(null);
-
+    const [pages, setPages] = useState(1)
     const [profile, setProfile] = useState([]);
     const userId = Number(useParams().id);
     const [follow, setFollow] = useState([]);
@@ -101,6 +101,9 @@ export default function UserPage(){
                             setRefresh={setRefresh}
                             userEmail={profile.email}
                             posts={posts}
+                            setPages={setPages}
+                            pages={pages}
+                            identifier={"user"}
                         />
                         ) : (
                         <TimelineMessage>Loading...</TimelineMessage>

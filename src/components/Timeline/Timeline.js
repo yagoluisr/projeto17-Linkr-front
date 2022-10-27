@@ -23,18 +23,15 @@ export default function Timeline() {
     try {
       const postsData = await getPosts(pages);
       setPosts(postsData.data);
-      console.log(postsData.data);
-
       const followsData = await getUserFollows(user.id);
       setFollows(followsData.data);
-      console.log(followsData.data);
     } catch (error) {
       console.error(error.message);
       alert(
         "There have been an issue loading your timeline, please refresh the page"
       );
     }
-  },[user.id])
+  },[pages])
 
   useEffect( ()=>{getDataFromAPI()}, [getDataFromAPI, renderTimeline]);
 

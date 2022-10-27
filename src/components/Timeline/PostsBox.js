@@ -12,6 +12,7 @@ export default function PostsBox({ identifier, hashtag, posts, pages, setPages, 
   const [loading, setLoading] = useState(false)
 
   async function loadMoreFunc(){
+    if(identifier==='user') return 
     if(posts.length && identifier !== 'user') {
       setLoading(true)
     }
