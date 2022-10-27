@@ -1,15 +1,17 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { userContext } from "../../context/userContext";
 import { logout } from "../../services/api";
 
 export default function Logout({ open, setOpen, menuRef }) {
     const navigate = useNavigate();
-
+    const { setUser } = useContext(userContext);
 
     function handleClick() {
         logout()
             .then(() => {
+                setUser(null);
                 localStorage.removeItem("linkr");
                 navigate("/");
             })
