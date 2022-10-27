@@ -63,7 +63,7 @@ export function SearchPeople () {
     )   
 }
 
-const Search = styled.div`
+export const Search = styled.div`
     display: flex;
     flex-direction: column;
     
