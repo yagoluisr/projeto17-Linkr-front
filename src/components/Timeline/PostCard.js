@@ -10,6 +10,8 @@ import DeleteModal from "./DeleteModal";
 import PostEditField from "./PostEditField";
 import Like from "./PostLike";
 import { userContext } from "../../context/userContext";
+import CommentsCounter from "./PostComments";
+import Comments from "../Comments/Comments";
 
 export default function PostCard({
   id,
@@ -19,6 +21,7 @@ export default function PostCard({
   userPostEmail,
   postDescription,
   link,
+  comments_number
 }) {
 
   const [hidePopUp, setHidePopUp] = useState(true);
@@ -27,6 +30,7 @@ export default function PostCard({
   const [value, setValue] = useState(postDescription);
   const { user } = useContext(userContext);
   const [isOpen, setOpen] = useState(false);
+  const [openComments, setOpenComments] = useState(false);
   const inputRef = useRef();
   function openModal() {
     setOpen(true);
@@ -69,66 +73,71 @@ export default function PostCard({
   }, [editPost, postDescription]);
 
   return (
-    <Wrapper>
-      <section>
-        <ProfilePic src={image_url} />
-          <Like id={id} />
-      </section>
+    <>
+        <Wrapper>
+            <section>
+                <ProfilePic src={image_url} />
+                <Like id={id} />
+                <CommentsCounter openComments={openComments} setOpenComments={setOpenComments} comments_number={comments_number} />
+            </section>
 
-      <PostData>
-        <HeaderContainer>
-          <Link to={`/user/${user_id}`}>
-            <h3>{username}</h3>
-          </Link>
-          {userPostEmail === user.email ? (
-            <PopUpContainer className="pop-up">
-              <div
-                className="react-icon"
-                onClick={() => {
-                  setHidePopUp(!hidePopUp);
-                }}
-              >
-                <FiMoreVertical />
-              </div>
-              <DeleteModal
-                isOpen={isOpen}
-                setOpen={setOpen}
-                setHidePopUp={setHidePopUp}
-                postId={id}
-              />
-              <PopUpMenuContainer hidden={hidePopUp}>
-                <PopUpMenu />
-              </PopUpMenuContainer>
-            </PopUpContainer>
-          ) : (
-            ""
-          )}
-        </HeaderContainer>
-        <PostEditField
-          id={id}
-          inputRef={inputRef}
-          postDescription={postDescription}
-          setValue={setValue}
-          value={value}
-          editPost={editPost}
-          setEditPost={setEditPost}
-          description={description}
-          setDescription={setDescription}
-        />
-        <LinkCard
-          url={link}
-          fetch-data="true"
-          size="normal"
-          media="logo"
-          direction="rtl"
-        />
-      </PostData>
-    </Wrapper>
+            <PostData>
+                <HeaderContainer>
+                <Link to={`/user/${user_id}`}>
+                    <h3>{username}</h3>
+                </Link>
+                {userPostEmail === user.email ? (
+                    <PopUpContainer className="pop-up">
+                    <div
+                        className="react-icon"
+                        onClick={() => {
+                        setHidePopUp(!hidePopUp);
+                        }}
+                    >
+                        <FiMoreVertical />
+                    </div>
+                    <DeleteModal
+                        isOpen={isOpen}
+                        setOpen={setOpen}
+                        setHidePopUp={setHidePopUp}
+                        postId={id}
+                    />
+                    <PopUpMenuContainer hidden={hidePopUp}>
+                        <PopUpMenu />
+                    </PopUpMenuContainer>
+                    </PopUpContainer>
+                ) : (
+                    ""
+                )}
+                </HeaderContainer>
+                <PostEditField
+                    id={id}
+                    inputRef={inputRef}
+                    postDescription={postDescription}
+                    setValue={setValue}
+                    value={value}
+                    editPost={editPost}
+                    setEditPost={setEditPost}
+                    description={description}
+                    setDescription={setDescription}
+                    />
+                    <LinkCard
+                    url={link}
+                    fetch-data="true"
+                    size="normal"
+                    media="logo"
+                    direction="rtl"
+                />
+            </PostData>
+        </Wrapper>
+    
+        {openComments ? <Comments id={id}  comments_number={comments_number} /> : null}
+    </>
   );
 }
 const Wrapper = styled.div`
   position: relative;
-  font-family: Lato, sans-serif;
+  font-family: var(--main-font);
   margin-bottom: 15px;
   display: flex;
   background-color: var(--post-background-black);

@@ -2,6 +2,7 @@ import { Tooltip } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import styled from "styled-components";
+import { IconWrapper } from "../../assets/styles/IconWrapper";
 import { renderTimeLineContext, userContext } from "../../context/userContext";
 import { deletePostLike, getPostLike, postPostLike } from "../../services/api";
 
@@ -95,35 +96,22 @@ export default function Like({ id }) {
   );
 }
 
-const Wrapper = styled.div`
-  color: var(--main-white);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin-top: 20px;
-
-  svg {
-    color: ${(props) => (props.like ? "var(--like-red)" : "var(--main-white)")};
-    font-size: 25px;
-    transition: color 0.4s linear;
-    animation: liked 0.4s ease;
-    cursor: pointer;
-  }
-
-  p {
-    margin-top: 5px;
-  }
-
-  @keyframes liked {
-    0% {
-      transform: scale(0.8);
+const Wrapper = styled(IconWrapper)`
+    & > svg {
+        color: ${(props) => (props.like ? "var(--like-red)" : "var(--main-white)")};
+        transition: color 0.4s linear;
+        animation: liked 0.4s ease;
     }
-    50% {
-      transform: scale(1.1);
+
+    @keyframes liked {
+        0% {
+            transform: scale(0.8);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
-    100% {
-      transform: scale(1);
-    }
-  }
 `;
