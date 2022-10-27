@@ -1,12 +1,31 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { getPostComments } from "../../services/api";
+import Comment from "./Comment";
 
 import InputComent from "./InputComment";
 
 export default function Comments({ id, comments_number }) {
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        getPostComments(id)
+            .then((answer) => {
+                setComments(answer.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [setComments]);
 
     return (
         <Wrapper>
-
+            <ul>
+                {comments.map(comment => (
+                    <Comment {...comment} />
+                ))}
+            </ul>
+                
             <InputComent id={id} />
         </Wrapper>
     );

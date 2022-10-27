@@ -128,6 +128,12 @@ function postComment(id, body) {
     return promise;
 }
 
+function getPostComments(id) {
+    const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`, config);
+    return promise;
+}
+
 export {
     signUp,
     login,
@@ -144,5 +150,6 @@ export {
     postPostLike,
     deletePostLike,
     getPostsbyHashtag,
-    postComment
-}
+    postComment,
+    getPostComments
+};
