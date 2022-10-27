@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
 
-export default function Comment({ id, user_id, name, image_url, comment, post_author_id, follow }) {
+export default function Comment({ user_id, name, image_url, comment, post_author_id, follow }) {
     let text = "";
 
     if (user_id === post_author_id) text += " • post’s author";
@@ -19,7 +19,7 @@ export default function Comment({ id, user_id, name, image_url, comment, post_au
                 </h4>
                 <p>{comment}</p>
             </div>
-        </Wrapper>    
+        </Wrapper>
     );
 
 }

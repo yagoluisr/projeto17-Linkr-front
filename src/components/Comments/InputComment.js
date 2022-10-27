@@ -6,7 +6,7 @@ import UnrequiredInput from "../../assets/styles/UnrequiredInput";
 import { userContext } from "../../context/userContext";
 import { postComment } from "../../services/api";
 
-export default function InputComent({ id }) {
+export default function InputComent({ id, setRefresh, refresh }) {
     const { user } = useContext(userContext);
     const [data, setData] = useState({
         comment: ""
@@ -24,7 +24,10 @@ export default function InputComent({ id }) {
 
         postComment(id, data)
             .then(() => {
-            
+                setRefresh(!refresh);
+                setData({
+                    comment: ""
+                });
             })
             .catch((error) => {
                 console.log(error);
@@ -39,7 +42,7 @@ export default function InputComent({ id }) {
                 type="text"
                 placeholder="write a comment..."
                 name="comment"
-                value={data.name}
+                value={data.comment}
                 autoComplete="off"
                 updateData={updateData}
             />

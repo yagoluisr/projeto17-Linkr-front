@@ -5,8 +5,9 @@ import Comment from "./Comment";
 
 import InputComent from "./InputComment";
 
-export default function Comments({ id, comments_number }) {
+export default function Comments({ id }) {
     const [comments, setComments] = useState([]);
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         getPostComments(id)
@@ -16,7 +17,7 @@ export default function Comments({ id, comments_number }) {
             .catch((error) => {
                 console.log(error);
             });
-    }, [setComments]);
+    }, [setComments, refresh]);
 
     return (
         <Wrapper>
@@ -26,7 +27,7 @@ export default function Comments({ id, comments_number }) {
                 ))}
             </ul>
                 
-            <InputComent id={id} />
+            <InputComent id={id} setRefresh={setRefresh} refresh={refresh} />
         </Wrapper>
     );
 }
