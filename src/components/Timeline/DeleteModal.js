@@ -37,7 +37,6 @@ export default function DeleteModal({ isOpen, setOpen, setHidePopUp, postId }) {
                 setloading(true);
                 deletePost(postId)
                   .then((answer) => {
-                    console.log(answer);
                     setRender(!renderTimeline);
                     closeModal();
                   })
