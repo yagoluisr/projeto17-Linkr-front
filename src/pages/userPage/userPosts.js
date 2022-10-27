@@ -263,7 +263,7 @@ const Posts = styled.div`
     }
 `;
 
-const Mobile = styled(Search)`
+export const Mobile = styled(Search)`
     display: none;
     z-index: 1;
 
