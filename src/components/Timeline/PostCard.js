@@ -11,6 +11,7 @@ import PostEditField from "./PostEditField";
 import Like from "./PostLike";
 import { userContext } from "../../context/userContext";
 import PostShared from "./PostShared";
+import RepostSnackBar from "./RepostSnackBar";
 
 export default function PostCard({
   id,
@@ -70,10 +71,11 @@ export default function PostCard({
 
   return (
     <Wrapper>
+      <RepostSnackBar />
       <section>
         <ProfilePic src={image_url} />
         <Like id={id} />
-        <PostShared id={id}/>
+        <PostShared id={id} />
       </section>
 
       <PostData>
@@ -129,8 +131,9 @@ export default function PostCard({
 }
 const Wrapper = styled.div`
   position: relative;
+  z-index: 0;
   font-family: Lato, sans-serif;
-  margin-bottom: 15px;
+  margin: 30px 0;
   display: flex;
   background-color: var(--post-background-black);
   height: fit-content;
@@ -138,7 +141,8 @@ const Wrapper = styled.div`
   min-width: 25vw;
   min-height: 220px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
   section {
     width: 100%;
     display: flex;
@@ -157,6 +161,7 @@ const Wrapper = styled.div`
     }
   }
 `;
+
 const PostData = styled.div`
   margin-top: 20px;
   margin-left: 1.5vw;

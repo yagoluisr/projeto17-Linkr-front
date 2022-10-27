@@ -3,11 +3,21 @@ import { BiRepost } from "react-icons/bi";
 import { Tooltip } from "@material-ui/core";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import { getSharedCountByPost } from "../../services/api";
+import { getSharedCountByPost, postSharePost } from "../../services/api";
 
 export default function PostShared({ id }) {
   const [hidePopUp, setHidePopUp] = useState(true);
-  const [sharedCount, setSharedCount] = useState(0);
+  const [sharedCount, setSharedCount] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    setRefresh(false);
+    getSharedCountByPost(id)
+      .then((answer) => {
+        setSharedCount(answer.data.shares_number);
+      })
+      .catch((error) => console.log(error));
+  }, [id, refresh]);
 
   function RePostPopUp() {
     return (
@@ -16,6 +26,9 @@ export default function PostShared({ id }) {
           <div
             className="edit-post"
             onClick={() => {
+              postSharePost(id)
+                .then(() => setRefresh(true))
+                .catch((error) => console.log(error));
               setHidePopUp(true);
             }}
           >
@@ -26,7 +39,6 @@ export default function PostShared({ id }) {
         <li>
           <div
             onClick={() => {
-              //   openModal();
               setHidePopUp(true);
             }}
           >
@@ -38,12 +50,6 @@ export default function PostShared({ id }) {
     );
   }
 
-  useEffect(() => {
-    getSharedCountByPost(id).then((answer) => {
-      setSharedCount(answer);
-    }, []);
-  });
-
   return (
     <Tooltip title={hidePopUp ? "Repost" : ""}>
       <Wrapper>
@@ -54,7 +60,7 @@ export default function PostShared({ id }) {
                 setHidePopUp(!hidePopUp);
               }}
             />
-            <p>`${sharedCount} reposts`</p>
+            <p>{sharedCount ?? 0} reposts</p>
           </RepostContainer>
 
           <PopUpMenuContainer hidden={hidePopUp}>

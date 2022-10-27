@@ -151,6 +151,7 @@ function postSharePost(id) {
   const config = createHeaders();
   const promise = axios.post(
     `${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`,
+    {},
     config
   );
   return promise;
