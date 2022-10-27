@@ -122,6 +122,24 @@ function getPostsbyHashtag(hashtag, pages){
   return promise;
 }
 
+function getFollowById (profileId) {
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, config);
+  return promise;
+}
+
+function insertFollow (profileId) {
+  const config = createHeaders();
+  const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, {}, config);
+  return promise;
+}
+
+function deleteFollow (profileId) {
+  const config = createHeaders();
+  const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/user/unfollow/${profileId}`, config);
+  return promise;
+}
+
 function getUserFollows(id){
   const config = createHeaders();
     const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/follows/${id}`, config);
@@ -143,6 +161,9 @@ export {
     getPostLike,
     postPostLike,
     deletePostLike,
-    getUserFollows,
-    getPostsbyHashtag
+    getPostsbyHashtag,
+    getFollowById,
+    insertFollow,
+    deleteFollow,
+    getUserFollows
 }
