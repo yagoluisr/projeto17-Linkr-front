@@ -11,7 +11,6 @@ import { userContext, renderTimeLineContext } from "../../context/userContext";
 
 export default function Timeline() {
   const { user } = useContext(userContext);
-  console.log(user);
   const { renderTimeline } = useContext(renderTimeLineContext);
 
   const [posts, setPosts] = useState([]);
@@ -44,7 +43,7 @@ export default function Timeline() {
         <ProfilePic src={user.image_url} />
         <FormBox updatePosts={setPosts} />
       </PublishBox>
-      <Updater />
+      <Updater posts={posts} updatePosts={setPosts} />
       <Posts>
         {posts ? (
           <div>
