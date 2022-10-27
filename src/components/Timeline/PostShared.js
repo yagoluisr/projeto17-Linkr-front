@@ -1,23 +1,22 @@
 import styled from "styled-components";
 import { BiRepost } from "react-icons/bi";
-import { Tooltip } from "@material-ui/core";
 import { AiOutlineEdit } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getSharedCountByPost, postSharePost } from "../../services/api";
+import { renderTimeLineContext } from "../../context/userContext";
 
-export default function PostShared({ id }) {
+export default function PostShared({ id, originalPost, repostedBy }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [sharedCount, setSharedCount] = useState(null);
-  const [refresh, setRefresh] = useState(false);
-
+  const { setRender } = useContext(renderTimeLineContext);
   useEffect(() => {
-    setRefresh(false);
-    getSharedCountByPost(id)
+    getSharedCountByPost(originalPost ?? id)
       .then((answer) => {
         setSharedCount(answer.data.shares_number);
       })
+
       .catch((error) => console.log(error));
-  }, [id, refresh]);
+  }, [originalPost, id]);
 
   function RePostPopUp() {
     return (
@@ -27,7 +26,7 @@ export default function PostShared({ id }) {
             className="edit-post"
             onClick={() => {
               postSharePost(id)
-                .then(() => setRefresh(true))
+                .then(() => setRender(true))
                 .catch((error) => console.log(error));
               setHidePopUp(true);
             }}
@@ -51,24 +50,24 @@ export default function PostShared({ id }) {
   }
 
   return (
-    <Tooltip title={hidePopUp ? "Repost" : ""}>
-      <Wrapper>
-        <PopUpContainer className="pop-up">
-          <RepostContainer className="react-icon">
-            <BiRepost
-              onClick={() => {
+    <Wrapper>
+      <PopUpContainer className="pop-up">
+        <RepostContainer className="react-icon">
+          <BiRepost
+            onClick={() => {
+              if (!repostedBy) {
                 setHidePopUp(!hidePopUp);
-              }}
-            />
-            <p>{sharedCount ?? 0} reposts</p>
-          </RepostContainer>
+              }
+            }}
+          />
+          <p>{sharedCount ?? 0} reposts</p>
+        </RepostContainer>
 
-          <PopUpMenuContainer hidden={hidePopUp}>
-            <RePostPopUp hidden={hidePopUp} />
-          </PopUpMenuContainer>
-        </PopUpContainer>
-      </Wrapper>
-    </Tooltip>
+        <PopUpMenuContainer hidden={hidePopUp}>
+          <RePostPopUp hidden={hidePopUp} />
+        </PopUpMenuContainer>
+      </PopUpContainer>
+    </Wrapper>
   );
 }
 
@@ -79,7 +78,6 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   svg {
-    color: ${(props) => (props.like ? "var(--like-red)" : "var(--main-white)")};
     transition: color 0.4s linear;
     animation: liked 0.4s ease;
     cursor: pointer;

@@ -16,6 +16,8 @@ export default function PostsBox({ posts }) {
               image_url={post.image_url}
               userPostEmail={post.email}
               postDescription={post.description}
+              repostedBy={post.reposted_by}
+              originalPost={post.original_post}
               link={post.link}
             />
           );

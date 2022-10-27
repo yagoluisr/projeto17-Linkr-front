@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getUserById } from "../../services/api";
 import PostsBox from "../../components/Timeline/PostsBox";
 import styled from "styled-components";
@@ -7,62 +7,56 @@ import Title from "../../assets/styles/Title";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
 import TrendingHashtags from "../../components/Trending/TrendingHashtags";
 import { useParams } from "react-router-dom";
+import { renderTimeLineContext } from "../../context/userContext";
 
-export default function UserPage(){
-    const [refresh, setRefresh] = useState(false);
-    const [posts, setPosts] = useState(null);
+export default function UserPage() {
+  const [posts, setPosts] = useState(null);
+  const { renderTimeline } = useContext(renderTimeLineContext);
 
-    const [user, setUser] = useState([]);
-    const userId = useParams().id;
+  const [user, setUser] = useState([]);
+  const userId = useParams().id;
 
-    useEffect(() => {
-        setRefresh(false);
+  useEffect(() => {
+    getUserById(parseInt(userId))
+      .then((user) => {
+        setUser(user.data);
+        setPosts(user.data.posts);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [userId, renderTimeline]);
 
-        getUserById(parseInt(userId))
-            .then((user) => {
-                setUser(user.data)
-                setPosts(user.data.posts);
-            }
-        )
-        .catch((error) => {
-            console.log(error);
-        });
-    }, [refresh, userId]);
+  return (
+    <Wrapper>
+      <Container>
+        <Title>
+          <ProfilePic src={user.image_url} />
+          <p>{user.name}'s posts</p>
+        </Title>
 
-    return (
-        <Wrapper>
-            <Container>
-                <Title>
-                    <ProfilePic src={user.image_url} />
-                    <p>{user.name}'s posts</p>
-                </Title>
-                
-                <Posts>
-                    {posts ? (
-                    <PostsBox
-                        setRefresh={setRefresh}
-                        userEmail={user.email}
-                        posts={posts}
-                    />
-                    ) : (
-                    <TimelineMessage>Loading...</TimelineMessage>
-                    )}
-                </Posts>
-            </Container>
-            <TrendingHashtags refresh={refresh}/>
-        </Wrapper>
-    );
+        <Posts>
+          {posts ? (
+            <PostsBox userEmail={user.email} posts={posts} />
+          ) : (
+            <TimelineMessage>Loading...</TimelineMessage>
+          )}
+        </Posts>
+      </Container>
+      <TrendingHashtags />
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.div`
-    height: fit-content;
-    min-height: 130vh;
-    width: 100vw;
-    background-color: var(--background-gray);
-    display: flex;
-    justify-content: center;
-    column-gap: 80px;
-`
+  height: fit-content;
+  min-height: 130vh;
+  width: 100vw;
+  background-color: var(--background-gray);
+  display: flex;
+  justify-content: center;
+  column-gap: 80px;
+`;
 
 const Container = styled.div`
   height: fit-content;
@@ -73,7 +67,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  
+
   & > h2 {
     display: flex;
     align-items: center;
@@ -87,36 +81,36 @@ const Container = styled.div`
   }
 
   @media (max-width: 614px) {
-        width: 100vw;
-        margin-top: 30px;
-        h2{
-          font-size: 40px;
-          margin-left: 10px;
-        }
+    width: 100vw;
+    margin-top: 30px;
+    h2 {
+      font-size: 40px;
+      margin-left: 10px;
     }
+  }
 `;
 
-const PublishBox = styled.div`  
-    margin-top: 60px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--main-white);
-    height: fit-content;
-    width: 40vw;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 16px;
-    img {
-        display: none;
-    }
+const PublishBox = styled.div`
+  margin-top: 60px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--main-white);
+  height: fit-content;
+  width: 40vw;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  img {
+    display: none;
+  }
 
-    @media (max-width: 614px) {
-      width: 100vw;
-      margin-top: 35px;
-      border-radius: 0px;
-    }
-`
+  @media (max-width: 614px) {
+    width: 100vw;
+    margin-top: 35px;
+    border-radius: 0px;
+  }
+`;
 
 const Posts = styled.div`
   margin-top: 15px;
@@ -127,6 +121,6 @@ const Posts = styled.div`
   align-items: center;
 
   @media (max-width: 614px) {
-        width: 100vw;
-    }
+    width: 100vw;
+  }
 `;

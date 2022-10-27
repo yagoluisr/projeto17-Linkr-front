@@ -16,6 +16,8 @@ import RepostSnackBar from "./RepostSnackBar";
 export default function PostCard({
   id,
   user_id,
+  repostedBy,
+  originalPost,
   image_url,
   username,
   userPostEmail,
@@ -63,19 +65,23 @@ export default function PostCard({
   }
 
   useEffect(() => {
-    setValue(postDescription);
     if (!editPost) {
       inputRef.current.focus();
     }
-  }, [editPost, postDescription]);
+    setValue(postDescription);
+  }, [editPost, postDescription, originalPost]);
 
   return (
-    <Wrapper>
-      <RepostSnackBar />
+    <Wrapper hasSnackBar={repostedBy}>
+      <RepostSnackBar id={id} repostedBy={repostedBy} />
       <section>
         <ProfilePic src={image_url} />
-        <Like id={id} />
-        <PostShared id={id} />
+        <Like id={id} originalPost={originalPost} repostedBy={repostedBy} />
+        <PostShared
+          id={id}
+          originalPost={originalPost}
+          repostedBy={repostedBy}
+        />
       </section>
 
       <PostData>
@@ -141,6 +147,7 @@ const Wrapper = styled.div`
   min-width: 25vw;
   min-height: 220px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: ${(props) => (props.hasSnackBar ? "0px" : "16px")};
   border-bottom-right-radius: 16px;
   border-bottom-left-radius: 16px;
   section {

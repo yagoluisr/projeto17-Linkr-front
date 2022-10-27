@@ -14,25 +14,25 @@ export default function Timeline() {
 
   const [posts, setPosts] = useState(null);
   const [follows, setFollows] = useState(null);
-  
-  const getDataFromAPI = useCallback(async()=>{
+
+  const getDataFromAPI = useCallback(async () => {
     try {
       const postsData = await getPosts();
       setPosts(postsData.data);
-      console.log(postsData.data);
-
       const followsData = await getUserFollows(user.id);
       setFollows(followsData.data);
-      console.log(followsData.data);
     } catch (error) {
       console.error(error.message);
       alert(
         "There have been an issue loading your timeline, please refresh the page"
       );
     }
-  },[user.id])
+  }, [user.id]);
 
-  useEffect( ()=>{getDataFromAPI()}, [getDataFromAPI, renderTimeline]);
+  useEffect(() => {
+    
+    getDataFromAPI();
+  }, [getDataFromAPI, renderTimeline]);
 
   return (
     <Wrapper>
