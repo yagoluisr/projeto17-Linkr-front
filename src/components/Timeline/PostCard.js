@@ -73,7 +73,7 @@ export default function PostCard({
       <section>
         <ProfilePic src={image_url} />
         <Like id={id} />
-        <PostShared />
+        <PostShared id={id}/>
       </section>
 
       <PostData>

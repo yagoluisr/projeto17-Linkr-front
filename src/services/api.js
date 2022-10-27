@@ -122,6 +122,22 @@ function getPostsbyHashtag(hashtag){
   return promise;
 }
 
+function postSharePost(id){
+  const config = createHeaders();
+  const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`, config);
+  return promise;
+}
+function deleteSharedPost(id){
+  const config = createHeaders();
+  const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`, config);
+  return promise;
+}
+function getSharedCountByPost(id){
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`, config);
+  return promise;
+}
+
 export {
     signUp,
     login,
@@ -137,5 +153,8 @@ export {
     getPostLike,
     postPostLike,
     deletePostLike,
-    getPostsbyHashtag
+    getPostsbyHashtag,
+    postSharePost,
+    deleteSharedPost,
+    getSharedCountByPost
 }

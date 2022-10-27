@@ -2,10 +2,13 @@ import styled from "styled-components";
 import { BiRepost } from "react-icons/bi";
 import { Tooltip } from "@material-ui/core";
 import { AiOutlineEdit } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getSharedCountByPost } from "../../services/api";
 
-export default function PostShared() {
+export default function PostShared({ id }) {
   const [hidePopUp, setHidePopUp] = useState(true);
+  const [sharedCount, setSharedCount] = useState(0);
+
   function RePostPopUp() {
     return (
       <PopUpList>
@@ -13,7 +16,6 @@ export default function PostShared() {
           <div
             className="edit-post"
             onClick={() => {
-              //   setEditPost(false);
               setHidePopUp(true);
             }}
           >
@@ -36,6 +38,12 @@ export default function PostShared() {
     );
   }
 
+  useEffect(() => {
+    getSharedCountByPost(id).then((answer) => {
+      setSharedCount(answer);
+    }, []);
+  });
+
   return (
     <Tooltip title={hidePopUp ? "Repost" : ""}>
       <Wrapper>
@@ -46,7 +54,7 @@ export default function PostShared() {
                 setHidePopUp(!hidePopUp);
               }}
             />
-            <p>1 reposts</p>
+            <p>`${sharedCount} reposts`</p>
           </RepostContainer>
 
           <PopUpMenuContainer hidden={hidePopUp}>
