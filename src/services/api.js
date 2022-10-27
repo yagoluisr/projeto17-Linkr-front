@@ -37,10 +37,13 @@ function makePost(body) {
   return promise;
 }
 
-function getTrendingHashtags(){
-    const config = createHeaders()
-    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/trending`, config);
-    return promise;
+function getTrendingHashtags() {
+  const config = createHeaders();
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/trending`,
+    config
+  );
+  return promise;
 }
 
 function getUser() {
@@ -81,80 +84,122 @@ function deletePost(id) {
 }
 
 function logout() {
-    const config = createHeaders();
-    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/sign-in`, config);
-    return promise;
+  const config = createHeaders();
+  const promise = axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/sign-in`,
+    config
+  );
+  return promise;
 }
 
 function getByUserName(body) {
-    const config = createHeaders();
-    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}`,config);
+  const config = createHeaders();
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/user/filter/${body}`,
+    config
+  );
   return promise;
 }
 
 function getPostLike(id) {
-    const config = createHeaders();
-    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
-    return promise;
+  const config = createHeaders();
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`,
+    config
+  );
+  return promise;
 }
 
 function postPostLike(id) {
-    const config = createHeaders();
-    const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, {}, config);
-    return promise;
+  const config = createHeaders();
+  const promise = axios.post(
+    `${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`,
+    {},
+    config
+  );
+  return promise;
 }
 
 function deletePostLike(id) {
-    const config = createHeaders();
-    const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`, config);
-    return promise;
-}
-
-function getUserById (body) {
   const config = createHeaders();
-  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${body}`, config);
+  const promise = axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/post/like/${id}`,
+    config
+  );
   return promise;
 }
 
-function getPostsbyHashtag(hashtag){
+function getUserById(body) {
   const config = createHeaders();
-  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`, config);
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/user/${body}`,
+    config
+  );
   return promise;
 }
 
-function postSharePost(id){
+function getPostsbyHashtag(hashtag) {
   const config = createHeaders();
-  const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`, config);
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`,
+    config
+  );
   return promise;
 }
-function deleteSharedPost(id){
+
+function postSharePost(id) {
   const config = createHeaders();
-  const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`, config);
+  const promise = axios.post(
+    `${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`,
+    config
+  );
   return promise;
 }
-function getSharedCountByPost(id){
+function deleteSharedPost(id) {
   const config = createHeaders();
-  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`, config);
+  const promise = axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`,
+    config
+  );
+  return promise;
+}
+
+function getSharedCountByPost(id) {
+  const config = createHeaders();
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`,
+    config
+  );
+  return promise;
+}
+
+function getUserFollows(id) {
+  const config = createHeaders();
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/user/follows/${id}`,
+    config
+  );
   return promise;
 }
 
 export {
-    signUp,
-    login,
-    makePost,
-    getUser,
-    getPosts,
-    updatePost,
-    deletePost,
-    logout,
-    getByUserName,
-    getUserById,
-    getTrendingHashtags,
-    getPostLike,
-    postPostLike,
-    deletePostLike,
-    getPostsbyHashtag,
-    postSharePost,
-    deleteSharedPost,
-    getSharedCountByPost
-}
+  signUp,
+  login,
+  makePost,
+  getUser,
+  getPosts,
+  updatePost,
+  deletePost,
+  logout,
+  getByUserName,
+  getUserById,
+  getTrendingHashtags,
+  getPostLike,
+  postPostLike,
+  deletePostLike,
+  getPostsbyHashtag,
+  postSharePost,
+  deleteSharedPost,
+  getSharedCountByPost,
+  getUserFollows,
+};

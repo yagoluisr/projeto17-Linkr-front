@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { getPosts } from "../../services/api";
+import { useState, useEffect, useContext, useCallback } from "react";
+import { getPosts, getUserFollows } from "../../services/api";
 import PostsBox from "./PostsBox";
 import styled from "styled-components";
 import ProfilePic from "../../assets/styles/ProfilePic";
@@ -13,19 +13,27 @@ export default function Timeline() {
   const { renderTimeline } = useContext(renderTimeLineContext);
 
   const [posts, setPosts] = useState(null);
+  const [follows, setFollows] = useState(null);
+  
+  const getDataFromAPI = useCallback(async()=>{
+    try {
+      const postsData = await getPosts();
+      setPosts(postsData.data);
+      console.log(postsData.data);
 
-  useEffect(() => {
-    const request = getPosts();
-    request.then((posts) => {
-      setPosts(posts.data);
-    });
-    request.catch((error) => {
-      console.log(error);
+      const followsData = await getUserFollows(user.id);
+      setFollows(followsData.data);
+      console.log(followsData.data);
+    } catch (error) {
+      console.error(error.message);
       alert(
-        "There have been an issue fetching your timeline, please refresh the page"
+        "There have been an issue loading your timeline, please refresh the page"
       );
-    });
-  }, [renderTimeline]);
+    }
+  },[user.id])
+
+  useEffect( ()=>{getDataFromAPI()}, [getDataFromAPI, renderTimeline]);
+
   return (
     <Wrapper>
       <Title>timeline</Title>
@@ -35,7 +43,15 @@ export default function Timeline() {
       </PublishBox>
       <Posts>
         {posts ? (
-          <PostsBox posts={posts} />
+          <div>
+            {follows?.length === 0 ? (
+              <TimelineMessage>
+                You don't follow anyone yet. Search for new Friends!
+              </TimelineMessage>
+            ) : (
+              <PostsBox posts={posts} />
+            )}
+          </div>
         ) : (
           <TimelineMessage>Loading...</TimelineMessage>
         )}
@@ -68,31 +84,30 @@ const Wrapper = styled.div`
   }
 `;
 
-const PublishBox = styled.div`  
-    margin-top: 60px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    background-color: var(--main-white);
-    height: fit-content;
-    width: 40vw;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 16px;
-    img {
-        margin-top: 20px;
-        margin-left: 1.5vw;
-    }
- 
+const PublishBox = styled.div`
+  margin-top: 60px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: var(--main-white);
+  height: fit-content;
+  width: 40vw;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  img {
+    margin-top: 20px;
+    margin-left: 1.5vw;
+  }
 
-    @media (max-width: 614px) {
-      width: 100vw;
-      margin-top: 35px;
-      border-radius: 0px;
-      img {
-        display: none;
+  @media (max-width: 614px) {
+    width: 100vw;
+    margin-top: 35px;
+    border-radius: 0px;
+    img {
+      display: none;
     }
-    }
+  }
 `;
 
 const Posts = styled.div`
