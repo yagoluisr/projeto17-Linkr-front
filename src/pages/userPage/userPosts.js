@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { deleteFollow, getFollowById, getUserById, insertFollow } from "../../services/api";
+import { deleteFollow, getFollowById, getUserById, getUserPosts, insertFollow } from "../../services/api";
 import PostsBox from "../../components/Timeline/PostsBox";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
@@ -16,16 +16,24 @@ export default function UserPage(){
     const [posts, setPosts] = useState(null);
     const [pages, setPages] = useState(1)
     const [profile, setProfile] = useState([]);
-    const userId = Number(useParams().id);
     const [follow, setFollow] = useState([]);
     const [disabled, setDisabled] = useState(false);
-
+    
+    const userId = Number(useParams().id);
+    
     useEffect(() => {
         setRefresh(false);
 
         getUserById(parseInt(userId))
+        .then((res) => {
+           setProfile(res.data)     
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        getUserPosts(parseInt(userId))
             .then((res) => {
-                setProfile(res.data[0])
                 setPosts(res.data);
                 
                 getFollowById(res.data[0].user_id)
@@ -48,7 +56,7 @@ export default function UserPage(){
         setDisabled(true)
 
         if(follow[0]) {
-            deleteFollow(profile.user_id)
+            deleteFollow(profile.id)
                 .then(()=> {
                     setDisabled(false)
                 })
@@ -58,7 +66,7 @@ export default function UserPage(){
                 })
             ;
         } else {
-            insertFollow(profile.user_id)
+            insertFollow(profile.id)
                 .then(() => {
                     setDisabled(false)
                 })
