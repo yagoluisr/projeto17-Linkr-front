@@ -24,13 +24,13 @@ export default function UserPage(){
         setRefresh(false);
 
         getUserById(parseInt(userId))
-            .then((profile) => {
-                setProfile(profile.data)
-                setPosts(profile.data.posts);
+            .then((res) => {
+                setProfile(res.data[0])
+                setPosts(res.data);
                 
-                getFollowById(profile.data.id)
-                    .then(res => {
-                        setFollow(res.data);
+                getFollowById(res.data[0].user_id)
+                    .then(ans => {
+                        setFollow(ans.data);
                     }
                 )
                 .catch((error) => {
@@ -48,7 +48,7 @@ export default function UserPage(){
         setDisabled(true)
 
         if(follow[0]) {
-            deleteFollow(profile.id)
+            deleteFollow(profile.user_id)
                 .then(()=> {
                     setDisabled(false)
                 })
@@ -58,7 +58,7 @@ export default function UserPage(){
                 })
             ;
         } else {
-            insertFollow(profile.id)
+            insertFollow(profile.user_id)
                 .then(() => {
                     setDisabled(false)
                 })
