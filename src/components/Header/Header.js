@@ -68,4 +68,11 @@ const Wrapper = styled.header`
 
         margin-right: 15px;
     }
+
+    @media (max-width: 614px) {
+
+        div:nth-child(1) {
+            display: none;
+        }
+    }
 `
