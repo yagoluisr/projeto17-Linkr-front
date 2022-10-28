@@ -8,10 +8,11 @@ import TimelineMessage from "../../assets/styles/TimelineMessage";
 import TrendingHashtags from "../../components/Trending/TrendingHashtags";
 import { userContext } from "../../context/userContext";
 import { Search, SearchPeople } from "../../components/Search/Search";
+import { renderTimeLineContext } from "../../context/userContext";
 
 export default function UserPage(){
     const { user } = useContext(userContext);
-
+    const { renderTimeline } = useContext(renderTimeLineContext);
     const [refresh, setRefresh] = useState(false);
     const [posts, setPosts] = useState(null);
     const [pages, setPages] = useState(1)
@@ -217,8 +218,6 @@ const Container = styled.section`
   align-items: flex-start;
   justify-content: center;
 
-  
-  
   & > h2 {
     display: flex;
     align-items: center;
@@ -232,36 +231,36 @@ const Container = styled.section`
   }
 
   @media (max-width: 614px) {
-        width: 100vw;
-        margin-top: 30px;
-        h2{
-          font-size: 40px;
-          margin-left: 10px;
-        }
+    width: 100vw;
+    margin-top: 30px;
+    h2 {
+      font-size: 40px;
+      margin-left: 10px;
     }
+  }
 `;
 
-const PublishBox = styled.div`  
-    margin-top: 60px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--main-white);
-    height: fit-content;
-    width: 40vw;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 16px;
-    img {
-        display: none;
-    }
+const PublishBox = styled.div`
+  margin-top: 60px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--main-white);
+  height: fit-content;
+  width: 40vw;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  img {
+    display: none;
+  }
 
-    @media (max-width: 614px) {
-      width: 100vw;
-      margin-top: 35px;
-      border-radius: 0px;
-    }
-`
+  @media (max-width: 614px) {
+    width: 100vw;
+    margin-top: 35px;
+    border-radius: 0px;
+  }
+`;
 
 const Posts = styled.div`
   margin-top: 15px;
@@ -272,8 +271,8 @@ const Posts = styled.div`
   align-items: center;
 
   @media (max-width: 614px) {
-        width: 100vw;
-    }
+    width: 100vw;
+  }
 `;
 
 export const Mobile = styled(Search)`

@@ -61,6 +61,8 @@ export default function PostsBox({ identifier, hashtag, userId, posts, pages, se
                 userPostEmail={post.email}
                 postDescription={post.description}
                 link={post.link}
+                repostedBy={post.reposted_by}
+                originalPost={post.original_post}
                 comments_number={post.comments_number}
               />
             );

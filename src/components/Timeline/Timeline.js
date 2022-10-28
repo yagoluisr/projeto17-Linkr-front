@@ -31,7 +31,7 @@ export default function Timeline() {
         "There have been an issue loading your timeline, please refresh the page"
       );
     }
-  },[pages])
+  },[pages, user.id])
 
   useEffect( ()=>{getDataFromAPI()}, [getDataFromAPI, renderTimeline]);
 

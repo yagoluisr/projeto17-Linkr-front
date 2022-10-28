@@ -5,12 +5,7 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import { renderTimeLineContext } from "../../context/userContext";
 
-export default function DeleteModal({
-  isOpen,
-  setOpen,
-  setHidePopUp,
-  postId,
-}) {
+export default function DeleteModal({ isOpen, setOpen, setHidePopUp, postId }) {
   const [loading, setloading] = useState(false);
   const { renderTimeline, setRender } = useContext(renderTimeLineContext);
 
@@ -41,12 +36,13 @@ export default function DeleteModal({
               onClick={() => {
                 setloading(true);
                 deletePost(postId)
-                  .then(() => {
+                  .then((answer) => {
                     setRender(!renderTimeline);
                     closeModal();
                   })
                   .catch((error) => {
                     console.error(error);
+                    setRender(!renderTimeline);
                     alert("Server couldn't delete the post, please try later");
                     closeModal();
                   });

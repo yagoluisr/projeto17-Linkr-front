@@ -6,7 +6,7 @@ import { IconWrapper } from "../../assets/styles/IconWrapper";
 import { renderTimeLineContext, userContext } from "../../context/userContext";
 import { deletePostLike, getPostLike, postPostLike } from "../../services/api";
 
-export default function Like({ id }) {
+export default function Like({ id, originalPost, repostedBy }) {
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [tooltipDescription, setTooltipDesc] = useState("");
@@ -49,7 +49,7 @@ export default function Like({ id }) {
   }
 
   useEffect(() => {
-    getPostLike(id)
+    getPostLike(originalPost ?? id)
       .then((answer) => {
         const usersLikesPost = answer.data.users;
 
@@ -60,26 +60,30 @@ export default function Like({ id }) {
       .catch((error) => {
         console.log(error);
       });
-  }, [renderTimeline, id, like]);
+  }, [renderTimeline, id, like, originalPost]);
 
   function likePost() {
-    postPostLike(id)
-      .then(() => {
-        setRender(!renderTimeline);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (!repostedBy) {
+      postPostLike(id)
+        .then(() => {
+          setRender(!renderTimeline);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   function dislikePost() {
-    deletePostLike(id)
-      .then(() => {
-        setRender(!renderTimeline);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (!repostedBy) {
+      deletePostLike(id)
+        .then(() => {
+          setRender(!renderTimeline);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   return (
@@ -96,12 +100,25 @@ export default function Like({ id }) {
   );
 }
 
-const Wrapper = styled(IconWrapper)`
-    & > svg {
-        color: ${(props) => (props.like ? "var(--like-red)" : "var(--main-white)")};
-        transition: color 0.4s linear;
-        animation: liked 0.4s ease;
-    }
+const Wrapper = styled.div`
+  color: var(--main-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+
+  svg {
+    color: ${(props) => (props.like ? "var(--like-red)" : "var(--main-white)")};
+    font-size: 25px;
+    transition: color 0.4s linear;
+    animation: liked 0.4s ease;
+    cursor: pointer;
+  }
+
+  p {
+    margin-top: 5px;
+  }
 
     @keyframes liked {
         0% {
