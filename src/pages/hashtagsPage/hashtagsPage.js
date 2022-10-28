@@ -10,12 +10,13 @@ import { useParams } from "react-router-dom";
 export default function HashtagsPage(){
     const [refresh, setRefresh] = useState(false);
     const [posts, setPosts] = useState(null);
+    const [pages, setPages] = useState(1);
     const hashtag = useParams().hashtag;
 
     useEffect(() => {
         setRefresh(false);
 
-        getPostsbyHashtag(hashtag)
+        getPostsbyHashtag(hashtag, pages)
             .then((res) => {
                 setPosts(res.data);
             }
@@ -35,6 +36,11 @@ export default function HashtagsPage(){
                     <PostsBox
                         setRefresh={setRefresh}
                         posts={posts}
+                        setPosts={setPosts}
+                        setPages={setPages}
+                        pages={pages}
+                        identifier={"hashtag"}
+                        hashtag={hashtag}
                     />
                     ) : (
                     <TimelineMessage>Loading...</TimelineMessage>

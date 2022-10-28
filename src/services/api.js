@@ -55,10 +55,10 @@ function getUser() {
   return promise;
 }
 
-function getPosts() {
+function getPosts(pages) {
   const config = createHeaders();
   const promise = axios.get(
-    `${process.env.REACT_APP_API_BASE_URL}/timeline`,
+    `${process.env.REACT_APP_API_BASE_URL}/timeline/${pages}`,
     config
   );
   return promise;
@@ -147,6 +147,30 @@ function getPostsbyHashtag(hashtag) {
   return promise;
 }
 
+function getUserPosts (body, pages) {
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${body}/${pages}`, config);
+  return promise;
+}
+
+function postComment(id, body) {
+    const config = createHeaders();
+    const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`, body, config);
+    return promise;
+}
+
+function getPostComments(id) {
+    const config = createHeaders();
+    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`, config);
+    return promise;
+}
+
+function getFollowById (profileId) {
+  const config = createHeaders();
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, config);
+  return promise;
+}
+
 function postSharePost(id) {
   const config = createHeaders();
   const promise = axios.post(
@@ -165,15 +189,26 @@ function deleteSharedPost(id) {
   return promise;
 }
 
+function insertFollow (profileId) {
+  const config = createHeaders();
+  const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, {}, config);
+  return promise;
+}
+
+function deleteFollow (profileId) {
+  const config = createHeaders();
+  const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/user/unfollow/${profileId}`, config);
+  return promise;
+}
+
+
 function getSharedCountByPost(id) {
   const config = createHeaders();
   const promise = axios.get(
     `${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`,
     config
   );
-  return promise;
-}
-
+  }
 function getUserFollows(id) {
   const config = createHeaders();
   const promise = axios.get(
@@ -183,24 +218,31 @@ function getUserFollows(id) {
   return promise;
 }
 
+
 export {
-  signUp,
-  login,
-  makePost,
-  getUser,
-  getPosts,
-  updatePost,
-  deletePost,
-  logout,
-  getByUserName,
-  getUserById,
-  getTrendingHashtags,
-  getPostLike,
-  postPostLike,
-  deletePostLike,
-  getPostsbyHashtag,
-  postSharePost,
-  deleteSharedPost,
-  getSharedCountByPost,
-  getUserFollows,
-};
+    signUp,
+    login,
+    makePost,
+    getUser,
+    getPosts,
+    updatePost,
+    deletePost,
+    logout,
+    getByUserName,
+    getUserById,
+    getTrendingHashtags,
+    getPostLike,
+    postPostLike,
+    deletePostLike,
+    getPostsbyHashtag,
+    postComment,
+    getPostComments,
+    getFollowById,
+    insertFollow,
+    deleteFollow,
+    getUserFollows,
+    getUserPosts,
+    postSharePost,
+    deleteSharedPost,
+    getSharedCountByPost,
+}

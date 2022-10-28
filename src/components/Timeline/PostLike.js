@@ -2,6 +2,7 @@ import { Tooltip } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import styled from "styled-components";
+import { IconWrapper } from "../../assets/styles/IconWrapper";
 import { renderTimeLineContext, userContext } from "../../context/userContext";
 import { deletePostLike, getPostLike, postPostLike } from "../../services/api";
 
@@ -119,15 +120,15 @@ const Wrapper = styled.div`
     margin-top: 5px;
   }
 
-  @keyframes liked {
-    0% {
-      transform: scale(0.8);
+    @keyframes liked {
+        0% {
+            transform: scale(0.8);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
 `;

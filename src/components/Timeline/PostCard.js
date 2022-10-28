@@ -10,6 +10,8 @@ import DeleteModal from "./DeleteModal";
 import PostEditField from "./PostEditField";
 import Like from "./PostLike";
 import { userContext } from "../../context/userContext";
+import CommentsCounter from "./PostComments";
+import Comments from "../Comments/Comments";
 import PostShared from "./PostShared";
 import RepostSnackBar from "./RepostSnackBar";
 
@@ -23,6 +25,7 @@ export default function PostCard({
   userPostEmail,
   postDescription,
   link,
+  comments_number
 }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [editPost, setEditPost] = useState(true);
@@ -30,6 +33,7 @@ export default function PostCard({
   const [value, setValue] = useState(postDescription);
   const { user } = useContext(userContext);
   const [isOpen, setOpen] = useState(false);
+  const [openComments, setOpenComments] = useState(false);
   const inputRef = useRef();
   function openModal() {
     setOpen(true);
@@ -72,17 +76,15 @@ export default function PostCard({
   }, [editPost, postDescription, originalPost]);
 
   return (
-    <Wrapper hasSnackBar={repostedBy}>
+    <>
+        <Wrapper hasSnackBar={repostedBy}>
       <RepostSnackBar id={id} repostedBy={repostedBy} />
-      <section>
-        <ProfilePic src={image_url} />
-        <Like id={id} originalPost={originalPost} repostedBy={repostedBy} />
-        <PostShared
-          id={id}
-          originalPost={originalPost}
-          repostedBy={repostedBy}
-        />
-      </section>
+            <section>
+                <ProfilePic src={image_url} />
+              <Like id={id} originalPost={originalPost} repostedBy={repostedBy} />
+              <CommentsCounter openComments={openComments} setOpenComments={setOpenComments} comments_number={comments_number} />
+              <PostShared id={id} originalPost={originalPost} repostedBy={repostedBy} />
+            </section>
 
       <PostData>
         <HeaderContainer>
@@ -133,12 +135,14 @@ export default function PostCard({
         />
       </PostData>
     </Wrapper>
+    {openComments ? <Comments id={id}  comments_number={comments_number} /> : null}
+    </>
   );
 }
 const Wrapper = styled.div`
   position: relative;
   z-index: 0;
-  font-family: Lato, sans-serif;
+  font-family: var(--main-font);
   margin: 30px 0;
   display: flex;
   background-color: var(--post-background-black);
