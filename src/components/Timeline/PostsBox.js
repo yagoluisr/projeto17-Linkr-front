@@ -12,7 +12,10 @@ export default function PostsBox({ identifier, hashtag, posts, pages, setPages, 
   const [loading, setLoading] = useState(false)
 
   async function loadMoreFunc(){
-    if(posts.length && identifier !== 'user') {
+    if(identifier === 'user'){
+      return
+    }
+    if(posts.length) {
       setLoading(true)
     }
     if(identifier === 'timeline'){

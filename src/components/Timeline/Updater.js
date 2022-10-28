@@ -17,7 +17,7 @@ export default function Updater({posts, updatePosts}) {
                 setNewPostsCount(difference)
             }
         })
-      }, 7500);
+      }, 15000);
 
       async function handleClick(){
         try {
