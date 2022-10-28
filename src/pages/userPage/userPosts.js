@@ -51,7 +51,6 @@ export default function UserPage() {
     getFollowById(userId)
       .then((ans) => {
         setFollow(ans.data);
-        console.log(ans.data)
       })
       .catch((error) => {
         console.error(error);
