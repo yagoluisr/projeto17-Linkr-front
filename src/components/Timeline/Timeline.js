@@ -33,6 +33,8 @@ export default function Timeline() {
     }
   },[pages, user.id])
 
+
+
   useEffect( ()=>{getDataFromAPI()}, [getDataFromAPI, renderTimeline]);
 
   return (

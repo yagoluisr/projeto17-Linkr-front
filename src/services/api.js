@@ -229,10 +229,11 @@ function getSharedCountByPost(id) {
   );
   return promise;
 }
+
 function getUserFollows(id) {
   const config = createHeaders();
   const promise = axios.get(
-    `${process.env.REACT_APP_API_BASE_URL}/user/follows/${id}`,
+    `${process.env.REACT_APP_API_BASE_URL}/user/follow/${id}`,
     config
   );
   return promise;
