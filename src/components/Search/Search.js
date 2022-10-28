@@ -55,28 +55,30 @@ export function SearchPeople() {
         </div>
         {arrUsers.length > 0 ? (
           <Extension ref={searchRef}>
-            {arrUsers.map((user, key) => (
-              <Link
-                to={`/user/${user.id}`}
-                key={key}
-                onClick={() => {
-                  setArrUsers([]);
-                  setSearch("");
-                }}
-              >
-                <Profile>
-                  <ProfilePic src={user.image_url}></ProfilePic>
-                  <p>{user.name}</p>
-                  {user.follow ? (
-                    <Follow>
-                      <p>• following</p>
-                    </Follow>
-                  ) : (
-                    <div></div>
-                  )}
-                </Profile>
-              </Link>
-            ))}
+            {arrUsers.map((user, key) => {
+              return (
+                <Link
+                  to={`/user/${user.id}`}
+                  key={key}
+                  onClick={() => {
+                    setArrUsers([]);
+                    setSearch("");
+                  }}
+                >
+                  <Profile>
+                    <ProfilePic src={user.image_url}></ProfilePic>
+                    <p>{user.name}</p>
+                    {user.follow ? (
+                      <Follow>
+                        <p>• following</p>
+                      </Follow>
+                    ) : (
+                      <div></div>
+                    )}
+                  </Profile>
+                </Link>
+              );
+            })}
           </Extension>
         ) : (
           ""
