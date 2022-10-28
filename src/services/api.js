@@ -129,45 +129,58 @@ function deletePostLike(id) {
   return promise;
 }
 
-function getUserById(body) {
+function getUserById(id) {
   const config = createHeaders();
   const promise = axios.get(
-    `${process.env.REACT_APP_API_BASE_URL}/user/${body}`,
+    `${process.env.REACT_APP_API_BASE_URL}/profile/${id}`,
     config
   );
   return promise;
 }
 
-function getPostsbyHashtag(hashtag) {
+function getPostsbyHashtag(hashtag, pages) {
   const config = createHeaders();
   const promise = axios.get(
-    `${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}`,
+    `${process.env.REACT_APP_API_BASE_URL}/hashtag/${hashtag}/${pages}`,
     config
   );
   return promise;
 }
 
-function getUserPosts (body, pages) {
+function getUserPosts(body, pages) {
   const config = createHeaders();
-  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${body}/${pages}`, config);
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/user/${body}/${pages}`,
+    config
+  );
   return promise;
 }
 
 function postComment(id, body) {
-    const config = createHeaders();
-    const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`, body, config);
-    return promise;
+  const config = createHeaders();
+  const promise = axios.post(
+    `${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`,
+    body,
+    config
+  );
+  return promise;
 }
 
 function getPostComments(id) {
-    const config = createHeaders();
-    const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`, config);
-    return promise;
+  const config = createHeaders();
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/post/comments/${id}`,
+    config
+  );
+  return promise;
 }
 
-function getFollowById (profileId) {
+function getFollowById(profileId) {
   const config = createHeaders();
-  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, config);
+  const promise = axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/user/follows/${profileId}`,
+    config
+  );
   return promise;
 }
 
@@ -189,18 +202,24 @@ function deleteSharedPost(id) {
   return promise;
 }
 
-function insertFollow (profileId) {
+function insertFollow(profileId) {
   const config = createHeaders();
-  const promise = axios.post(`${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`, {}, config);
+  const promise = axios.post(
+    `${process.env.REACT_APP_API_BASE_URL}/user/follow/${profileId}`,
+    {},
+    config
+  );
   return promise;
 }
 
-function deleteFollow (profileId) {
+function deleteFollow(profileId) {
   const config = createHeaders();
-  const promise = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/user/unfollow/${profileId}`, config);
+  const promise = axios.delete(
+    `${process.env.REACT_APP_API_BASE_URL}/user/unfollow/${profileId}`,
+    config
+  );
   return promise;
 }
-
 
 function getSharedCountByPost(id) {
   const config = createHeaders();
@@ -208,7 +227,8 @@ function getSharedCountByPost(id) {
     `${process.env.REACT_APP_API_BASE_URL}/post/share/${id}`,
     config
   );
-  }
+  return promise;
+}
 function getUserFollows(id) {
   const config = createHeaders();
   const promise = axios.get(
@@ -218,31 +238,30 @@ function getUserFollows(id) {
   return promise;
 }
 
-
 export {
-    signUp,
-    login,
-    makePost,
-    getUser,
-    getPosts,
-    updatePost,
-    deletePost,
-    logout,
-    getByUserName,
-    getUserById,
-    getTrendingHashtags,
-    getPostLike,
-    postPostLike,
-    deletePostLike,
-    getPostsbyHashtag,
-    postComment,
-    getPostComments,
-    getFollowById,
-    insertFollow,
-    deleteFollow,
-    getUserFollows,
-    getUserPosts,
-    postSharePost,
-    deleteSharedPost,
-    getSharedCountByPost,
-}
+  signUp,
+  login,
+  makePost,
+  getUser,
+  getPosts,
+  updatePost,
+  deletePost,
+  logout,
+  getByUserName,
+  getUserById,
+  getTrendingHashtags,
+  getPostLike,
+  postPostLike,
+  deletePostLike,
+  getPostsbyHashtag,
+  postComment,
+  getPostComments,
+  getFollowById,
+  insertFollow,
+  deleteFollow,
+  getUserFollows,
+  getUserPosts,
+  postSharePost,
+  deleteSharedPost,
+  getSharedCountByPost,
+};

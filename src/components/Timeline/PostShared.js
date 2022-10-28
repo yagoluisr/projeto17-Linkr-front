@@ -1,26 +1,41 @@
 import styled from "styled-components";
 import { BiRepost } from "react-icons/bi";
 import { AiOutlineEdit } from "react-icons/ai";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { getSharedCountByPost, postSharePost } from "../../services/api";
 import { renderTimeLineContext } from "../../context/userContext";
+import { IconWrapper } from "../../assets/styles/IconWrapper";
 
 export default function PostShared({ id, originalPost, repostedBy }) {
   const [hidePopUp, setHidePopUp] = useState(true);
   const [sharedCount, setSharedCount] = useState(null);
+  const popUpRef = useRef();
   const { setRender } = useContext(renderTimeLineContext);
   useEffect(() => {
     getSharedCountByPost(originalPost ?? id)
       .then((answer) => {
         setSharedCount(answer.data.shares_number);
       })
-
       .catch((error) => console.log(error));
-  }, [originalPost, id]);
+
+    function handler(e) {
+      if (!popUpRef?.current.contains(e.target)) {
+        setHidePopUp(!hidePopUp);
+      }
+    }
+
+    if (!hidePopUp) {
+      document.addEventListener("mousedown", handler);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  }, [originalPost, id, hidePopUp, popUpRef]);
 
   function RePostPopUp() {
     return (
-      <PopUpList>
+      <PopUpList ref={popUpRef}>
         <li>
           <div
             className="edit-post"
@@ -28,7 +43,7 @@ export default function PostShared({ id, originalPost, repostedBy }) {
               postSharePost(id)
                 .then(() => setRender(true))
                 .catch((error) => console.log(error));
-              setHidePopUp(true);
+              setHidePopUp(!hidePopUp);
             }}
           >
             <BiRepost />
@@ -38,7 +53,7 @@ export default function PostShared({ id, originalPost, repostedBy }) {
         <li>
           <div
             onClick={() => {
-              setHidePopUp(true);
+              setHidePopUp(!hidePopUp);
             }}
           >
             <AiOutlineEdit />
@@ -71,16 +86,10 @@ export default function PostShared({ id, originalPost, repostedBy }) {
   );
 }
 
-const Wrapper = styled.div`
-  color: var(--main-white);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+const Wrapper = styled(IconWrapper)`
   svg {
     transition: color 0.4s linear;
     animation: liked 0.4s ease;
-    cursor: pointer;
   }
 `;
 
@@ -92,13 +101,6 @@ const PopUpContainer = styled.div`
   justify-content: flex-end;
   p {
     font-size: 14px;
-  }
-  svg {
-    font-size: 28px;
-  }
-  svg:hover {
-    background-color: #252525;
-    cursor: pointer;
   }
   .react-icon {
     font-size: 24px;
@@ -112,11 +114,8 @@ const PopUpMenuContainer = styled.div`
   z-index: 1;
   width: 155px;
   top: 0;
-  left: -16%;
-  margin: 188px 6px 0px 80px;
-  svg {
-    font-size: 20px;
-  }
+  left: 0;
+  margin: 250px 6px 0px 20px;
   p {
     padding-top: 2px;
   }
@@ -146,12 +145,12 @@ const PopUpList = styled.ul`
     padding-bottom: 8px;
     border-bottom: 1px solid grey;
   }
-  p {
-    font-size: 14px;
-  }
 `;
 const RepostContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  p {
+    font-size: 11px;
+  }
 `;

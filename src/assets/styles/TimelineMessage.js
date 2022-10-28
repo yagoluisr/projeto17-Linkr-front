@@ -8,7 +8,7 @@ export default function TimelineMessage({ children }) {
     );
 }
 
-const Wrapper = styled.span`
+const Wrapper = styled.div`
     text-align: center;
     margin-top: 70px;
     margin-bottom: 80px;

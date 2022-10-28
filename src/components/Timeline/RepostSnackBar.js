@@ -31,14 +31,12 @@ export default function RepostSnackBar({ id, repostedBy }) {
 }
 
 const RepostSnackbar = styled.div`
-  position: absolute;
   top: -10.5%;
   left: 0;
-  z-index: -1;
   display: ${(props) => (props.hidden ? "none" : "flex")};
   align-items: center;
   padding-left: 25px;
-  margin-bottom: 20px;
+  font-family: var(--main-font);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   width: 100%;
