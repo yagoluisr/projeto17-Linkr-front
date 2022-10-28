@@ -1,7 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { deleteFollow, getFollowById, getUserById, getUserPosts, insertFollow } from "../../services/api";
+import {
+  deleteFollow,
+  getFollowById,
+  getUserById,
+  getUserPosts,
+  insertFollow,
+} from "../../services/api";
 import PostsBox from "../../components/Timeline/PostsBox";
 import ProfilePic from "../../assets/styles/ProfilePic";
 import TimelineMessage from "../../assets/styles/TimelineMessage";
@@ -10,203 +16,202 @@ import { userContext } from "../../context/userContext";
 import { Search, SearchPeople } from "../../components/Search/Search";
 import { renderTimeLineContext } from "../../context/userContext";
 
-export default function UserPage(){
-    const { user } = useContext(userContext);
-    const { renderTimeline } = useContext(renderTimeLineContext);
-    const [refresh, setRefresh] = useState(false);
-    const [posts, setPosts] = useState(null);
-    const [pages, setPages] = useState(1)
-    const [profile, setProfile] = useState([]);
-    const [follow, setFollow] = useState([]);
-    const [disabled, setDisabled] = useState(false);
-    
-    const userId = Number(useParams().id);
-    
-    useEffect(() => {
-        setRefresh(false);
+export default function UserPage() {
+  const { user } = useContext(userContext);
+  const { renderTimeline } = useContext(renderTimeLineContext);
+  const [refresh, setRefresh] = useState(false);
+  const [posts, setPosts] = useState(null);
+  const [pages, setPages] = useState(1);
+  const [profile, setProfile] = useState([]);
+  const [follow, setFollow] = useState([]);
+  const [disabled, setDisabled] = useState(false);
 
-        getUserById(parseInt(userId))
-        .then((res) => {
-           setProfile(res.data)     
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+  const userId = Number(useParams().id);
 
-        getUserPosts(parseInt(userId), pages)
-            .then((res) => {
-                setPosts(res.data);
-                
-                getFollowById(res.data[0].user_id)
-                    .then(ans => {
-                        setFollow(ans.data);
-                    }
-                )
-                .catch((error) => {
-                    console.error(error);
-                });
-            }
-        )
-        .catch((error) => {
-            console.log(error);
+  useEffect(() => {
+    setRefresh(false);
+    getUserById(parseInt(userId))
+      .then((res) => {
+        setProfile(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    getUserPosts(parseInt(userId), pages)
+      .then((res) => {
+        setPosts(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [refresh, userId, renderTimeline, pages]);
+
+  useEffect(() => {
+    getFollowById(userId)
+      .then((ans) => {
+        setFollow(ans.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [userId, refresh]);
+
+  function handleFollowButton() {
+    setDisabled(true);
+    if (follow[0]) {
+      deleteFollow(profile.id)
+        .then(() => {
+          setRefresh(!refresh);
+          setDisabled(false);
+        })
+        .catch(() => {
+          alert("Operation could not be performed");
+          setDisabled(false);
         });
-    }, [refresh, userId, follow]);
-
-
-    function handleFollowButton () {
-        setDisabled(true)
-
-        if(follow[0]) {
-            deleteFollow(profile.id)
-                .then(()=> {
-                    setDisabled(false)
-                })
-                .catch(() => {
-                    alert('Operation could not be performed');
-                    setDisabled(false)
-                })
-            ;
-        } else {
-            insertFollow(profile.id)
-                .then(() => {
-                    setDisabled(false)
-                })
-                .catch(() => {
-                    alert('Operation could not be performed');
-                    setDisabled(false)
-                })
-            ;
-        }
+    } else {
+      insertFollow(profile.id)
+        .then(() => {
+          setRefresh(!refresh);
+          setDisabled(false);
+        })
+        .catch(() => {
+          alert("Operation could not be performed");
+          setDisabled(false);
+        });
     }
+  }
 
-    return (
-        <Wrapper>
-                <Mobile>
-                    <SearchPeople />
-                </Mobile>
-            <NewTitle>
-                <div>
-                    <ProfilePic src={profile.image_url} />
-                    <p>{profile.name}'s posts</p>
-                </div>
+  return (
+    <Wrapper>
+      <Mobile>
+        <SearchPeople />
+      </Mobile>
+      <NewTitle>
+        <div>
+          <ProfilePic src={profile.image_url} />
+          <p>{profile.name}'s posts</p>
+        </div>
 
-                {userId === user.id ? 
-                '' 
-                : 
-                    <FollowButton 
-                        follow={follow} 
-                        onClick={handleFollowButton}
-                        disabled={disabled}
-                    >
-                        {follow[0] ? 'Unfollow' : 'Follow'}
-                    </FollowButton>
-                }
-            </NewTitle>
-            <main>
-                <Container>
-                    <Posts>
-                        {posts ? (
-                        <PostsBox
-                            setRefresh={setRefresh}
-                            userEmail={profile.email}
-                            userId={userId}
-                            posts={posts}
-                            setPosts={setPosts}
-                            setPages={setPages}
-                            pages={pages}
-                            identifier={"user"}
-                        />
-                        ) : (
-                        <TimelineMessage>Loading...</TimelineMessage>
-                        )}
-                    </Posts>
-                </Container>
-                <TrendingHashtags refresh={refresh}/>
-            </main>
-        </Wrapper>
-    );
+        {userId === user.id ? (
+          ""
+        ) : (
+          <FollowButton
+            follow={follow}
+            onClick={handleFollowButton}
+            disabled={disabled}
+          >
+            {follow[0] ? "Unfollow" : "Follow"}
+          </FollowButton>
+        )}
+      </NewTitle>
+      <main>
+        <Container>
+          <Posts>
+            {posts ? (
+              <PostsBox
+                setRefresh={setRefresh}
+                userEmail={profile.email}
+                userId={userId}
+                posts={posts}
+                setPosts={setPosts}
+                setPages={setPages}
+                pages={pages}
+                identifier={"user"}
+              />
+            ) : (
+              <TimelineMessage />
+            )}
+          </Posts>
+        </Container>
+        <TrendingHashtags refresh={refresh} />
+      </main>
+    </Wrapper>
+  );
 }
 
 const NewTitle = styled.h2`
-    height: 120px;
-    width: 70vw;
-    margin-top: 30px;
-    
+  height: 120px;
+  width: 70vw;
+  margin-top: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 50px;
+
+  font-family: var(--titles-font);
+  color: var(--main-white);
+  font-weight: 700;
+  font-size: 50px;
+
+  & > div {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 50px;
+  }
 
-    font-family: var(--titles-font);
-    color: var(--main-white);
-    font-weight: 700;
-    font-size: 50px;
+  & > div > p {
+    margin-left: 15px;
+  }
 
-    & > div {
-        display: flex;
-    }
+  @media (max-width: 614px) {
+    width: 100vw;
+    margin-top: 30px;
+    padding: 20px;
 
     & > div > p {
-        margin-left: 15px;
+      font-size: 40px;
+      margin-left: 10px;
     }
-
-    @media (max-width: 614px) {
-        width: 100vw;
-        margin-top: 30px;
-        padding: 20px;
-        
-        & > div > p {
-          font-size: 40px;
-          margin-left: 10px;
-        }
-    }
-`
+  }
+`;
 
 const FollowButton = styled.button`
-    height: 45px;
-    width: 150px;
+  height: 45px;
+  width: 150px;
 
-    color: ${props => props.follow[0] ? 'var(--accent-color)' : 'var(--main-white)'};
-    background-color: ${props => props.follow[0] ? 'var(--main-white)' : 'var(--accent-color)'};
-    border: none;
-    border-radius: 6px;
-    font-size: 20px;
-    font-weight: 700;
-    font-family: var(--titles-font);
+  color: ${(props) =>
+    props.follow[0] ? "var(--accent-color)" : "var(--main-white)"};
+  background-color: ${(props) =>
+    props.follow[0] ? "var(--main-white)" : "var(--accent-color)"};
+  border: none;
+  border-radius: 6px;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: var(--titles-font);
 
-    &:active {
-        font-size: calc(27px / 0.97);
-        transform: scale(0.97);
-    }
+  &:active {
+    font-size: calc(27px / 0.97);
+    transform: scale(0.97);
+  }
 
-    &:disabled {
-        background-color: var(--input-disabled-gray);
-    }
+  &:disabled {
+    background-color: var(--input-disabled-gray);
+  }
 
-    &:hover {
-        cursor: pointer;
-        filter: brightness(1.3);
-    }
-`
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.3);
+  }
+`;
 
 const Wrapper = styled.div`
-    height: fit-content;
-    min-height: 130vh;
-    width: 100vw;
-    background-color: var(--background-gray);
+  height: fit-content;
+  min-height: 130vh;
+  width: 100vw;
+  background-color: var(--background-gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  main {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    column-gap: 80px;
+  }
 
-    main {
-        display: flex;
-        column-gap: 80px;
-    }
-
-    & > main > div {
-        margin-top: 15px;
-    }
-`
+  & > main > div {
+    margin-top: 15px;
+  }
+`;
 
 const Container = styled.section`
   height: fit-content;
@@ -276,15 +281,15 @@ const Posts = styled.div`
 `;
 
 export const Mobile = styled(Search)`
-    display: none;
-    z-index: 1;
+  display: none;
+  z-index: 1;
 
-    @media (max-width: 614px) {
-        display: block;
-        width: 90%;
+  @media (max-width: 614px) {
+    display: block;
+    width: 90%;
 
-        div input {
-            width: 80vw;
-        }
+    div input {
+      width: 80vw;
     }
-`
+  }
+`;

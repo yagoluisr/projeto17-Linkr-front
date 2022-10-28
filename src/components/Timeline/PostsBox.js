@@ -68,7 +68,7 @@ export default function PostsBox({ identifier, hashtag, userId, posts, pages, se
             );
           })
         ) : (
-          <TimelineMessage>{posts ? 'Loading...' : 'No posts found from your friends'}</TimelineMessage>
+          <TimelineMessage>{posts ? 'There is nothing to show.' : 'Loading...' }</TimelineMessage>
         )}
       </InfiniteScroll>
 

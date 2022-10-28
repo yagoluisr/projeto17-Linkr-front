@@ -43,7 +43,7 @@ export default function HashtagsPage(){
                         hashtag={hashtag}
                     />
                     ) : (
-                    <TimelineMessage>Loading...</TimelineMessage>
+                    <TimelineMessage />
                     )}
                 </Posts>
             </Container>
