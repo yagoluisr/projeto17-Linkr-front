@@ -110,9 +110,9 @@ function deletePostLike(id) {
     return promise;
 }
 
-function getUserPosts (body) {
+function getUserPosts (body, pages) {
   const config = createHeaders();
-  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${body}`, config);
+  const promise = axios.get(`${process.env.REACT_APP_API_BASE_URL}/user/${body}/${pages}`, config);
   return promise;
 }
 

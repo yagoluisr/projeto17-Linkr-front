@@ -32,7 +32,7 @@ export default function UserPage(){
                 console.error(error);
             });
 
-        getUserPosts(parseInt(userId))
+        getUserPosts(parseInt(userId), pages)
             .then((res) => {
                 setPosts(res.data);
                 
@@ -108,7 +108,9 @@ export default function UserPage(){
                         <PostsBox
                             setRefresh={setRefresh}
                             userEmail={profile.email}
+                            userId={userId}
                             posts={posts}
+                            setPosts={setPosts}
                             setPages={setPages}
                             pages={pages}
                             identifier={"user"}

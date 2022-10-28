@@ -3,18 +3,15 @@ import TimelineMessage from "../../assets/styles/TimelineMessage";
 import PostCard from "./PostCard";
 import { useState } from "react";
 import InfiniteScroll from 'react-infinite-scroller';
-import { getPosts, getPostsbyHashtag } from "../../services/api";
+import { getPosts, getPostsbyHashtag, getUserPosts } from "../../services/api";
 import { Watch } from "react-loader-spinner";
 
-export default function PostsBox({ identifier, hashtag, posts, pages, setPages, setPosts }) {
+export default function PostsBox({ identifier, hashtag, userId, posts, pages, setPages, setPosts }) {
 
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(false)
 
   async function loadMoreFunc(){
-    if(identifier === 'user'){
-      return
-    }
     if(posts.length) {
       setLoading(true)
     }
@@ -33,6 +30,13 @@ export default function PostsBox({ identifier, hashtag, posts, pages, setPages, 
         setHasMore(false)
       }
     ;
+    }
+    if(identifier === 'user'){
+      const request = await getUserPosts(parseInt(userId), pages+1);
+      setPosts(request.data);
+      if(pages*10 > request.data.length){
+        setHasMore(false)
+      }
     }
     setPages(pages+1);
     setLoading(false)
